@@ -22,7 +22,7 @@
 ## Yerelde
 
 ```bash
-cd kubbe-corporate-site
+cd kubbe-kurumsal-site
 npm run dev
 ```
 

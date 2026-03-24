@@ -7,8 +7,8 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '';
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
 export default defineConfig({
-  name: 'kubbe-corporate',
-  title: 'Kubbe Site — CMS',
+  name: 'kubbe-kurumsal-site',
+  title: 'Kubbe Kurumsal Site — CMS',
   projectId,
   dataset,
   basePath: '/studio',

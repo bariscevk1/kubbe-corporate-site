@@ -31,9 +31,8 @@ Bu sayfa **hiç bilmeyen** biri için yazıldı. Sırayı bozmayın.
 
 ## ADIM 2 — Bilgisayarda proje klasörü
 
-1. Bu sitenin kodları şu klasörde:  
-   `kubbe-corporate-site`  
-   (Tam yol örneği: `Masaüstü\feramuz\kubbe-corporate-site`)
+1. Bu sitenin kodları proje klasörünüzde (GitHub depo adı: **`kubbe-kurumsal-site`**).  
+   Tam yol örneği: `Masaüstü\feramuz\kubbe-corporate-site` veya klon sonrası `...\kubbe-kurumsal-site` — `cd` yaparken **kendi klasör adınızı** kullanın.
 
 2. Bu klasörün **içinde** `.env.local` adında **yeni bir dosya** oluşturun.  
    - Windows’ta: Not Defteri ile açın, **Farklı Kaydet** → dosya adı: `.env.local` (tırnak olmadan; bazen “tüm dosyalar” seçmeniz gerekir).
@@ -65,6 +64,8 @@ Sizin uydurduğunuz **gizli bir şifre** (örnek: rastgele harf+rakam, en az 32 
 ```text
 cd C:\Users\Baris\Desktop\feramuz\kubbe-corporate-site
 ```
+
+*(Klasör adınız `kubbe-kurumsal-site` ise yolun sonundaki klasör adını ona çevirin.)*
 
 3. Bir kez paketleri kurun:
 

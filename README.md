@@ -1,14 +1,18 @@
-# Kubbe Corporate Site — Next.js (App Router)
+# Kubbe Kurumsal Site — Next.js (App Router)
 
-Kurumsal altyapı: **TypeScript**, **Tailwind CSS**, **SSG** (`force-static`), **next/font** (Inter + Montserrat), koyu tema (**kurşun** `#374151` / **yeşil** `#064e3b`).
+Kurumsal altyapı: **TypeScript**, **Tailwind CSS**, **Sunucu render** (`force-dynamic`, hosting derleme süresi için), **next/font** (Inter + Montserrat), koyu tema (**kurşun** `#374151` / **yeşil** `#064e3b`).
+
+**GitHub depo adı:** `kubbe-kurumsal-site` (eski `…-sitesi` / `kubbe-corporate-site` isimleri yerine bunu kullanın; Hostinger’daki repo URL’si ile aynı olmalı.)
 
 ## Kurulum
 
 ```bash
-cd kubbe-corporate-site
+cd kubbe-kurumsal-site
 npm install
 npm run dev
 ```
+
+Yerel klasörünüz hâlâ `kubbe-corporate-site` ise `cd` satırında o klasör adını kullanın.
 
 ### Site açılmıyorsa (localhost)
 
@@ -75,7 +79,7 @@ Ek snippet (AdresGezgini panel kodu vb.) için `app/layout.tsx` içinde `CmsScri
 
 ## Performans
 
-- **SSG:** `app/layout.tsx` → `export const dynamic = 'force-static'`
+- **Render:** `app/layout.tsx` → `export const dynamic = 'force-dynamic'` (uzak derlemede Sanity ile SSG zaman aşımını önler; içerik `sanityFetch` etiketleri + webhook ile yenilenir.)
 - **Fontlar:** Google Fonts, `next/font` ile `display: swap` — CLS azaltımı
 - **LCP:** Hero’da metin öncelikli; görseller eklendiğinde `next/image` + `priority` kullanın
 
