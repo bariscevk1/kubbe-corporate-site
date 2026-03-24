@@ -1,0 +1,55 @@
+import type { Metadata } from 'next';
+import { ContactCtaBlock } from '@/components/ContactCtaBlock';
+import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+
+export const metadata: Metadata = {
+  title: 'Oluk Satışı ve Montajı',
+  description:
+    'Camii ve çatı hatlarında oluk satışı ve montajı. Beyaz ve kırmızı seçenekler; alüminyum kubbe kaplama ile uyumlu uygulama.',
+  openGraph: {
+    title: 'Oluk Satışı ve Montajı | Kubbe Kaplama',
+    description:
+      'Yağmur suyu tahliyesi için oluk ve düşen boru sistemleri; Türkiye geneli sevkiyat ve profesyonel montaj.',
+  },
+};
+
+export default function OlukPage() {
+  return (
+    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+      <HizmetPageHero
+        imageSrc="/hizmetler/oluk-satis-montaj.webp"
+        imageAlt="Çatı oluk ve düşen boru montajı"
+        title="Oluk Satışı ve Montajı"
+        kicker="Hizmet"
+        subtitle="Yağmur suyu tahliyesi; Türkiye geneli satış ve montaj."
+      />
+
+      <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
+        <div className="space-y-5 leading-relaxed text-slate-300">
+          <p>
+            Yağmur suyunu güvenli şekilde tahliye etmek, kubbe ve çatı bütünlüğünü korumak için oluk hattı kritik
+            bir detaydır. Eksiz oluk satışımız devam etmekte; her ile gönderim yapıyor, talep ettiğinizde montajını
+            da üstleniyoruz.
+          </p>
+
+          <p>
+            Özellikle <strong>alüminyum kubbe kaplama</strong> projelerinde oluk sistemini aynı ekip mantığıyla
+            planlayarak, çatı hattında uyumlu ve sızdırmaz bir çözüm sunmayı hedefliyoruz. Böylece hem görsel
+            bütünlük korunur hem de uzun vadede suyun yapıya zarar vermesi engellenir.
+          </p>
+
+          <p>
+            <strong>Beyaz</strong> ve <strong>kırmızı</strong> renk seçeneklerimiz mevcuttur. Projenin cephe rengine,
+            kubbe rengine ve uygulama detaylarına göre doğru profili birlikte seçeriz.
+          </p>
+
+          <p>
+            Oluk metrajı, düşen boru yönlendirmesi ve bağlantı noktaları için keşif sonrası netleşen bir montaj
+            planı paylaşırız. Detaylı bilgi ve fiyat için iletişim kanallarımızdan bize ulaşabilirsiniz.
+          </p>
+        </div>
+        <ContactCtaBlock />
+      </div>
+    </main>
+  );
+}

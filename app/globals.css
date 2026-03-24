@@ -1,0 +1,355 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  /* Marka — Tailwind `brand` sınıfları; layout’ta logo rengine göre güncellenir */
+  --brand: #064e3b;
+  --brand-light: #047857;
+  --brand-muted: #0d9488;
+  --brand-radial: rgba(6, 78, 59, 0.35);
+  --brand-bg-body: #0b0f14;
+  --brand-hero-overlay: rgba(17, 24, 39, 0.62);
+  --brand-hero-overlay-hover: rgba(17, 24, 39, 0.44);
+  --brand-logo-glow: rgba(6, 78, 59, 0.35);
+}
+
+html {
+  @apply scroll-smooth antialiased;
+}
+
+/* i18n: RTL desteği */
+html[dir='rtl'] body {
+  direction: rtl;
+}
+
+html[dir='rtl'] * {
+  letter-spacing: normal;
+}
+
+/* Arapça font + okunabilirlik optimizasyonu (sadece ar dili seçiliyken) */
+html[data-lang='ar'] body {
+  font-family:
+    var(--font-arabic),
+    var(--font-inter),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Arial,
+    sans-serif;
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+
+html[data-lang='ar'] .font-display {
+  font-family:
+    var(--font-arabic),
+    var(--font-montserrat),
+    var(--font-inter),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Arial,
+    sans-serif;
+  letter-spacing: 0;
+}
+
+html[data-lang='ar'] p,
+html[data-lang='ar'] li {
+  line-height: 1.9;
+}
+
+body {
+  @apply min-h-screen text-slate-100;
+  background-color: var(--brand-bg-body);
+}
+
+/* Sanity “Genel Ayarlar” → tema: yeşil — marka zemini + emerald */
+html[data-site-theme='green'] body {
+  background-color: color-mix(in srgb, var(--brand-bg-body) 82%, #022c22 18%);
+}
+
+/* CLS: görseller için */
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+/* ProtectedImage: sürüklemeyi caydır */
+.protected-image img {
+  -webkit-user-drag: none;
+}
+
+/* Anasayfa hero — hafif ızgara dokusu */
+.hero-dots {
+  background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.12) 1px, transparent 0);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 15%, transparent 72%);
+}
+
+/* Leaflet referans haritası — koyu tema, marka altın çerçeve */
+.reference-leaflet-map .leaflet-popup-content-wrapper {
+  border-radius: 0.625rem;
+  border: 1px solid rgba(197, 160, 89, 0.28);
+  background: #121212;
+  color: #e5e5e5;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+}
+.reference-leaflet-map .leaflet-popup-content {
+  margin: 12px 14px 12px 12px;
+  min-width: 0;
+}
+.reference-leaflet-map .leaflet-popup-tip {
+  background: #121212 !important;
+  border: 1px solid rgba(197, 160, 89, 0.25);
+}
+.reference-leaflet-map .leaflet-container a.leaflet-popup-close-button {
+  color: #94a3b8;
+  padding: 8px 10px 0 0;
+  width: 28px;
+  height: 28px;
+}
+.reference-leaflet-map .leaflet-container a.leaflet-popup-close-button:hover {
+  color: #e8d5a3;
+}
+.reference-leaflet-map .leaflet-control-attribution {
+  font-size: 10px;
+  max-width: 55%;
+}
+
+.reference-leaflet-map .leaflet-control-zoom {
+  border: none !important;
+  margin: 12px 14px 0 0 !important;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+.reference-leaflet-map .leaflet-control-zoom a {
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 34px !important;
+  background: rgba(12, 12, 12, 0.94) !important;
+  color: #e8d5a3 !important;
+  border: 1px solid rgba(197, 160, 89, 0.28) !important;
+  font-size: 18px !important;
+}
+.reference-leaflet-map .leaflet-control-zoom a:hover {
+  background: rgba(197, 160, 89, 0.14) !important;
+  color: #fff !important;
+}
+.reference-leaflet-map .leaflet-control-zoom-in {
+  border-radius: 10px 10px 0 0 !important;
+}
+.reference-leaflet-map .leaflet-control-zoom-out {
+  border-radius: 0 0 10px 10px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.reference-leaflet-map .leaflet-tooltip.reference-map-tooltip {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(18, 18, 18, 0.96) !important;
+  color: #e5e5e5 !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+}
+.reference-leaflet-map .leaflet-tooltip-top:before {
+  border-top-color: rgba(18, 18, 18, 0.96) !important;
+}
+
+/* Referans haritası — seçili pin nabız + küme vurgusu */
+@keyframes reference-pin-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(197, 160, 89, 0.45),
+      0 4px 20px rgba(0, 0, 0, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(197, 160, 89, 0),
+      0 4px 24px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.reference-map-pin--selected .reference-pin-outer {
+  animation: reference-pin-pulse 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-map-pin--selected .reference-pin-outer {
+    animation: none;
+  }
+}
+
+/* Harita üstü — hafif tarama / derinlik (motion-safe) */
+@keyframes map-sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.map-sheen-overlay {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(197, 160, 89, 0.04) 45%,
+    rgba(6, 78, 59, 0.06) 55%,
+    transparent 100%
+  );
+  width: 55%;
+  animation: map-sheen 14s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-sheen-overlay {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer-load {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.map-loading-shimmer {
+  animation: shimmer-load 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-loading-shimmer {
+    animation: none;
+    opacity: 0.15;
+  }
+}
+
+/* Hero — kurumsal teknik doku */
+.hero-tech-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(rgba(197, 160, 89, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197, 160, 89, 0.06) 1px, transparent 1px);
+  background-size: 54px 54px;
+}
+
+.hero-tech-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(ellipse at 50% -10%, rgba(6, 78, 59, 0.2), transparent 56%);
+}
+
+/* Hakkımızda + Footer — hafif kurumsal hareket */
+@keyframes about-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-reveal {
+  animation: about-fade-up 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes about-cta-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.14);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(197, 160, 89, 0);
+  }
+}
+
+.about-cta-glow {
+  animation: about-cta-glow 2.4s ease-in-out infinite;
+}
+
+.about-lead-texture {
+  background-color: #4a4a4a;
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0%, transparent 46%),
+    linear-gradient(45deg, rgba(0, 75, 35, 0.18) 0%, transparent 52%),
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.06) 0, transparent 34%),
+    radial-gradient(circle at 82% 88%, rgba(0, 75, 35, 0.22) 0, transparent 38%);
+}
+
+@keyframes about-divider-sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.about-divider-sheen {
+  animation: about-divider-sheen 8s ease-in-out infinite;
+}
+
+@keyframes footer-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.footer-sheen {
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(197, 160, 89, 0.08) 45%,
+    rgba(255, 255, 255, 0.06) 52%,
+    transparent 100%
+  );
+  width: 38%;
+  animation: footer-sweep 12s ease-in-out infinite;
+}
+
+.footer-link-micro {
+  transition:
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.footer-link-micro:hover {
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-reveal,
+  .about-cta-glow,
+  .about-divider-sheen,
+  .footer-sheen {
+    animation: none;
+  }
+}
+

@@ -1,0 +1,30 @@
+{
+  "lang": {
+    "tr": "TR",
+    "en": "EN",
+    "ar": "AR"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "shipments": "Shipments",
+    "contact": "Contact"
+  },
+  "services": {
+    "all": "All services",
+    "kubbe": "Mosque dome cladding",
+    "aluminyumSatis": "Aluminum sales",
+    "aluminyumKubbe": "Aluminum dome cladding",
+    "bakir": "Copper sheet & dome",
+    "kursun": "Lead sheet sales",
+    "nakkas": "Ornamentation & painting",
+    "alemler": "Mosque finials",
+    "oluk": "Gutter sales & installation"
+  },
+  "ui": {
+    "language": "Language"
+  }
+}
+

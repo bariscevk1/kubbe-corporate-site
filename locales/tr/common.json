@@ -1,0 +1,30 @@
+{
+  "lang": {
+    "tr": "TR",
+    "en": "EN",
+    "ar": "AR"
+  },
+  "nav": {
+    "home": "Anasayfa",
+    "about": "Hakkımızda",
+    "services": "Hizmetler",
+    "projects": "Projelerimiz",
+    "shipments": "Sevkiyatlar",
+    "contact": "İletişim"
+  },
+  "services": {
+    "all": "Tüm hizmetler",
+    "kubbe": "Camii kubbe kaplama",
+    "aluminyumSatis": "Alüminyum satışı",
+    "aluminyumKubbe": "Alüminyum kubbe kaplama",
+    "bakir": "Bakır levha & kubbe",
+    "kursun": "Kurşun levha satışı",
+    "nakkas": "Camii nakkaş ve süsleme",
+    "alemler": "Camii alemleri",
+    "oluk": "Oluk satışı ve montajı"
+  },
+  "ui": {
+    "language": "Dil"
+  }
+}
+
