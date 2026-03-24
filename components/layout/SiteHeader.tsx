@@ -5,7 +5,14 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { i18n, STORAGE_KEY, SUPPORTED_LANGS, type SupportedLang, isSupportedLang } from '@/lib/i18n/i18n';
+import {
+  ensureI18nInit,
+  i18n,
+  STORAGE_KEY,
+  SUPPORTED_LANGS,
+  type SupportedLang,
+  isSupportedLang,
+} from '@/lib/i18n/i18n';
 import { useRouter } from 'next/navigation';
 import { formatPhoneDisplay, telHrefTr } from '@/lib/phone';
 
@@ -75,7 +82,7 @@ function NavUnderlineLink({
 const DEFAULT_PHONE = '05323236627';
 
 export function SiteHeader({ phone = DEFAULT_PHONE }: SiteHeaderProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common', { i18n });
   const router = useRouter();
   const pathname = usePathname();
   /** URL tabanli dil: anasayfa /tr, /en veya /ar olabilir */
@@ -112,7 +119,8 @@ export function SiteHeader({ phone = DEFAULT_PHONE }: SiteHeaderProps) {
     [currentLang, stripLocale],
   );
 
-  const setLang = (lng: SupportedLang) => {
+  const setLang = async (lng: SupportedLang) => {
+    await ensureI18nInit(lng);
     try {
       window.localStorage.setItem(STORAGE_KEY, lng);
     } catch {
@@ -129,6 +137,10 @@ export function SiteHeader({ phone = DEFAULT_PHONE }: SiteHeaderProps) {
   const onScroll = useCallback(() => {
     setScrolled(window.scrollY > 24);
   }, []);
+
+  useEffect(() => {
+    void ensureI18nInit(currentLang);
+  }, [currentLang]);
 
   useEffect(() => {
     onScroll();

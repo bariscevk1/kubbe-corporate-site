@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /** Sanity vb. yavas API: varsayilan 60s yetmez; Hostinger/Vercel derlemesinde SIGTERM onlenir */
+  staticPageGenerationTimeout: 300,
   async redirects() {
     return [
       {

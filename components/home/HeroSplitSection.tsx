@@ -45,7 +45,7 @@ function HeroCornerFrame({ side }: { side: 'left' | 'right' }) {
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
+        initial={false}
         animate={{ pathLength: 1, opacity: 1 }}
         transition={{ duration: 1.1, delay: side === 'left' ? 0.5 : 0.65, ease: easeLux }}
       />
@@ -102,7 +102,7 @@ function HeroDividerLogo({
   return (
     <motion.div
       className="pointer-events-none absolute left-[50%] top-[50%] z-[28] hidden -translate-x-1/2 -translate-y-1/2 md:block"
-      initial={reduce ? false : { opacity: 0, y: -10, scale: 0.96 }}
+      initial={false}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, delay: 0.2, ease: easeLux }}
       aria-hidden
@@ -163,7 +163,7 @@ function HeroCornerSignature({ phone }: { phone: string }) {
   return (
     <motion.aside
       className="absolute bottom-5 left-5 z-[24] max-w-[min(90vw,560px)] md:bottom-8 md:left-8"
-      initial={reduce ? false : { opacity: 0, y: -10 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: 0.18, ease: easeLux }}
       aria-label="Hero imza metni"
@@ -177,7 +177,7 @@ function HeroCornerSignature({ phone }: { phone: string }) {
       <motion.a
         href={telHref}
         className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#c5a059]/35 bg-black/35 px-3 py-1.5 font-display text-sm font-semibold text-[#e8d5a3] shadow-[0_8px_18px_-10px_rgba(0,0,0,0.8)] backdrop-blur-sm"
-        initial={reduce ? false : { opacity: 0, y: 8 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.32, ease: easeLux }}
       >
@@ -206,7 +206,7 @@ function HeroContentDock({
   return (
     <motion.div
       className="relative z-[22] border-t border-white/10 bg-[#07090c]/92 backdrop-blur-md"
-      initial={reduce ? false : { opacity: 0, y: 14 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: 0.2, ease: easeLux }}
     >
@@ -286,14 +286,14 @@ function HeroColumn({
   return (
     <motion.div
       className="group relative min-h-[min(92vh,820px)] overflow-hidden bg-lead-900 md:min-h-[calc(100vh-4.5rem)]"
-      initial={{ opacity: 0, x: reduce ? 0 : xEnter }}
+      initial={false}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.95, ease: easeLux, delay: side === 'left' ? 0.05 : 0.12 }}
       onContextMenu={(e) => e.preventDefault()}
     >
       <motion.div
         className="absolute inset-0"
-        initial={{ scale: reduce ? 1 : imgScale }}
+        initial={false}
         animate={{ scale: imgScaleEnd }}
         transition={{ duration: 1.35, ease: easeLux, delay: 0.08 }}
       >

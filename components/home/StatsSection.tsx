@@ -2,14 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { Playfair_Display } from 'next/font/google';
 import { HOME_STATS_HEADING, HOME_STATS_ITEMS } from '@/lib/content/home-stats';
-
-const playfair = Playfair_Display({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['500', '600', '700'],
-  display: 'swap',
-});
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -249,7 +242,7 @@ export function StatsSection() {
                   <Icon className="h-9 w-9 md:h-10 md:w-10" />
                 </div>
                 <p
-                  className={`${playfair.className} text-4xl font-semibold tracking-tight md:text-5xl`}
+                  className="font-display text-4xl font-semibold tracking-tight md:text-5xl"
                   style={{ color: gold }}
                 >
                   <AnimatedStatNumber

@@ -50,7 +50,10 @@ export function middleware(req: NextRequest) {
    * Yerel gelistirme (npm run dev): / ve /hizmetler dogrudan acilir; /tr -> rewrite yukarida cozulur.
    * .env.local: NEXT_PUBLIC_DEV_SIMPLE_ROUTES=1 — uretimde kullanmayin.
    */
-  if (process.env.NEXT_PUBLIC_DEV_SIMPLE_ROUTES === '1') {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NEXT_PUBLIC_DEV_SIMPLE_ROUTES === '1'
+  ) {
     return NextResponse.next();
   }
 

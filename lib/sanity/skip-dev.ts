@@ -3,7 +3,8 @@
  * `npm run dev` bunu varsayılan açar; tam CMS için: `npm run dev:full`
  */
 export function skipSanityInDev(): boolean {
-  if (process.env.NODE_ENV !== 'development') return false;
   const v = process.env.SKIP_SANITY_IN_DEV;
-  return v === '1' || v === 'true';
+  // Varsayilan: CMS agina gitme. Tam CMS test icin SKIP_SANITY_IN_DEV=0 verin.
+  if (v === '0' || v === 'false') return false;
+  return true;
 }
