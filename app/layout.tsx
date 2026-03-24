@@ -7,8 +7,11 @@ import { DEFAULT_SITE_DESCRIPTION_TR } from '@/lib/seo/seo-copy';
 import { getMetadataBaseUrl } from '@/lib/seo/site-url';
 import { DEFAULT_BRAND_HEX } from '@/lib/brand-css';
 
-/** ISR: CMS webhook ile anlık yenileme; yedek süre */
-export const revalidate = 300;
+/**
+ * Hostinger vb. ortamlarda SSG (22 sayfa × Sanity) 300 sn’yi aşıyordu.
+ * On-demand render + sanityFetch `next.tags` ile webhook revalidation devam eder.
+ */
+export const dynamic = 'force-dynamic';
 
 export function generateMetadata(): Metadata {
   const siteName = 'Kubbe Kaplama';

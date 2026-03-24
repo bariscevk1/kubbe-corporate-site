@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { sanityFetch } from '@/lib/sanity/client';
-import { serviceBySlugQuery, servicesQuery } from '@/lib/sanity/queries';
+import { serviceBySlugQuery } from '@/lib/sanity/queries';
 import type { ServiceDoc } from '@/lib/sanity/types';
 import { SanityServiceCover } from '@/components/cms/SanityServiceCover';
 
@@ -24,17 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: service.description.slice(0, 160),
     openGraph: { title: service.title },
   };
-}
-
-/** Build / ISR: CMS’deki tüm slug’lar için statik yol üret */
-export async function generateStaticParams() {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return [];
-  try {
-    const list = await sanityFetch<ServiceDoc[]>(servicesQuery, {}, ['service']);
-    return (list || []).map((s) => ({ slug: s.slug.current }));
-  } catch {
-    return [];
-  }
 }
 
 export default async function HizmetDetayPage({ params }: Props) {
