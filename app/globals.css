@@ -17,6 +17,8 @@
 
 html {
   @apply scroll-smooth antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* i18n: RTL desteği */

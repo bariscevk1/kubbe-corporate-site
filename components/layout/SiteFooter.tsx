@@ -29,7 +29,7 @@ export function SiteFooter({
   return (
     <footer className={`relative overflow-hidden border-t ${footerBorder} ${footerBg}`}>
       <div className="footer-sheen pointer-events-none absolute inset-y-0 left-0 opacity-70" aria-hidden />
-      <div className="mx-auto max-w-6xl px-4 py-8 md:px-6">
+      <div className="mx-auto max-w-6xl px-4 py-8 pb-[max(2rem,calc(env(safe-area-inset-bottom,0px)+1.5rem))] md:px-6 md:pb-8">
         <div className="flex flex-col gap-6 md:flex-row md:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-3">

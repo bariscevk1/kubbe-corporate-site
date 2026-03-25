@@ -101,7 +101,7 @@ function HeroDividerLogo({
   const { reduce } = useHeroMotion();
   return (
     <motion.div
-      className="pointer-events-none absolute left-[50%] top-[50%] z-[28] hidden -translate-x-1/2 -translate-y-1/2 md:block"
+      className="pointer-events-none absolute left-1/2 top-1/2 z-[28] block -translate-x-1/2 -translate-y-1/2"
       initial={false}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, delay: 0.2, ease: easeLux }}
@@ -109,7 +109,7 @@ function HeroDividerLogo({
     >
       {logoUrl ? (
         <motion.div
-          className="relative flex flex-col items-center -translate-x-[47%] -translate-y-[50%]"
+          className="relative flex flex-col items-center -translate-x-[47%] -translate-y-[50%] max-md:-translate-x-1/2"
           animate={
             reduce
               ? undefined
@@ -141,14 +141,14 @@ function HeroDividerLogo({
             alt={logoAlt}
             width={1135}
             height={338}
-            className="relative z-[1] h-48 w-auto object-contain drop-shadow-[0_6px_18px_rgba(0,0,0,0.95)]"
-            sizes="1135px"
+            className="relative z-[1] h-[5.5rem] w-auto object-contain drop-shadow-[0_6px_18px_rgba(0,0,0,0.95)] sm:h-32 md:h-48"
+            sizes="(max-width:768px) 200px, 1135px"
             quality={96}
             priority
           />
         </motion.div>
       ) : (
-        <p className="font-display text-xl font-semibold tracking-wide text-white drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)]">
+        <p className="max-w-[12rem] text-center font-display text-base font-semibold tracking-wide text-white drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)] sm:text-lg md:text-xl">
           {brandWordPrimary} <span className="text-[#c5a059]">{brandWordAccent}</span>
         </p>
       )}
@@ -162,21 +162,21 @@ function HeroCornerSignature({ phone }: { phone: string }) {
   const telHref = telHrefTr(phone);
   return (
     <motion.aside
-      className="absolute bottom-5 left-5 z-[24] max-w-[min(90vw,560px)] md:bottom-8 md:left-8"
+      className="absolute left-4 right-4 top-[min(28vh,200px)] z-[24] max-w-none sm:top-[min(30vh,240px)] md:bottom-8 md:left-8 md:right-auto md:top-auto md:max-w-[min(90vw,560px)]"
       initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: 0.18, ease: easeLux }}
       aria-label="Hero imza metni"
     >
-      <p className="font-display text-base font-semibold uppercase tracking-[0.2em] text-[#e8d5a3] drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)] md:text-xl">
+      <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-[#e8d5a3] drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)] sm:text-base md:text-xl md:tracking-[0.2em]">
         Turgut Usta
       </p>
-      <p className="mt-2 max-w-[38ch] text-base leading-relaxed text-slate-100 drop-shadow-[0_2px_14px_rgba(0,0,0,0.8)] md:text-lg md:leading-[1.4]">
+      <p className="mt-1.5 max-w-[40ch] text-sm leading-relaxed text-slate-100 drop-shadow-[0_2px_14px_rgba(0,0,0,0.8)] sm:mt-2 sm:text-base md:mt-2 md:max-w-[38ch] md:text-lg md:leading-[1.4]">
         Kubbe kaplama, alem ve oluk uygulamalarinda kurumsal disiplin ve uzun omurlu iscilik.
       </p>
       <motion.a
         href={telHref}
-        className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#c5a059]/35 bg-black/35 px-3 py-1.5 font-display text-sm font-semibold text-[#e8d5a3] shadow-[0_8px_18px_-10px_rgba(0,0,0,0.8)] backdrop-blur-sm"
+        className="mt-3 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c5a059]/35 bg-black/40 px-4 py-2.5 font-display text-sm font-semibold text-[#e8d5a3] shadow-[0_8px_18px_-10px_rgba(0,0,0,0.8)] backdrop-blur-sm active:scale-[0.98]"
         initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.32, ease: easeLux }}
@@ -210,20 +210,20 @@ function HeroContentDock({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: 0.2, ease: easeLux }}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 md:px-6 md:py-7">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-5 sm:gap-4 sm:py-6 md:px-6 md:py-7">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.18em] text-[#e8d5a3]/95">
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 font-display text-[9px] font-semibold uppercase tracking-[0.16em] text-[#e8d5a3]/95 sm:text-[10px] sm:tracking-[0.18em]">
             Kurumsal Proje Standardı
           </span>
-          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-slate-300">
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[9px] text-slate-300 sm:text-[10px]">
             Türkiye geneli uygulama
           </span>
         </div>
 
-        <h1 className="font-display text-2xl font-bold leading-tight tracking-tight text-white md:text-3xl">
+        <h1 className="font-display text-[1.35rem] font-bold leading-[1.2] tracking-tight text-white sm:text-2xl md:text-3xl">
           {leftTitle}
         </h1>
-        <p className="max-w-4xl text-sm leading-relaxed text-slate-300 md:text-base">
+        <p className="max-w-4xl text-[0.9375rem] leading-relaxed text-slate-300 sm:text-sm md:text-base">
           {leftSubtitle} · {rightSubtitle}
         </p>
 
@@ -231,7 +231,7 @@ function HeroContentDock({
           <Link
             href="/iletisim"
             onClick={() => trackHeroTeklifClick()}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-brand px-6 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-black/35 ring-1 ring-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)]"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-brand px-6 py-3.5 text-center text-[15px] font-semibold text-white shadow-lg shadow-black/35 ring-1 ring-white/15 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)] sm:text-sm"
           >
             <motion.span
               className="inline-flex items-center gap-2"
@@ -250,7 +250,7 @@ function HeroContentDock({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackHeroWhatsAppClick()}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-white/15 bg-lead-800/90 px-6 py-3 text-center text-sm font-semibold text-slate-100 shadow-md shadow-black/25 ring-1 ring-[var(--brand)]/30 backdrop-blur-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)]"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-lead-800/90 px-6 py-3.5 text-center text-[15px] font-semibold text-slate-100 shadow-md shadow-black/25 ring-1 ring-[var(--brand)]/30 backdrop-blur-sm active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)] sm:text-sm"
             whileHover={{ scale: 1.03, borderColor: 'rgba(255,255,255,0.28)' }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 380, damping: 24 }}
@@ -285,7 +285,7 @@ function HeroColumn({
 
   return (
     <motion.div
-      className="group relative min-h-[min(92vh,820px)] overflow-hidden bg-lead-900 md:min-h-[calc(100vh-4.5rem)]"
+      className="group relative min-h-[min(42vh,360px)] overflow-hidden bg-lead-900 sm:min-h-[min(46vh,400px)] md:min-h-[calc(100vh-4.5rem)]"
       initial={false}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.95, ease: easeLux, delay: side === 'left' ? 0.05 : 0.12 }}
@@ -324,10 +324,10 @@ function HeroColumn({
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
 
       {bottomCta ? (
-        <div className="pointer-events-auto absolute inset-x-0 bottom-[5.5rem] z-[20] flex justify-center px-4 md:bottom-[6.5rem]">
+        <div className="pointer-events-auto absolute inset-x-0 bottom-[6.25rem] z-[20] flex justify-center px-3 sm:bottom-[5.75rem] md:bottom-[6.5rem]">
           <Link
             href={bottomCta.href}
-            className="rounded-full border border-[#c5a059]/75 bg-black/35 px-5 py-2.5 text-center font-display text-[10px] font-semibold uppercase tracking-[0.18em] text-[#e8d5a3] shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-sm transition hover:border-[#e8d5a3]/95 hover:bg-black/50 md:text-[11px] md:tracking-[0.22em]"
+            className="min-h-[44px] rounded-full border border-[#c5a059]/75 bg-black/40 px-5 py-2.5 text-center font-display text-[9px] font-semibold uppercase leading-tight tracking-[0.14em] text-[#e8d5a3] shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-sm transition active:scale-[0.98] hover:border-[#e8d5a3]/95 hover:bg-black/50 sm:text-[10px] sm:tracking-[0.18em] md:text-[11px] md:tracking-[0.22em]"
           >
             {bottomCta.label}
           </Link>

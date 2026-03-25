@@ -6,6 +6,7 @@ import { I18nProvider } from '@/components/i18n/I18nProvider';
 import { DEFAULT_SITE_DESCRIPTION_TR } from '@/lib/seo/seo-copy';
 import { getMetadataBaseUrl } from '@/lib/seo/site-url';
 import { DEFAULT_BRAND_HEX } from '@/lib/brand-css';
+import { DEFAULT_LOGO_SRC } from '@/lib/brand-assets';
 
 /** Hostinger: ağır SSG zaman aşımı — dinamik render. Middleware artık locale için rewrite kullanmıyor. */
 export const dynamic = 'force-dynamic';
@@ -37,6 +38,7 @@ export function generateViewport(): Viewport {
     themeColor: DEFAULT_BRAND_HEX,
     width: 'device-width',
     initialScale: 1,
+    viewportFit: 'cover',
   };
 }
 
@@ -46,17 +48,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
-      <body className="font-sans">
+      <body className="font-sans touch-manipulation pb-[env(safe-area-inset-bottom,0px)]">
         <I18nProvider>
           <SiteHeader
             theme="lead"
             phone="05323236627"
-            logoUrl={null}
-            logoAlt="Kubbe Kaplama"
+            logoUrl={DEFAULT_LOGO_SRC}
+            logoAlt="Turgut Coşkun Kubbe Kaplama"
             brandWordPrimary="Kubbe"
             brandWordAccent="Kaplama"
           />
-          <div className="min-h-[70vh]">{children}</div>
+          <div className="min-h-[70vh] min-w-0">{children}</div>
           <SiteFooter
             theme="lead"
             phone="05323236627"

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -81,7 +82,13 @@ function NavUnderlineLink({
 
 const DEFAULT_PHONE = '05323236627';
 
-export function SiteHeader({ phone = DEFAULT_PHONE }: SiteHeaderProps) {
+export function SiteHeader({
+  phone = DEFAULT_PHONE,
+  logoUrl = null,
+  logoAlt = 'Kubbe Kaplama',
+  brandWordPrimary = 'Kubbe',
+  brandWordAccent = 'Kaplama',
+}: SiteHeaderProps) {
   const { t } = useTranslation('common', { i18n });
   const router = useRouter();
   const pathname = usePathname();
@@ -166,10 +173,33 @@ export function SiteHeader({ phone = DEFAULT_PHONE }: SiteHeaderProps) {
   const headerPlacement = isHome && !scrolled ? 'fixed inset-x-0 top-0' : 'sticky top-0';
 
   return (
-    <header className={`${headerPlacement} z-50 transition-all duration-300 ease-out ${barBg}`}>
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-4">
-        {/* Sol: logo + telefon */}
-        <div className="flex min-w-0 flex-1 items-center gap-3 md:gap-5" />
+    <header
+      className={`${headerPlacement} z-50 pt-[env(safe-area-inset-top,0px)] transition-all duration-300 ease-out ${barBg}`}
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
+        {/* Mobil: marka + masaüstünde boş (nav merkezde) */}
+        <div className="flex min-w-0 flex-1 items-center gap-2 md:gap-5">
+          <Link
+            href={withLocale('/')}
+            className="flex min-w-0 shrink items-center gap-2 rounded-lg py-1.5 outline-none ring-offset-2 ring-offset-[#0b0f14] focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:hidden"
+          >
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={logoAlt || 'Kubbe Kaplama'}
+                width={140}
+                height={42}
+                className="h-8 w-auto max-w-[140px] object-contain object-left"
+                sizes="140px"
+                priority
+              />
+            ) : (
+              <span className="truncate font-display text-[13px] font-bold leading-tight tracking-tight text-white">
+                <span className="text-[#c5a059]">{brandWordPrimary}</span> {brandWordAccent}
+              </span>
+            )}
+          </Link>
+        </div>
 
         {/* Masaüstü menü */}
         <nav
@@ -267,7 +297,7 @@ export function SiteHeader({ phone = DEFAULT_PHONE }: SiteHeaderProps) {
         {/* Mobil: hamburger */}
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white transition hover:bg-white/10 md:hidden"
+          className="inline-flex h-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white transition active:scale-95 hover:bg-white/10 md:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-sheet"
           aria-label={mobileOpen ? 'Menüyü kapat' : 'Menüyü aç'}
@@ -309,7 +339,7 @@ export function SiteHeader({ phone = DEFAULT_PHONE }: SiteHeaderProps) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-              className="fixed bottom-0 right-0 top-0 z-[101] flex w-[min(100vw-3rem,20rem)] flex-col border-l border-white/10 bg-lead-900 shadow-2xl md:hidden"
+              className="fixed bottom-0 right-0 top-0 z-[101] flex w-[min(100vw-2.5rem,22rem)] flex-col border-l border-white/10 bg-lead-900 pt-[env(safe-area-inset-top,0px)] shadow-2xl md:hidden"
             >
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
                 <span className="font-display text-sm font-semibold text-white">Menü</span>

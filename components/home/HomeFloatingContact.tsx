@@ -15,11 +15,11 @@ export function HomeFloatingContact({ phone }: Props) {
   const ig = process.env.NEXT_PUBLIC_INSTAGRAM_URL?.trim();
 
   const btnClass =
-    'flex h-12 w-12 items-center justify-center rounded-full shadow-lg shadow-black/40 ring-2 ring-white/10 transition hover:scale-105 hover:ring-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c5a059]';
+    'flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full shadow-lg shadow-black/40 ring-2 ring-white/10 transition active:scale-95 hover:scale-105 hover:ring-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c5a059] sm:h-14 sm:w-14';
 
   return (
     <div
-      className="pointer-events-none fixed bottom-20 right-4 z-[45] flex flex-col gap-3 md:bottom-8 md:right-6"
+      className="pointer-events-none fixed bottom-[max(5.5rem,calc(env(safe-area-inset-bottom,0px)+4.5rem))] right-[max(1rem,env(safe-area-inset-right,0px))] z-[45] flex flex-col gap-3 md:bottom-8 md:right-6"
       aria-label="Hızlı iletişim"
     >
       <div className="pointer-events-auto flex flex-col gap-3">

@@ -276,7 +276,7 @@ export function TurkeyReferencesSection() {
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
+      <div className="relative mx-auto max-w-6xl px-3 py-14 sm:px-4 sm:py-16 md:px-6 md:py-28">
         <motion.header
           className="mx-auto max-w-4xl text-center"
           variants={headerVariants}
@@ -294,7 +294,7 @@ export function TurkeyReferencesSection() {
           <motion.h2
             variants={headerItem}
             id="turkey-ref-heading"
-            className={`${playfair.className} mt-5 text-3xl font-semibold leading-tight tracking-tight text-white md:text-4xl lg:text-[2.4rem]`}
+            className={`${playfair.className} mt-4 text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-white sm:mt-5 sm:text-3xl md:text-4xl lg:text-[2.4rem]`}
           >
             <span className="text-white">81 ilin </span>
             <motion.span
