@@ -194,7 +194,7 @@ export function SiteHeader({
 
   return (
     <header
-      className={`${headerPlacement} z-50 pt-[env(safe-area-inset-top,0px)] transition-all duration-300 ease-out ${barBg}`}
+      className={`${headerPlacement} z-[120] pt-[env(safe-area-inset-top,0px)] transition-all duration-300 ease-out ${barBg}`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
         {/* Mobil: marka + masaüstünde boş (nav merkezde) */}
@@ -342,7 +342,7 @@ export function SiteHeader({
         {mobileOpen && (
           <>
             <motion.div
-              className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] md:hidden"
+              className="fixed inset-0 z-[130] bg-black/60 backdrop-blur-[3px] md:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -359,7 +359,7 @@ export function SiteHeader({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 28 }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-y-0 right-0 z-[101] flex w-[min(88vw,380px)] flex-col border-l border-white/10 bg-[#4A4E52] px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] shadow-2xl md:hidden"
+              className="fixed inset-y-0 right-0 z-[140] flex h-dvh max-h-dvh w-[min(86vw,360px)] flex-col border-l border-white/10 bg-[#4A4E52] px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] shadow-2xl md:hidden"
             >
               <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <Link
@@ -395,6 +395,9 @@ export function SiteHeader({
               </div>
               <div className="flex min-h-0 flex-1 flex-col">
                 <div ref={mobileDrawerScrollRef} className="flex-1 overflow-y-auto overscroll-contain py-5">
+                  <p className="px-1 pb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+                    Sayfalar
+                  </p>
                   <nav aria-label="Mobil ana menü" className="flex flex-col gap-2">
                     {mobileMenuLinks.map((item) => (
                       <Link
@@ -409,47 +412,7 @@ export function SiteHeader({
                       </Link>
                     ))}
                   </nav>
-
-                  <div className="mt-5">
-                    <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-                      {t('ui.language')}
-                    </p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {SUPPORTED_LANGS.map((lng) => (
-                        <button
-                          key={lng}
-                          type="button"
-                          onClick={() => setLang(lng)}
-                          className={`rounded-xl border px-2 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] transition ${
-                            lng === currentLang
-                              ? 'border-[#c5a059]/55 bg-[#c5a059]/12 text-[#e8d5a3]'
-                              : 'border-white/15 bg-white/[0.02] text-slate-100 hover:border-white/30'
-                          }`}
-                        >
-                          {t(`lang.${lng}`)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
                 </div>
-
-                <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-4">
-                  <a
-                    href={waHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex min-h-[52px] items-center justify-center rounded-2xl bg-[#0f7a3f] px-4 text-center font-display text-sm font-bold text-white shadow-[0_16px_32px_-18px_rgba(15,122,63,0.8)]"
-                  >
-                    {t('mobileBar.whatsappLine')}
-                  </a>
-                  <a
-                    href={telHref}
-                    className="flex min-h-[52px] items-center justify-center rounded-2xl border border-white/18 bg-[#f3f4f6] px-4 text-center font-display text-sm font-bold text-[#1f2937] shadow-[0_16px_32px_-18px_rgba(0,0,0,0.4)]"
-                  >
-                    {t('mobileBar.call')}
-                  </a>
-                </div>
-                <p className="pt-3 text-center text-xs text-slate-300/80">{phonePretty}</p>
               </div>
             </motion.aside>
           </>
