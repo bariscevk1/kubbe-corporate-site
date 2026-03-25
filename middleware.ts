@@ -2,13 +2,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 const PUBLIC_FILE = /\.(.*)$/;
 const SUPPORTED = new Set(['tr', 'en', 'ar']);
-const DEFAULT_LOCALE = 'tr';
-
-function getLocaleFromCookie(req: NextRequest) {
-  const v = req.cookies.get('NEXT_LOCALE')?.value || req.cookies.get('kubbe_lang')?.value;
-  if (v && SUPPORTED.has(v)) return v;
-  return null;
-}
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -31,8 +24,9 @@ export function middleware(req: NextRequest) {
   }
 
   /**
-   * App Router: sayfalar app/page.tsx altinda / ile tanimli; /tr, /en, /ar klasoru yok.
-   * Dis URL: /tr/iletisim -> ic rewrite: /iletisim (aynı route dosyalari calisir).
+   * /tr, /en, /ar önekli linkler (eski reklamlar, yer imleri).
+   * Rewrite kullanmıyoruz: kök layout `force-dynamic` iken rewrite + RSC üretimde yanıt kilitleniyordu (500).
+   * Öneki kaldıran 307 + NEXT_LOCALE çerezi — sayfa `/`, `/hizmetler` vb. gerçek yollar üzerinden sunulur.
    */
   const parts = pathname.split('/').filter(Boolean);
   const first = parts[0];
@@ -41,14 +35,25 @@ export function middleware(req: NextRequest) {
   if (hasLocale) {
     const rest = parts.slice(1);
     const internalPath = rest.length ? `/${rest.join('/')}` : '/';
+    if (process.env.NODE_ENV === 'development') {
+      const u = new URL(req.url);
+      u.pathname = internalPath;
+      return NextResponse.rewrite(u);
+    }
     const url = req.nextUrl.clone();
     url.pathname = internalPath;
-    return NextResponse.rewrite(url);
+    const res = NextResponse.redirect(url);
+    res.cookies.set('NEXT_LOCALE', first, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: 'lax',
+    });
+    return res;
   }
 
   /**
-   * Yerel gelistirme (npm run dev): / ve /hizmetler dogrudan acilir; /tr -> rewrite yukarida cozulur.
-   * .env.local: NEXT_PUBLIC_DEV_SIMPLE_ROUTES=1 — uretimde kullanmayin.
+   * Yerel: / ve /hizmetler doğrudan; isteğe bağlı NEXT_PUBLIC_DEV_SIMPLE_ROUTES=1.
+   * Üretim: artık `/` → `/tr` zorunlu yönlendirmesi yok (aynı kilitlenme riski + çerez yeterli).
    */
   if (
     process.env.NODE_ENV === 'development' ||
@@ -57,10 +62,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const locale = getLocaleFromCookie(req) || DEFAULT_LOCALE;
-  const url = req.nextUrl.clone();
-  url.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
-  return NextResponse.redirect(url);
+  return NextResponse.next();
 }
 
 export const config = {
