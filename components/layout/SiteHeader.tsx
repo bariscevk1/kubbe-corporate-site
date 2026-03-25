@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
@@ -121,6 +121,7 @@ export function SiteHeader({
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const mobileDrawerScrollRef = useRef<HTMLDivElement | null>(null);
 
   const telHref = telHrefTr(phone);
   const waHref = waHrefTr(phone);
@@ -135,21 +136,6 @@ export function SiteHeader({
     { href: '/sevkiyatlar', label: t('nav.shipments') || 'Sevkiyatlar' },
     { href: '/iletisim', label: t('nav.contact') || 'Iletisim' },
   ] as const;
-  const mobileServiceLinks = [
-    { href: '/hizmetler', label: t('services.all') || 'Tum hizmetler' },
-    { href: '/hizmetler/kubbe-kaplama', label: t('services.kubbe') || 'Camii kubbe kaplama' },
-    { href: '/hizmetler/aluminyum-satis', label: t('services.aluminyumSatis') || 'Aluminyum satisi' },
-    {
-      href: '/hizmetler/aluminyum-kubbe-kaplama',
-      label: t('services.aluminyumKubbe') || 'Aluminyum kubbe kaplama',
-    },
-    { href: '/hizmetler/bakir-levha-satis', label: t('services.bakir') || 'Bakir levha ve kubbe' },
-    { href: '/hizmetler/kursun-levha-satis', label: t('services.kursun') || 'Kursun levha satisi' },
-    { href: '/hizmetler/nakkas-susleme', label: t('services.nakkas') || 'Camii nakkas ve susleme' },
-    { href: '/hizmetler/alemler', label: t('services.alemler') || 'Camii alemleri' },
-    { href: '/hizmetler/oluk', label: t('services.oluk') || 'Oluk satisi ve montaji' },
-  ] as const;
-
   const toHref = useCallback(
     (internalHref: string) => {
       if (!internalHref.startsWith('/')) return internalHref;
@@ -189,6 +175,9 @@ export function SiteHeader({
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => {
+        mobileDrawerScrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+      });
     } else {
       document.body.style.overflow = '';
     }
@@ -405,7 +394,7 @@ export function SiteHeader({
                 </button>
               </div>
               <div className="flex min-h-0 flex-1 flex-col">
-                <div className="flex-1 overflow-y-auto overscroll-contain py-5">
+                <div ref={mobileDrawerScrollRef} className="flex-1 overflow-y-auto overscroll-contain py-5">
                   <nav aria-label="Mobil ana menü" className="flex flex-col gap-2">
                     {mobileMenuLinks.map((item) => (
                       <Link
@@ -420,26 +409,6 @@ export function SiteHeader({
                       </Link>
                     ))}
                   </nav>
-
-                  <div className="mt-5">
-                    <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-                      {t('nav.service_categories')}
-                    </p>
-                    <div className="flex flex-col gap-2">
-                      {mobileServiceLinks.map((item) => (
-                        <Link
-                          key={item.href}
-                          prefetch
-                          href={toHref(item.href)}
-                          className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-4 py-3 text-[15px] font-medium text-slate-100 transition hover:bg-white/[0.06]"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          <span>{item.label}</span>
-                          <ArrowRight className="h-4 w-4 shrink-0 text-white/60" />
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
 
                   <div className="mt-5">
                     <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
