@@ -103,7 +103,7 @@ function HeroDividerLogo({
   const { reduce } = useHeroMotion();
   return (
     <motion.div
-      className="pointer-events-none absolute left-1/2 top-1/2 z-[28] block -translate-x-1/2 -translate-y-1/2"
+      className="pointer-events-none absolute left-1/2 top-1/2 z-[28] hidden -translate-x-1/2 -translate-y-1/2 md:block"
       initial={false}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, delay: 0.2, ease: easeLux }}
@@ -220,6 +220,8 @@ function HeroContentDock({
     kicker2: string;
     ctaQuote: string;
     ctaWhatsapp: string;
+    colServices: string;
+    colProjects: string;
   };
 }) {
   const wa = waHrefTr(phone);
@@ -233,18 +235,18 @@ function HeroContentDock({
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-6 max-md:gap-4 sm:gap-4 sm:py-6 md:px-6 md:py-7">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 font-display text-[9px] font-semibold uppercase tracking-[0.16em] text-[#e8d5a3]/95 sm:text-[10px] sm:tracking-[0.18em]">
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-[#e8d5a3]/95 sm:text-[10px] sm:tracking-[0.18em]">
             {labels.kicker1}
           </span>
-          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[9px] text-slate-300 sm:text-[10px]">
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[10px] text-slate-300 sm:text-[10px]">
             {labels.kicker2}
           </span>
         </div>
 
-        <h1 className="font-display text-[1.35rem] font-bold leading-[1.2] tracking-tight text-white sm:text-2xl md:text-3xl">
+        <h1 className="font-display text-[1.55rem] font-bold leading-[1.18] tracking-tight text-white sm:text-2xl md:text-3xl">
           {leftTitle}
         </h1>
-        <p className="max-w-4xl text-[0.9375rem] leading-relaxed text-slate-300 sm:text-sm md:text-base">
+        <p className="max-w-4xl text-[0.98rem] leading-relaxed text-slate-300 sm:text-sm md:text-base">
           {leftSubtitle} · {rightSubtitle}
         </p>
 
@@ -283,6 +285,22 @@ function HeroContentDock({
             {rightTitle}
           </span>
         </div>
+        <div className="grid grid-cols-2 gap-2 md:hidden">
+          <Link
+            prefetch
+            href={toHref('/hizmetler')}
+            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[#c5a059]/40 bg-[#c5a059]/10 px-4 py-2.5 text-center font-display text-[12px] font-semibold uppercase tracking-[0.12em] text-[#e8d5a3]"
+          >
+            {labels.colServices}
+          </Link>
+          <Link
+            prefetch
+            href={toHref('/projeler')}
+            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-white/12 bg-white/[0.04] px-4 py-2.5 text-center font-display text-[12px] font-semibold uppercase tracking-[0.12em] text-white"
+          >
+            {labels.colProjects}
+          </Link>
+        </div>
       </div>
     </motion.div>
   );
@@ -307,7 +325,7 @@ function HeroColumn({
 
   return (
     <motion.div
-      className="group relative min-h-[min(42vh,360px)] overflow-hidden bg-lead-900 sm:min-h-[min(46vh,400px)] md:min-h-[calc(100vh-4.5rem)]"
+      className="group relative min-h-[36vh] overflow-hidden bg-lead-900 sm:min-h-[42vh] md:min-h-[calc(100vh-4.5rem)]"
       initial={false}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.95, ease: easeLux, delay: side === 'left' ? 0.05 : 0.12 }}
@@ -346,11 +364,11 @@ function HeroColumn({
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
 
       {bottomCta ? (
-        <div className="pointer-events-auto absolute inset-x-0 bottom-[6.25rem] z-[20] flex justify-center px-3 sm:bottom-[5.75rem] md:bottom-[6.5rem]">
+        <div className="pointer-events-auto absolute inset-x-0 bottom-5 z-[20] flex justify-center px-3 sm:bottom-6 md:bottom-[6.5rem]">
           <Link
             prefetch
             href={bottomCta.href}
-            className="min-h-[44px] rounded-full border border-[#c5a059]/75 bg-black/40 px-5 py-2.5 text-center font-display text-[9px] font-semibold uppercase leading-tight tracking-[0.14em] text-[#e8d5a3] shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-sm transition active:scale-[0.98] hover:border-[#e8d5a3]/95 hover:bg-black/50 sm:text-[10px] sm:tracking-[0.18em] md:text-[11px] md:tracking-[0.22em]"
+            className="min-h-[44px] rounded-full border border-[#c5a059]/75 bg-black/45 px-5 py-2.5 text-center font-display text-[11px] font-semibold uppercase leading-tight tracking-[0.14em] text-[#e8d5a3] shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-sm transition active:scale-[0.98] hover:border-[#e8d5a3]/95 hover:bg-black/50 sm:text-[11px] sm:tracking-[0.18em] md:text-[11px] md:tracking-[0.22em]"
           >
             {bottomCta.label}
           </Link>
@@ -474,14 +492,16 @@ export function HeroSplitSection({
                 bottomCta={leftCta}
               />
             </ColumnParallax>
-            <ColumnParallax>
-              <HeroColumn
-                imageSrc={rightImageSrc}
-                imageAlt={t('home.hero.imageRightAlt')}
-                side="right"
-                bottomCta={rightCta}
-              />
-            </ColumnParallax>
+            <div className="hidden md:block">
+              <ColumnParallax>
+                <HeroColumn
+                  imageSrc={rightImageSrc}
+                  imageAlt={t('home.hero.imageRightAlt')}
+                  side="right"
+                  bottomCta={rightCta}
+                />
+              </ColumnParallax>
+            </div>
           </div>
           <HeroDividerLogo
             logoUrl={resolvedLogo}
@@ -509,6 +529,8 @@ export function HeroSplitSection({
             kicker2: t('home.hero.kickerBadge2'),
             ctaQuote: t('home.hero.ctaQuote'),
             ctaWhatsapp: t('home.hero.ctaWhatsapp'),
+            colServices: t('home.hero.colCtaServices'),
+            colProjects: t('home.hero.colCtaProjects'),
           }}
         />
       </div>

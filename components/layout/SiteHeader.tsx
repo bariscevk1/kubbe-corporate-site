@@ -197,10 +197,11 @@ export function SiteHeader({
     };
   }, [mobileOpen]);
 
-  const barBg = scrolled
-    ? 'border-b border-white/10 bg-[linear-gradient(180deg,rgba(6,14,20,0.72),rgba(6,14,20,0.5))] shadow-[0_10px_30px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl'
-    : 'border-b border-transparent bg-transparent shadow-none backdrop-blur-0';
-  const headerPlacement = isHome && !scrolled ? 'fixed inset-x-0 top-0' : 'sticky top-0';
+  const barBg =
+    scrolled || !isHome
+      ? 'border-b border-white/10 bg-[linear-gradient(180deg,rgba(6,14,20,0.72),rgba(6,14,20,0.5))] shadow-[0_10px_30px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl'
+      : 'border-b border-white/10 bg-[linear-gradient(180deg,rgba(6,14,20,0.72),rgba(6,14,20,0.5))] shadow-[0_10px_30px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl md:border-transparent md:bg-transparent md:shadow-none md:backdrop-blur-0';
+  const headerPlacement = 'sticky top-0';
 
   return (
     <header
@@ -347,20 +348,29 @@ export function SiteHeader({
         </button>
       </div>
 
-      {/* Mobil tam ekran menü */}
+      {/* Mobil sidebar menü */}
       <AnimatePresence>
         {mobileOpen && (
           <>
             <motion.div
+              className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileOpen(false)}
+              aria-hidden
+            />
+            <motion.aside
               id="mobile-nav-sheet"
               role="dialog"
               aria-modal="true"
               aria-label="Mobil navigasyon"
-              initial={{ opacity: 0, y: -18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
+              initial={{ opacity: 0, x: 28 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 28 }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-0 z-[101] flex flex-col bg-[#4A4E52] px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] shadow-2xl md:hidden"
+              className="fixed inset-y-0 right-0 z-[101] flex w-[min(88vw,380px)] flex-col border-l border-white/10 bg-[#4A4E52] px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] shadow-2xl md:hidden"
             >
               <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <Link
@@ -394,95 +404,85 @@ export function SiteHeader({
                   {t('ui.close')}
                 </button>
               </div>
-              <div className="relative z-[2] flex min-h-0 flex-1 flex-col">
-                <div className="flex-1 overflow-y-auto overscroll-contain py-6">
-                  <div className="mx-auto flex w-full max-w-md flex-col gap-4">
-                    <nav
-                      aria-label="Mobil ana menü"
-                      className="rounded-[28px] border border-white/10 bg-[#3f4347] p-3 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.65)]"
-                    >
-                      <div className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-                        Sayfalar
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        {mobileMenuLinks.map((item) => (
-                          <Link
-                            key={item.href}
-                            prefetch
-                            href={toHref(item.href)}
-                            className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-4 font-display text-[1.125rem] font-semibold tracking-tight text-white transition hover:bg-white/[0.08]"
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            <span>{item.label}</span>
-                            <ArrowRight className="h-5 w-5 shrink-0 text-white/70" />
-                          </Link>
-                        ))}
-                      </div>
-                    </nav>
+              <div className="flex min-h-0 flex-1 flex-col">
+                <div className="flex-1 overflow-y-auto overscroll-contain py-5">
+                  <nav aria-label="Mobil ana menü" className="flex flex-col gap-2">
+                    {mobileMenuLinks.map((item) => (
+                      <Link
+                        key={item.href}
+                        prefetch
+                        href={toHref(item.href)}
+                        className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.05] px-4 py-4 font-display text-[1.05rem] font-semibold tracking-tight text-white transition hover:bg-white/[0.08]"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <span>{item.label}</span>
+                        <ArrowRight className="h-5 w-5 shrink-0 text-white/70" />
+                      </Link>
+                    ))}
+                  </nav>
 
-                    <div className="rounded-[28px] border border-white/10 bg-[#3f4347] p-3 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.65)]">
-                      <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-                        {t('nav.service_categories')}
-                      </p>
-                      <div className="flex flex-col gap-2">
-                        {mobileServiceLinks.map((item) => (
-                          <Link
-                            key={item.href}
-                            prefetch
-                            href={toHref(item.href)}
-                            className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-4 py-3 text-[15px] font-medium text-slate-100 transition hover:bg-white/[0.06]"
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            <span>{item.label}</span>
-                            <ArrowRight className="h-4 w-4 shrink-0 text-white/60" />
-                          </Link>
-                        ))}
-                      </div>
+                  <div className="mt-5">
+                    <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+                      {t('nav.service_categories')}
+                    </p>
+                    <div className="flex flex-col gap-2">
+                      {mobileServiceLinks.map((item) => (
+                        <Link
+                          key={item.href}
+                          prefetch
+                          href={toHref(item.href)}
+                          className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-4 py-3 text-[15px] font-medium text-slate-100 transition hover:bg-white/[0.06]"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          <span>{item.label}</span>
+                          <ArrowRight className="h-4 w-4 shrink-0 text-white/60" />
+                        </Link>
+                      ))}
                     </div>
+                  </div>
 
-                    <div className="rounded-[28px] border border-white/10 bg-[#3f4347] p-3 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.65)]">
-                      <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-                        {t('ui.language')}
-                      </p>
-                      <div className="grid grid-cols-3 gap-2 px-1 pb-1">
-                        {SUPPORTED_LANGS.map((lng) => (
-                          <button
-                            key={lng}
-                            type="button"
-                            onClick={() => setLang(lng)}
-                            className={`rounded-xl border px-2 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] transition ${
-                              lng === currentLang
-                                ? 'border-[#c5a059]/55 bg-[#c5a059]/12 text-[#e8d5a3]'
-                                : 'border-white/15 bg-white/[0.02] text-slate-100 hover:border-white/30'
-                            }`}
-                          >
-                            {t(`lang.${lng}`)}
-                          </button>
-                        ))}
-                      </div>
+                  <div className="mt-5">
+                    <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+                      {t('ui.language')}
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {SUPPORTED_LANGS.map((lng) => (
+                        <button
+                          key={lng}
+                          type="button"
+                          onClick={() => setLang(lng)}
+                          className={`rounded-xl border px-2 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] transition ${
+                            lng === currentLang
+                              ? 'border-[#c5a059]/55 bg-[#c5a059]/12 text-[#e8d5a3]'
+                              : 'border-white/15 bg-white/[0.02] text-slate-100 hover:border-white/30'
+                          }`}
+                        >
+                          {t(`lang.${lng}`)}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                <div className="mx-auto grid w-full max-w-md shrink-0 grid-cols-2 gap-3 border-t border-white/10 pt-4">
+                <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-4">
                   <a
                     href={waHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex min-h-[54px] items-center justify-center rounded-2xl bg-[#0f7a3f] px-4 text-center font-display text-sm font-bold text-white shadow-[0_16px_32px_-18px_rgba(15,122,63,0.8)]"
+                    className="flex min-h-[52px] items-center justify-center rounded-2xl bg-[#0f7a3f] px-4 text-center font-display text-sm font-bold text-white shadow-[0_16px_32px_-18px_rgba(15,122,63,0.8)]"
                   >
                     {t('mobileBar.whatsappLine')}
                   </a>
                   <a
                     href={telHref}
-                    className="flex min-h-[54px] items-center justify-center rounded-2xl border border-white/18 bg-[#f3f4f6] px-4 text-center font-display text-sm font-bold text-[#1f2937] shadow-[0_16px_32px_-18px_rgba(0,0,0,0.4)]"
+                    className="flex min-h-[52px] items-center justify-center rounded-2xl border border-white/18 bg-[#f3f4f6] px-4 text-center font-display text-sm font-bold text-[#1f2937] shadow-[0_16px_32px_-18px_rgba(0,0,0,0.4)]"
                   >
                     {t('mobileBar.call')}
                   </a>
                 </div>
                 <p className="pt-3 text-center text-xs text-slate-300/80">{phonePretty}</p>
               </div>
-            </motion.div>
+            </motion.aside>
           </>
         )}
       </AnimatePresence>

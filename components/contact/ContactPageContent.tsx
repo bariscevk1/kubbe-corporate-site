@@ -133,13 +133,13 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               ulaşabilirsiniz.
             </p>
 
-            <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+            <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <a
                 href={waPrefilled}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick('iletisim_hero')}
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-emerald-200 transition hover:bg-emerald-500/22 sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-emerald-200 transition hover:bg-emerald-500/22 sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>🟢</Icon>
                 WhatsApp
@@ -148,7 +148,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('iletisim_hero')}
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-white/18 bg-white/[0.04] px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08] sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-white/18 bg-white/[0.04] px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>☎</Icon>
                 Hızlı arama
@@ -160,7 +160,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20 sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20 sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>📍</Icon>
                 Harita
@@ -170,7 +170,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 href={reviewsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[0.04] px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition hover:border-white/35 hover:bg-white/[0.08] sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[0.04] px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition hover:border-white/35 hover:bg-white/[0.08] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>★</Icon>
                 Yorumlar
@@ -184,9 +184,6 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               </span>
               <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
                 Keşif · teklif · montaj · sevkiyat
-              </span>
-              <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
-                Dönüşüm takibi: arama/WhatsApp event
               </span>
             </div>
           </motion.div>
