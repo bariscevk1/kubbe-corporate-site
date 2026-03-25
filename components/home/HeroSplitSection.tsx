@@ -10,9 +10,11 @@ import {
   useTransform,
 } from 'framer-motion';
 import { useRef, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { HERO_LEFT_IMAGE, HERO_RIGHT_IMAGE } from '@/lib/brand-assets';
 import { trackHeroTeklifClick, trackHeroWhatsAppClick } from '@/lib/analytics/gtag-events';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 
 /** Premium easing — yumuşak duruş */
 const easeLux = [0.22, 1, 0.36, 1] as const;
@@ -156,23 +158,33 @@ function HeroDividerLogo({
   );
 }
 
-function HeroCornerSignature({ phone }: { phone: string }) {
+function HeroCornerSignature({
+  phone,
+  line1,
+  line2,
+  callLabel,
+}: {
+  phone: string;
+  line1: string;
+  line2: string;
+  callLabel: string;
+}) {
   const { reduce } = useHeroMotion();
   const phonePretty = formatPhoneDisplay(phone);
   const telHref = telHrefTr(phone);
   return (
     <motion.aside
-      className="absolute left-4 right-4 top-[min(28vh,200px)] z-[24] max-w-none sm:top-[min(30vh,240px)] md:bottom-8 md:left-8 md:right-auto md:top-auto md:max-w-[min(90vw,560px)]"
+      className="absolute left-4 right-4 top-[min(28vh,200px)] z-[24] hidden max-w-none sm:top-[min(30vh,240px)] lg:bottom-8 lg:left-8 lg:right-auto lg:top-auto lg:block lg:max-w-[min(90vw,560px)]"
       initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: 0.18, ease: easeLux }}
       aria-label="Hero imza metni"
     >
-      <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-[#e8d5a3] drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)] sm:text-base md:text-xl md:tracking-[0.2em]">
-        Turgut Usta
+      <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-[#e8d5a3] drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)] sm:text-base lg:text-xl lg:tracking-[0.2em]">
+        {line1}
       </p>
-      <p className="mt-1.5 max-w-[40ch] text-sm leading-relaxed text-slate-100 drop-shadow-[0_2px_14px_rgba(0,0,0,0.8)] sm:mt-2 sm:text-base md:mt-2 md:max-w-[38ch] md:text-lg md:leading-[1.4]">
-        Kubbe kaplama, alem ve oluk uygulamalarinda kurumsal disiplin ve uzun omurlu iscilik.
+      <p className="mt-1.5 max-w-[40ch] text-sm leading-relaxed text-slate-100 drop-shadow-[0_2px_14px_rgba(0,0,0,0.8)] sm:mt-2 sm:text-base lg:mt-2 lg:max-w-[38ch] lg:text-lg lg:leading-[1.4]">
+        {line2}
       </p>
       <motion.a
         href={telHref}
@@ -181,7 +193,7 @@ function HeroCornerSignature({ phone }: { phone: string }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.32, ease: easeLux }}
       >
-        <span className="uppercase tracking-[0.14em] text-[11px] text-slate-300">Hemen Arayin</span>
+        <span className="uppercase tracking-[0.14em] text-[11px] text-slate-300">{callLabel}</span>
         <span className="text-base tracking-wide text-brand-muted">{phonePretty}</span>
       </motion.a>
     </motion.aside>
@@ -194,12 +206,21 @@ function HeroContentDock({
   rightTitle,
   rightSubtitle,
   phone,
+  toHref,
+  labels,
 }: {
   leftTitle: string;
   leftSubtitle: string;
   rightTitle: string;
   rightSubtitle: string;
   phone: string;
+  toHref: (internal: string) => string;
+  labels: {
+    kicker1: string;
+    kicker2: string;
+    ctaQuote: string;
+    ctaWhatsapp: string;
+  };
 }) {
   const wa = waHrefTr(phone);
   const { reduce } = useHeroMotion();
@@ -210,13 +231,13 @@ function HeroContentDock({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: 0.2, ease: easeLux }}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-5 sm:gap-4 sm:py-6 md:px-6 md:py-7">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-6 max-md:gap-4 sm:gap-4 sm:py-6 md:px-6 md:py-7">
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 font-display text-[9px] font-semibold uppercase tracking-[0.16em] text-[#e8d5a3]/95 sm:text-[10px] sm:tracking-[0.18em]">
-            Kurumsal Proje Standardı
+            {labels.kicker1}
           </span>
           <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[9px] text-slate-300 sm:text-[10px]">
-            Türkiye geneli uygulama
+            {labels.kicker2}
           </span>
         </div>
 
@@ -229,7 +250,8 @@ function HeroContentDock({
 
         <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           <Link
-            href="/iletisim"
+            prefetch
+            href={toHref('/iletisim')}
             onClick={() => trackHeroTeklifClick()}
             className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-brand px-6 py-3.5 text-center text-[15px] font-semibold text-white shadow-lg shadow-black/35 ring-1 ring-white/15 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)] sm:text-sm"
           >
@@ -239,7 +261,7 @@ function HeroContentDock({
               whileTap={{ scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 420, damping: 24 }}
             >
-              Hemen Teklif Al
+              {labels.ctaQuote}
               <motion.span aria-hidden animate={{ x: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>
                 →
               </motion.span>
@@ -255,7 +277,7 @@ function HeroContentDock({
             whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 380, damping: 24 }}
           >
-            WhatsApp&apos;tan Yaz
+            {labels.ctaWhatsapp}
           </motion.a>
           <span className="hidden font-display text-xs font-semibold uppercase tracking-[0.14em] text-slate-400 md:inline">
             {rightTitle}
@@ -281,7 +303,7 @@ function HeroColumn({
   side,
   bottomCta,
 }: ColumnProps) {
-  const { reduce, imgScale, imgScaleEnd } = useHeroMotion();
+  const { imgScaleEnd } = useHeroMotion();
 
   return (
     <motion.div
@@ -326,6 +348,7 @@ function HeroColumn({
       {bottomCta ? (
         <div className="pointer-events-auto absolute inset-x-0 bottom-[6.25rem] z-[20] flex justify-center px-3 sm:bottom-[5.75rem] md:bottom-[6.5rem]">
           <Link
+            prefetch
             href={bottomCta.href}
             className="min-h-[44px] rounded-full border border-[#c5a059]/75 bg-black/40 px-5 py-2.5 text-center font-display text-[9px] font-semibold uppercase leading-tight tracking-[0.14em] text-[#e8d5a3] shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-sm transition active:scale-[0.98] hover:border-[#e8d5a3]/95 hover:bg-black/50 sm:text-[10px] sm:tracking-[0.18em] md:text-[11px] md:tracking-[0.22em]"
           >
@@ -388,17 +411,16 @@ function ColumnParallax({ children }: { children: ReactNode }) {
 
 export type HeroSplitSectionProps = {
   phone: string;
-  leftTitle: string;
-  leftSubtitle: string;
-  rightTitle: string;
-  rightSubtitle: string;
+  leftTitle?: string;
+  leftSubtitle?: string;
+  rightTitle?: string;
+  rightSubtitle?: string;
   leftImageSrc?: string;
   rightImageSrc?: string;
   logoUrl?: string | null;
   logoAlt?: string | null;
   brandWordPrimary?: string;
   brandWordAccent?: string;
-  /** Görsel sütunun altındaki altın çerçeveli kısayol (ör. Hizmetlerimiz / Projeler) */
   leftColumnCta?: { href: string; label: string };
   rightColumnCta?: { href: string; label: string };
 };
@@ -418,12 +440,26 @@ export function HeroSplitSection({
   leftColumnCta,
   rightColumnCta,
 }: HeroSplitSectionProps) {
+  const { t } = useTranslation('common');
+  const toHref = useLocalizedPath();
+
+  const lt = leftTitle ?? t('home.hero.leftTitle');
+  const lst = leftSubtitle ?? t('home.hero.leftSubtitle');
+  const rt = rightTitle ?? t('home.hero.rightTitle');
+  const rst = rightSubtitle ?? t('home.hero.rightSubtitle');
   const resolvedLogo = logoUrl ?? null;
-  const resolvedAlt = logoAlt?.trim() || `${brandWordPrimary} ${brandWordAccent}`;
+  const resolvedAlt = logoAlt?.trim() || t('home.hero.logoAlt');
+  const leftCta = leftColumnCta
+    ? { href: toHref(leftColumnCta.href), label: leftColumnCta.label }
+    : { href: toHref('/hizmetler'), label: t('home.hero.colCtaServices') };
+  const rightCta = rightColumnCta
+    ? { href: toHref(rightColumnCta.href), label: rightColumnCta.label }
+    : { href: toHref('/projeler'), label: t('home.hero.colCtaProjects') };
+
   return (
     <section
       className="relative w-full overflow-hidden hero-tech-overlay"
-      aria-label="Anasayfa tanıtım"
+      aria-label={t('home.hero.ariaSection')}
       onContextMenu={(e) => e.preventDefault()}
     >
       <div className="relative mx-auto min-h-0 max-w-[1920px]">
@@ -432,18 +468,18 @@ export function HeroSplitSection({
             <ColumnParallax>
               <HeroColumn
                 imageSrc={leftImageSrc}
-                imageAlt="Bakır kubbe ve cami alemleri — referans proje görseli"
+                imageAlt={t('home.hero.imageLeftAlt')}
                 priority
                 side="left"
-                bottomCta={leftColumnCta}
+                bottomCta={leftCta}
               />
             </ColumnParallax>
             <ColumnParallax>
               <HeroColumn
                 imageSrc={rightImageSrc}
-                imageAlt="Alüminyum kubbe külliye — referans proje görseli"
+                imageAlt={t('home.hero.imageRightAlt')}
                 side="right"
-                bottomCta={rightColumnCta}
+                bottomCta={rightCta}
               />
             </ColumnParallax>
           </div>
@@ -453,15 +489,27 @@ export function HeroSplitSection({
             brandWordPrimary={brandWordPrimary}
             brandWordAccent={brandWordAccent}
           />
-          <HeroCornerSignature phone={phone} />
+          <HeroCornerSignature
+            phone={phone}
+            line1={t('home.hero.signatureLine1')}
+            line2={t('home.hero.signatureLine2')}
+            callLabel={t('home.hero.callCta')}
+          />
           <HeroCenterBeam />
         </div>
         <HeroContentDock
-          leftTitle={leftTitle}
-          leftSubtitle={leftSubtitle}
-          rightTitle={rightTitle}
-          rightSubtitle={rightSubtitle}
+          leftTitle={lt}
+          leftSubtitle={lst}
+          rightTitle={rt}
+          rightSubtitle={rst}
           phone={phone}
+          toHref={toHref}
+          labels={{
+            kicker1: t('home.hero.kickerBadge1'),
+            kicker2: t('home.hero.kickerBadge2'),
+            ctaQuote: t('home.hero.ctaQuote'),
+            ctaWhatsapp: t('home.hero.ctaWhatsapp'),
+          }}
         />
       </div>
     </section>

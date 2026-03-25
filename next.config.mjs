@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /**
+   * `next dev` ve `next build` ayni anda calistiginda chunk/cached output karismasin.
+   * Bu sayede dev sunucu, production build tarafindan uretilen `.next` ciktilariyla bozulmaz.
+   */
+  distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
   /** Sanity vb. yavas API: varsayilan 60s yetmez; Hostinger/Vercel derlemesinde SIGTERM onlenir */
   staticPageGenerationTimeout: 300,
   async redirects() {

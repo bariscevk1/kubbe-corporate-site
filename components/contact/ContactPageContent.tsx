@@ -1,9 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
+import { ValuesSection } from '@/components/home/ValuesSection';
 
 type Props = {
   phone: string;
@@ -93,22 +95,32 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
   return (
     <main className="bg-[var(--brand-bg-body)]">
       <section className="relative overflow-hidden border-b border-white/10">
+        <Image
+          src="/iletisim/iletisim-hero.png"
+          alt="İletişim sayfası hero görseli"
+          fill
+          priority
+          fetchPriority="high"
+          className="object-cover object-center"
+          sizes="100vw"
+        />
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.55]"
+          className="pointer-events-none absolute inset-0 opacity-[0.72]"
           style={{
             background:
               'radial-gradient(1200px 520px at 15% 0%, rgba(197,160,89,0.18), transparent 55%), radial-gradient(900px 460px at 90% 10%, rgba(0,75,35,0.22), transparent 58%)',
           }}
           aria-hidden
         />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-black/72 to-[#0b1014]/92" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px]" />
 
-        <div className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
+        <div className="relative mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: easeOut }}
-            className="max-w-3xl"
+            className="max-w-3xl rounded-2xl border border-white/12 bg-black/36 p-4 shadow-[0_12px_38px_rgba(0,0,0,0.48)] backdrop-blur-[3px] md:p-7"
           >
             <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-brand-muted">
               İletişim ve teklif
@@ -121,13 +133,13 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               ulaşabilirsiniz.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
               <a
                 href={waPrefilled}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick('iletisim_hero')}
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/15 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200 transition hover:bg-emerald-500/22"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-emerald-200 transition hover:bg-emerald-500/22 sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>🟢</Icon>
                 WhatsApp
@@ -136,17 +148,19 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('iletisim_hero')}
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/18 bg-white/[0.04] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08]"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-white/18 bg-white/[0.04] px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08] sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>☎</Icon>
                 Hızlı arama
-                <span aria-hidden>{phonePretty}</span>
+                <span aria-hidden className="hidden md:inline">
+                  {phonePretty}
+                </span>
               </a>
               <a
                 href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20 sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>📍</Icon>
                 Harita
@@ -156,7 +170,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 href={reviewsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-white/35 hover:bg-white/[0.08]"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[0.04] px-4 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition hover:border-white/35 hover:bg-white/[0.08] sm:rounded-full sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>★</Icon>
                 Yorumlar
@@ -342,6 +356,8 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
           </div>
         </motion.aside>
       </section>
+
+      <ValuesSection />
 
       <section className="mx-auto max-w-6xl px-4 pb-14 md:px-6">
         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0a0d10]/70 p-6 md:p-8">

@@ -29,10 +29,10 @@ export function CmsScriptManager({ headHtml, bodyEndHtml, adresGezginiHtml }: Pr
   return (
     <>
       {head ? (
-        <Script id="cms-script-head" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: head }} />
+        <Script id="cms-script-head" strategy="lazyOnload" dangerouslySetInnerHTML={{ __html: head }} />
       ) : null}
       {adres ? (
-        <Script id="cms-adres-gezgini" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: adres }} />
+        <Script id="cms-adres-gezgini" strategy="lazyOnload" dangerouslySetInnerHTML={{ __html: adres }} />
       ) : null}
       {bodyEnd ? (
         <Script id="cms-script-body-end" strategy="lazyOnload" dangerouslySetInnerHTML={{ __html: bodyEnd }} />

@@ -4,21 +4,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
+import { StatsSection } from '@/components/home/StatsSection';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
 
-type Section = {
-  id: string;
-  title: string;
-  paragraphs: string[];
-};
+const SECTION_IDS = ['tarihce', 'yaklasim', 'vizyon'] as const;
 
 type Props = {
   company: string;
   brandLine: string;
-  sections: Section[];
-  quote: string;
-  cta: string;
 };
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -40,74 +36,6 @@ type TestimonialItem = {
   person: string;
   city: string;
 };
-
-const ABOUT_STATS: readonly StatItem[] = [
-  { value: 500, suffix: '+', label: 'Tamamlanan proje' },
-  { value: 30, suffix: '+ yıl', label: 'Saha deneyimi' },
-  { value: 81, label: 'İlde sevkiyat ve uygulama' },
-  { value: 4, label: 'Uzman ekip organizasyonu' },
-] as const;
-
-const ABOUT_TIMELINE: readonly TimelineItem[] = [
-  {
-    year: '1987',
-    title: 'Kuruluş ve Ustalık Temeli',
-    detail: 'Firma temelleri atıldı; kubbe kaplama ve saha ustalığı odaklı ilk ekip yapılanması kuruldu.',
-  },
-  {
-    year: '2000+',
-    title: 'Türkiye Geneli Sevkiyat Ağı',
-    detail: 'Malzeme tedariği ve uygulama koordinasyonu genişletilerek farklı illerde düzenli sevkiyat başladı.',
-  },
-  {
-    year: '2010+',
-    title: 'Yüksek Ölçekli Projeler',
-    detail: 'Camii kubbe, minare ve restorasyon projelerinde çoklu ekip yönetimi ile büyük hacimli işler tamamlandı.',
-  },
-  {
-    year: 'Bugün',
-    title: 'Sürdürülebilir Kalite ve Hız',
-    detail: 'Proje, sevkiyat ve montaj süreçleri tek merkezden yönetilerek güvenilir, hızlı ve şeffaf hizmet sürdürülüyor.',
-  },
-] as const;
-
-const ABOUT_TESTIMONIALS: readonly TestimonialItem[] = [
-  {
-    text: 'Sahada söz verdikleri tarihte teslim yaptılar. Ekip koordinasyonu gerçekten profesyoneldi.',
-    person: 'Cami Yaptırma Derneği',
-    city: 'Kahramanmaraş',
-  },
-  {
-    text: 'Hem malzeme kalitesi hem uygulama disiplini beklentimizin üstündeydi. Süreç baştan sona şeffaftı.',
-    person: 'Restorasyon Uygulama Ekibi',
-    city: 'İstanbul',
-  },
-  {
-    text: 'Sevkiyat planı ve montaj hızı sayesinde işlerimiz aksamadı. İletişimleri hızlı ve çözüm odaklı.',
-    person: 'Şantiye Sorumluluğu',
-    city: 'Bursa',
-  },
-  {
-    text: 'Uygulama öncesi keşif ve teknik planlama aşamasında tüm detayları netleştirdiler, süreç çok rahat ilerledi.',
-    person: 'Cami Yönetim Kurulu',
-    city: 'Konya',
-  },
-  {
-    text: 'Kurşun levha tedariği ve sahadaki koordinasyon beklentimizin üstünde çıktı. Zamanında ve temiz teslim aldık.',
-    person: 'Restorasyon Proje Ekibi',
-    city: 'Edirne',
-  },
-  {
-    text: 'Uzaktan yürüttüğümüz projede bile iletişim kopmadı. Fotoğraf ve saha geri bildirimleri düzenli paylaşıldı.',
-    person: 'Yapı Denetim Temsilcisi',
-    city: 'Gaziantep',
-  },
-  {
-    text: 'Hem estetik görünüm hem işçilik kalitesi açısından çok memnun kaldık. Tavsiye edeceğimiz bir ekip.',
-    person: 'Dernek Başkanı',
-    city: 'Amasya',
-  },
-] as const;
 
 const CONTACT_PHONE = '05323236627';
 
@@ -147,22 +75,58 @@ function CounterValue({ value, suffix = '' }: { value: number; suffix?: string }
   );
 }
 
-export function HakkimizdaMotionContent({ company, brandLine, sections, quote, cta }: Props) {
+export function HakkimizdaMotionContent({ company, brandLine }: Props) {
+  const { t } = useTranslation('common');
+  const toHref = useLocalizedPath();
   const reduced = useReducedMotion();
-  const timeline = useMemo(() => ABOUT_TIMELINE, []);
   const telHref = telHrefTr(CONTACT_PHONE);
   const waHref = waHrefTr(CONTACT_PHONE);
   const phoneLabel = formatPhoneDisplay(CONTACT_PHONE);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
+  const sections = useMemo(
+    () =>
+      SECTION_IDS.map((id) => ({
+        id,
+        title: t(`about.sections.${id}.title`),
+        paragraphs: t(`about.sections.${id}.paragraphs`, { returnObjects: true }) as string[],
+      })),
+    [t],
+  );
+
+  const motionStats = useMemo(
+    () => t('about.motion.stats', { returnObjects: true }) as StatItem[],
+    [t],
+  );
+  const timeline = useMemo(
+    () => t('about.motion.timeline', { returnObjects: true }) as TimelineItem[],
+    [t],
+  );
+  const testimonials = useMemo(
+    () => t('about.motion.testimonials', { returnObjects: true }) as TestimonialItem[],
+    [t],
+  );
+  const heroPills = useMemo(
+    () => t('about.motion.heroPills', { returnObjects: true }) as string[],
+    [t],
+  );
+  const trustLines = useMemo(
+    () => t('about.motion.trustLines', { returnObjects: true }) as string[],
+    [t],
+  );
+  const processSteps = useMemo(
+    () => t('about.motion.processSteps', { returnObjects: true }) as { n: string; t: string }[],
+    [t],
+  );
+
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || testimonials.length === 0) return;
     const timer = window.setInterval(() => {
-      setActiveTestimonial((i) => (i + 1) % ABOUT_TESTIMONIALS.length);
+      setActiveTestimonial((i) => (i + 1) % testimonials.length);
     }, 4300);
     return () => window.clearInterval(timer);
-  }, [reduced]);
+  }, [reduced, testimonials.length]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -220,7 +184,7 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
         >
           <Image
             src="/about/hakkimizda-hero.png"
-            alt="Hakkımızda hero görseli"
+            alt={t('about.motion.heroAlt')}
             fill
             priority
             className="object-cover object-center"
@@ -265,22 +229,22 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
             {...item}
             className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#b7d8c8] drop-shadow-[0_1px_6px_rgba(0,0,0,0.75)]"
           >
-            Kurumsal
+            {t('about.motion.heroKicker')}
           </motion.p>
           <motion.h1
             {...item}
             className="mt-3 font-display text-3xl font-bold tracking-tight text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.8)] md:text-4xl"
           >
-            Hakkımızda
+            {t('about.motion.heroTitle')}
           </motion.h1>
           <motion.p {...item} className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-100 drop-shadow-[0_2px_14px_rgba(0,0,0,0.78)]">
-            <strong className="text-white">{company}</strong> — {brandLine} alanında,{' '}
-            <strong className="font-semibold text-slate-200">1987’den beri</strong> süren bir gelenek ve Türkiye
-            genelinde süregelen bir hizmet ağıyla yanınızdayız.
+            <strong className="text-white">{company}</strong> — {t('about.motion.heroLeadMid', { brandLine })}{' '}
+            <strong className="font-semibold text-slate-200">{t('about.motion.heroLeadSince')}</strong>{' '}
+            {t('about.motion.heroLeadEnd')}
           </motion.p>
 
           <motion.ul {...item} className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {ABOUT_STATS.map((x) => (
+            {motionStats.map((x) => (
               <li
                 key={x.label}
                 className="rounded-xl border border-white/15 bg-black/20 px-4 py-3 backdrop-blur-sm"
@@ -296,7 +260,7 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           </motion.div>
 
           <motion.ul {...item} className="mt-5 flex flex-wrap gap-2">
-            {['Kurumsal güven', 'Türkiye geneli sevkiyat', 'Uzman saha ekipleri'].map((pill) => (
+            {heroPills.map((pill) => (
               <li
                 key={pill}
                 className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-200"
@@ -308,6 +272,8 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           </motion.div>
         </motion.div>
       </div>
+
+      <StatsSection />
 
       <motion.article {...container} className="mx-auto max-w-5xl px-4 py-12 pb-28 md:px-6 md:py-16">
         {sections.map((section, index) => (
@@ -344,7 +310,9 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           {...item}
           className="mt-8 rounded-2xl border border-[#004B23]/40 bg-gradient-to-br from-[#004B23]/35 to-[#0d1416] p-6 md:p-8"
         >
-          <p className="font-display text-lg font-medium leading-relaxed text-slate-100 md:text-xl">“{quote}”</p>
+          <p className="font-display text-lg font-medium leading-relaxed text-slate-100 md:text-xl">
+            “{t('about.quote')}”
+          </p>
           <footer className="mt-4 text-sm text-slate-400">— {company}</footer>
         </motion.blockquote>
 
@@ -352,8 +320,10 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           {...item}
           className="mt-8 rounded-2xl border border-white/10 bg-gradient-to-br from-[#1f2528] to-[#111619] p-6 md:p-8"
         >
-          <h2 className="font-display text-lg font-semibold text-white md:text-xl">Türkiye’nin her yerine</h2>
-          <p className="mt-3 text-base leading-relaxed text-slate-200">{cta}</p>
+          <h2 className="font-display text-lg font-semibold text-white md:text-xl">
+            {t('about.motion.mapSectionTitle')}
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-slate-200">{t('about.ctaBand')}</p>
         </motion.section>
 
         <motion.section
@@ -362,7 +332,7 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           aria-labelledby="timeline-title"
         >
           <h2 id="timeline-title" className="font-display text-lg font-semibold text-white md:text-xl">
-            Kuruluştan bugüne önemli adımlar
+            {t('about.motion.timelineTitle')}
           </h2>
           <div className="relative mt-6">
             <span className="pointer-events-none absolute bottom-0 left-3 top-0 w-px bg-white/15 md:left-1/2 md:-translate-x-1/2" />
@@ -401,14 +371,10 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           aria-labelledby="about-trust-title"
         >
           <h2 id="about-trust-title" className="font-display text-lg font-semibold text-white md:text-xl">
-            Neden bizi tercih ediyorlar?
+            {t('about.motion.trustTitle')}
           </h2>
           <ul className="mt-4 grid gap-3 md:grid-cols-3">
-            {[
-              'Saha tecrübesi yüksek, çözüm odaklı uzman ekip',
-              'Sevkiyat, montaj ve iletişimde planlı süreç yönetimi',
-              'Uzun ömürlü malzeme ve işçilikte sürdürülebilir kalite',
-            ].map((line) => (
+            {trustLines.map((line) => (
               <li
                 key={line}
                 className="flex items-start gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 text-sm leading-relaxed text-slate-200"
@@ -428,15 +394,10 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           aria-labelledby="about-process-title"
         >
           <h2 id="about-process-title" className="font-display text-lg font-semibold text-white md:text-xl">
-            Çalışma sürecimiz
+            {t('about.motion.processTitle')}
           </h2>
           <ol className="mt-5 grid gap-3 md:grid-cols-4">
-            {[
-              { n: '01', t: 'Keşif ve ihtiyaç analizi' },
-              { n: '02', t: 'Teklif ve teknik planlama' },
-              { n: '03', t: 'Sevkiyat ve sahaya hazırlık' },
-              { n: '04', t: 'Uygulama ve teslim' },
-            ].map((step) => (
+            {processSteps.map((step) => (
               <li
                 key={step.n}
                 className="rounded-xl border border-white/10 bg-white/[0.03] p-3"
@@ -455,10 +416,10 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
         >
           <div className="flex items-center justify-between gap-3">
             <h2 id="about-testimonials-title" className="font-display text-lg font-semibold text-white md:text-xl">
-              Müşteri görüşleri
+              {t('about.motion.testimonialsTitle')}
             </h2>
             <div className="flex gap-1.5" aria-hidden>
-              {ABOUT_TESTIMONIALS.map((_, i) => (
+              {testimonials.map((_, i) => (
                 <span
                   key={i}
                   className={`h-1.5 w-5 rounded-full transition ${
@@ -476,10 +437,10 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
               transition={{ duration: 0.35 }}
             >
               <p className="text-sm leading-relaxed text-slate-200">
-                “{ABOUT_TESTIMONIALS[activeTestimonial].text}”
+                “{testimonials[activeTestimonial]?.text ?? ''}”
               </p>
               <footer className="mt-3 text-xs uppercase tracking-[0.14em] text-[#9fbeac]">
-                {ABOUT_TESTIMONIALS[activeTestimonial].person} · {ABOUT_TESTIMONIALS[activeTestimonial].city}
+                {testimonials[activeTestimonial]?.person ?? ''} · {testimonials[activeTestimonial]?.city ?? ''}
               </footer>
             </motion.blockquote>
           </div>
@@ -487,31 +448,31 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
 
         <motion.div {...item} className="mt-12 flex flex-wrap gap-4">
           <Link
-            href="/iletisim"
+            href={toHref('/iletisim')}
             className="about-cta-glow inline-flex items-center gap-2 rounded-xl bg-brand px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-brand-light"
           >
-            Bizi arayın — teklif alın
+            {t('about.motion.ctaCallQuote')}
             <span aria-hidden>→</span>
           </Link>
           <Link
-            href="/hizmetler"
+            href={toHref('/hizmetler')}
             className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/5"
           >
-            Hizmetlerimiz
+            {t('about.motion.ctaServices')}
             <span aria-hidden>↗</span>
           </Link>
           <Link
-            href="/sevkiyatlar"
+            href={toHref('/sevkiyatlar')}
             className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/5"
           >
-            Sevkiyatlar
+            {t('about.motion.ctaShipments')}
             <span aria-hidden>↗</span>
           </Link>
         </motion.div>
 
         <motion.p {...item} className="mt-10 text-center text-sm text-slate-500">
-          <Link href="/" className="text-brand-muted underline-offset-2 hover:underline">
-            Anasayfaya dön
+          <Link href={toHref('/')} className="text-brand-muted underline-offset-2 hover:underline">
+            {t('about.motion.backHome')}
           </Link>
         </motion.p>
       </motion.article>
@@ -528,7 +489,7 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
             <path d="M12.05 2a9.94 9.94 0 0 0-8.6 14.93L2 22l5.23-1.37A10 10 0 1 0 12.05 2Zm5.83 14.31c-.24.68-1.37 1.26-1.88 1.34-.48.08-1.08.11-1.75-.11-.4-.13-.92-.3-1.58-.58-2.8-1.21-4.62-4.16-4.76-4.36-.14-.2-1.14-1.52-1.14-2.89 0-1.37.72-2.04.98-2.32.26-.28.56-.35.75-.35.18 0 .37 0 .53.01.17.01.4-.06.63.49.24.58.81 2 .88 2.14.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.3.36-.42.48-.14.14-.29.29-.12.57.17.28.74 1.21 1.58 1.95 1.09.97 2.01 1.28 2.29 1.42.28.14.44.12.61-.07.17-.2.72-.84.91-1.13.19-.29.38-.24.64-.15.26.09 1.67.79 1.95.93.28.14.47.21.54.33.07.12.07.7-.17 1.38Z" />
           </svg>
-          Hemen Teklif Al
+          {t('about.motion.stickyWhatsapp')}
         </a>
         <a
           href={telHref}
@@ -536,40 +497,10 @@ export function HakkimizdaMotionContent({ company, brandLine, sections, quote, c
           className="mt-2 flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/10"
         >
           <span aria-hidden>📞</span>
-          Hızlı Arama ({phoneLabel})
+          {t('about.motion.stickyCallWithPhone', { phone: phoneLabel })}
         </a>
       </div>
 
-      {/* Mobile: alt bar sabit CTA */}
-      <motion.div
-        initial={reduced ? undefined : { opacity: 0, y: 26 }}
-        animate={reduced ? undefined : { opacity: 1, y: 0 }}
-        transition={reduced ? undefined : { duration: 0.55, ease: easeOut, delay: 0.18 }}
-        className="fixed inset-x-0 bottom-0 z-[70] border-t border-white/10 bg-[#0b1014]/95 p-3 backdrop-blur-md md:hidden"
-      >
-        <div className="mx-auto flex max-w-md gap-2">
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackWhatsAppClick('about_sticky_mobile')}
-            className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-3 text-xs font-semibold text-emerald-100"
-          >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
-              <path d="M12.05 2a9.94 9.94 0 0 0-8.6 14.93L2 22l5.23-1.37A10 10 0 1 0 12.05 2Zm5.83 14.31c-.24.68-1.37 1.26-1.88 1.34-.48.08-1.08.11-1.75-.11-.4-.13-.92-.3-1.58-.58-2.8-1.21-4.62-4.16-4.76-4.36-.14-.2-1.14-1.52-1.14-2.89 0-1.37.72-2.04.98-2.32.26-.28.56-.35.75-.35.18 0 .37 0 .53.01.17.01.4-.06.63.49.24.58.81 2 .88 2.14.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.16-.3.36-.42.48-.14.14-.29.29-.12.57.17.28.74 1.21 1.58 1.95 1.09.97 2.01 1.28 2.29 1.42.28.14.44.12.61-.07.17-.2.72-.84.91-1.13.19-.29.38-.24.64-.15.26.09 1.67.79 1.95.93.28.14.47.21.54.33.07.12.07.7-.17 1.38Z" />
-            </svg>
-            Hemen Teklif Al
-          </a>
-          <a
-            href={telHref}
-            onClick={() => trackPhoneClick('about_sticky_mobile')}
-            className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-3 text-xs font-semibold text-slate-100"
-          >
-            <span aria-hidden>📞</span>
-            Hızlı Arama
-          </a>
-        </div>
-      </motion.div>
     </>
   );
 }

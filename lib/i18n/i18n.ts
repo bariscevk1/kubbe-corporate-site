@@ -1,30 +1,35 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import trCommon from '@/locales/tr/common.json';
-import enCommon from '@/locales/en/common.json';
-import arCommon from '@/locales/ar/common.json';
+import trCommon from '@/messages/tr.json';
+import enCommon from '@/messages/en.json';
+import arCommon from '@/messages/ar.json';
 
-export const SUPPORTED_LANGS = ['tr', 'en', 'ar'] as const;
-export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
+import {
+  DEFAULT_LANG,
+  type SupportedLang,
+} from '@/lib/i18n/config';
 
-export const STORAGE_KEY = 'kubbe_lang';
-export const DEFAULT_LANG: SupportedLang = 'tr';
-
-export function isSupportedLang(v: string | null | undefined): v is SupportedLang {
-  return !!v && (SUPPORTED_LANGS as readonly string[]).includes(v);
-}
-
-export function langDir(lang: SupportedLang) {
-  return lang === 'ar' ? 'rtl' : 'ltr';
-}
+export {
+  SUPPORTED_LANGS,
+  type SupportedLang,
+  STORAGE_KEY,
+  DEFAULT_LANG,
+  isSupportedLang,
+  langDir,
+} from '@/lib/i18n/config';
 
 export const i18n = i18next.createInstance();
 
 const baseInit = {
   lng: DEFAULT_LANG,
-  fallbackLng: DEFAULT_LANG,
-  supportedLngs: [...SUPPORTED_LANGS],
+  /** EN/AR sparse keys fall back to Turkish so new tr.json keys never show raw key ids */
+  fallbackLng: {
+    default: [DEFAULT_LANG],
+    en: [DEFAULT_LANG],
+    ar: [DEFAULT_LANG],
+  },
+  supportedLngs: ['tr', 'en', 'ar'],
   ns: ['common'],
   defaultNS: 'common',
   resources: {
@@ -38,10 +43,6 @@ const baseInit = {
   returnEmptyString: false,
 } as const;
 
-/**
- * SSR + üretim: I18nProvider’ın useEffect’i çalışmadan SiteHeader useTranslation kullanıyor.
- * Modül yüklenirken init şart; aksi halde 500 / yanıt takılması görülebiliyor.
- */
 i18n.use(initReactI18next).init({ ...baseInit });
 
 export async function ensureI18nInit(lang?: SupportedLang) {
@@ -51,4 +52,3 @@ export async function ensureI18nInit(lang?: SupportedLang) {
   }
   return i18n;
 }
-

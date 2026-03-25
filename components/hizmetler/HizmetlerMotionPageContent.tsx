@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import type { HomeServiceTeaserItem } from '@/lib/content/home-services-teaser';
 
 type Props = {
@@ -50,16 +52,18 @@ function StatCounter({ value, suffix = '' }: { value: number; suffix?: string })
 
 export function HizmetlerMotionPageContent({ items }: Props) {
   const reduced = useReducedMotion();
+  const { t } = useTranslation('common');
+  const toHref = useLocalizedPath();
 
   return (
     <main className="bg-[var(--brand-bg-body)]">
       <section className="about-lead-texture relative overflow-hidden border-b border-white/10">
         <Image
-          src="/api/hizmetler-hero"
-          alt="Hizmetlerimiz hero görseli"
+          src="/hizmetler/hizmetler-hero.png"
+          alt={t('servicesPage.heroAlt')}
           fill
           priority
-          className="object-cover object-[62%_center] md:object-center"
+          className="object-cover object-center"
           sizes="100vw"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-black/74 to-[#0e1417]/96 md:from-black/35 md:via-black/70" />
@@ -73,28 +77,27 @@ export function HizmetlerMotionPageContent({ items }: Props) {
         >
           <div className="rounded-2xl border border-white/12 bg-black/36 p-4 shadow-[0_12px_36px_rgba(0,0,0,0.5)] backdrop-blur-[3px] md:p-7">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.26em] text-[#c5dfd3]">
-              Firmamızın yaptığı hizmetler
+              {t('servicesPage.kicker')}
             </p>
             <h1 className="mt-3 font-display text-[1.8rem] font-bold tracking-tight text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.78)] sm:text-3xl md:text-4xl">
-              Hizmetlerimiz
+              {t('servicesPage.title')}
             </h1>
             <p className="mt-4 max-w-3xl text-slate-100/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.75)] md:text-slate-200 md:drop-shadow-none">
-              Camii kubbe kaplamadan sevkiyat ve montaja kadar tüm uzmanlık alanlarımızı tek ekranda
-              bulabilirsiniz. Her başlık için detay sayfasına geçip proje bazlı bilgi alabilirsiniz.
+              {t('servicesPage.lead')}
             </p>
 
             <ul className="mt-6 grid gap-3 sm:grid-cols-3">
               <li className="rounded-xl border border-white/15 bg-black/30 p-4">
                 <StatCounter value={items.length} />
-                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#c0dccf]">Hizmet başlığı</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#c0dccf]">{t('servicesPage.stat1Label')}</p>
               </li>
               <li className="rounded-xl border border-white/15 bg-black/30 p-4">
-                <StatCounter value={30} suffix="+ yıl" />
-                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#c0dccf]">Saha tecrübesi</p>
+                <StatCounter value={30} suffix={t('servicesPage.stat2Suffix')} />
+                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#c0dccf]">{t('servicesPage.stat2Label')}</p>
               </li>
               <li className="rounded-xl border border-white/15 bg-black/30 p-4">
                 <StatCounter value={81} />
-                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#c0dccf]">İlde hizmet ağı</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#c0dccf]">{t('servicesPage.stat3Label')}</p>
               </li>
             </ul>
           </div>
@@ -118,6 +121,10 @@ export function HizmetlerMotionPageContent({ items }: Props) {
         >
           {items.map((item, index) => {
             const fromLeft = index % 2 === 0;
+            const gridBase = `home.services.grid.${item.id}` as const;
+            const title = t(`${gridBase}.title`);
+            const description = t(`${gridBase}.description`);
+            const imageAlt = t(`${gridBase}.imageAlt`);
             return (
               <motion.li
                 key={item.id}
@@ -138,7 +145,7 @@ export function HizmetlerMotionPageContent({ items }: Props) {
                     {item.imageSrc ? (
                       <Image
                         src={item.imageSrc}
-                        alt={item.imageAlt ?? item.title}
+                        alt={imageAlt}
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 42vw"
@@ -153,20 +160,20 @@ export function HizmetlerMotionPageContent({ items }: Props) {
                   <div className="md:col-span-7">
                     <div className="flex h-full flex-col justify-center p-6 md:p-8">
                       <p className="font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-muted">
-                        Alt başlık
+                        {t('servicesPage.cardKicker')}
                       </p>
                       <h2 className="mt-2 font-display text-2xl font-semibold text-white md:text-3xl">
-                        {item.title}
+                        {title}
                       </h2>
                       <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
-                        {item.description}
+                        {description}
                       </p>
                       <div className="mt-6">
                         <Link
-                          href={item.href}
+                          href={toHref(item.href)}
                           className="inline-flex items-center gap-2 rounded-lg border border-brand/35 bg-brand/10 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-brand hover:bg-brand/20"
                         >
-                          Hizmet detayına git
+                          {t('servicesPage.detailCta')}
                           <span aria-hidden>→</span>
                         </Link>
                       </div>

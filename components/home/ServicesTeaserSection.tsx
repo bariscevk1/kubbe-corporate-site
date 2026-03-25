@@ -2,13 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { RelativeImageWatermark } from '@/components/media/RelativeImageWatermark';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Playfair_Display } from 'next/font/google';
-import {
-  HOME_SERVICES_KICKER,
-  HOME_SERVICES_TEASER_ITEMS,
-  HOME_SERVICES_TITLE,
-} from '@/lib/content/home-services-teaser';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
+import { HOME_SERVICES_TEASER_ITEMS } from '@/lib/content/home-services-teaser';
 
 const playfair = Playfair_Display({
   subsets: ['latin', 'latin-ext'],
@@ -204,13 +203,16 @@ type Props = {
 
 export function ServicesTeaserSection({ phone }: Props) {
   const reduce = useReducedMotion();
-  const t = (s: number) => (reduce ? 0 : s);
+  const anim = (s: number) => (reduce ? 0 : s);
+  const { t } = useTranslation('common');
+  const toHref = useLocalizedPath();
   const phoneDisplay = formatPhoneDisplay(phone);
+  const servicesPath = toHref('/hizmetler');
 
   const headerContainer = {
     hidden: {},
     show: {
-      transition: { staggerChildren: t(0.12), delayChildren: t(0.05) },
+      transition: { staggerChildren: anim(0.12), delayChildren: anim(0.05) },
     },
   };
 
@@ -219,14 +221,14 @@ export function ServicesTeaserSection({ phone }: Props) {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: t(0.65), ease },
+      transition: { duration: anim(0.65), ease },
     },
   };
 
   const gridContainer = {
     hidden: {},
     show: {
-      transition: { staggerChildren: t(0.08), delayChildren: t(0.2) },
+      transition: { staggerChildren: anim(0.08), delayChildren: anim(0.2) },
     },
   };
 
@@ -235,7 +237,7 @@ export function ServicesTeaserSection({ phone }: Props) {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: t(0.52), ease },
+      transition: { duration: anim(0.52), ease },
     },
   };
 
@@ -253,7 +255,7 @@ export function ServicesTeaserSection({ phone }: Props) {
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-24">
+      <div className="relative mx-auto max-w-6xl px-4 py-20 max-md:px-5 max-md:py-24 md:px-6 md:py-24">
         <motion.div
           className="mx-auto max-w-3xl text-center"
           variants={headerContainer}
@@ -266,32 +268,33 @@ export function ServicesTeaserSection({ phone }: Props) {
             className="font-display text-[11px] font-semibold uppercase tracking-[0.38em] md:text-xs"
             style={{ color: gold }}
           >
-            {HOME_SERVICES_KICKER}
+            {t('home.services.kicker')}
           </motion.p>
           <motion.h2
             id="services-teaser-heading"
             variants={headerItem}
             className={`${playfair.className} mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.65rem]`}
           >
-            {HOME_SERVICES_TITLE}
+            {t('home.services.title')}
           </motion.h2>
           <motion.p
             variants={headerItem}
             className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base"
           >
-            Aşağıda özetlediğimiz iş kalemleri üzerinde uzmanlaştık; detaylı anlatım ve görseller{' '}
-            <Link href="/hizmetler" className="text-[#c5a059]/90 underline-offset-4 hover:underline">
-              hizmetler
-            </Link>{' '}
-            sayfamızda yer alacaktır.
+            {t('home.services.leadBefore')}
+            <Link prefetch href={servicesPath} className="text-[#c5a059]/90 underline-offset-4 hover:underline">
+              {t('home.services.leadLink')}
+            </Link>
+            {t('home.services.leadAfter')}
           </motion.p>
           <motion.div variants={headerItem} className="mt-8 flex justify-center">
             <Link
-              href="/hizmetler"
+              prefetch
+              href={servicesPath}
               className="group inline-flex items-center gap-2 rounded-lg border px-6 py-2.5 font-display text-xs font-semibold uppercase tracking-[0.2em] transition hover:bg-[#c5a059]/10 md:text-sm"
               style={{ borderColor: goldMuted, color: gold }}
             >
-              Tümünü gör
+              {t('home.services.viewAll')}
               <span
                 className="transition-transform group-hover:translate-x-0.5"
                 aria-hidden
@@ -303,7 +306,7 @@ export function ServicesTeaserSection({ phone }: Props) {
         </motion.div>
 
         <motion.ul
-          className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
+          className="mt-14 grid grid-cols-1 gap-6 max-md:mt-16 max-md:gap-8 sm:grid-cols-2 xl:grid-cols-4"
           variants={gridContainer}
           initial="hidden"
           whileInView="show"
@@ -312,30 +315,35 @@ export function ServicesTeaserSection({ phone }: Props) {
           {HOME_SERVICES_TEASER_ITEMS.map((item, idx) => {
             const Icon = SERVICE_ICONS[idx] ?? IconDomeMosque;
             const hasImage = Boolean(item.imageSrc);
+            const gridBase = `home.services.grid.${item.id}` as const;
+            const title = t(`${gridBase}.title`);
+            const description = t(`${gridBase}.description`);
+            const imageAlt = t(`${gridBase}.imageAlt`);
             return (
               <motion.li key={item.id} variants={cardItem} className="group h-full">
                 <Link
-                  href={item.href}
-                  className="relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[#c5a059]/35 hover:shadow-[0_24px_48px_-28px_rgba(0,0,0,0.85),0_0_0_1px_rgba(197,160,89,0.12)] md:min-h-[300px]"
+                  prefetch
+                  href={toHref(item.href)}
+                  className="relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[#c5a059]/35 hover:shadow-[0_24px_48px_-28px_rgba(0,0,0,0.85),0_0_0_1px_rgba(197,160,89,0.12)] max-md:min-h-[296px] md:min-h-[300px]"
                 >
                   {hasImage && item.imageSrc ? (
-                    <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-lead-900">
+                    <RelativeImageWatermark className="relative aspect-[4/3] w-full shrink-0 bg-lead-900">
                       <Image
                         src={item.imageSrc}
-                        alt={item.imageAlt ?? item.title}
+                        alt={imageAlt}
                         fill
                         className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                         sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
                         quality={82}
                       />
                       <div
-                        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#111111]/85 via-transparent to-black/10"
+                        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-[#111111]/85 via-transparent to-black/10"
                         aria-hidden
                       />
-                    </div>
+                    </RelativeImageWatermark>
                   ) : null}
                   <div
-                    className={`flex flex-1 flex-col p-6 md:p-7 ${hasImage ? 'pt-5' : 'pt-7'}`}
+                    className={`flex flex-1 flex-col p-6 max-md:p-7 md:p-7 ${hasImage ? 'pt-5' : 'pt-7'}`}
                   >
                     {!hasImage ? (
                       <div
@@ -348,17 +356,17 @@ export function ServicesTeaserSection({ phone }: Props) {
                     <h3
                       className={`${playfair.className} text-center text-lg font-semibold leading-snug text-white md:text-xl`}
                     >
-                      {item.title}
+                      {title}
                     </h3>
                     <p className="mt-3 flex-1 text-center text-sm leading-relaxed text-slate-400">
-                      {item.description}
+                      {description}
                     </p>
                     <div className="mt-6 flex items-end justify-between gap-3 border-t border-white/[0.06] pt-5">
                       <span
                         className="inline-flex items-center gap-1 font-display text-[11px] font-semibold uppercase tracking-wider transition-colors group-hover:text-[#d4b87a]"
                         style={{ color: gold }}
                       >
-                        Detaylar
+                        {t('home.services.detailCta')}
                         <span aria-hidden>→</span>
                       </span>
                       <span className="shrink-0 text-right font-mono text-[10px] text-slate-500 md:text-[11px]">

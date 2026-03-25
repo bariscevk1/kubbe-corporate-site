@@ -32,9 +32,9 @@ export function GtagSlot({ googleAdsId, ga4MeasurementId }: Props) {
     <>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${loaderId}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="gtag-config" strategy="afterInteractive">
+      <Script id="gtag-config" strategy="lazyOnload">
         {initScript}
       </Script>
     </>

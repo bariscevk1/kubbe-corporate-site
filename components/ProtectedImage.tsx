@@ -1,32 +1,32 @@
 'use client';
 
 import Image, { type ImageProps } from 'next/image';
-import { useCallback, type DragEvent, type MouseEvent } from 'react';
-
-const PHONE = '0532 323 66 27';
+import { useCallback, useId, type DragEvent, type MouseEvent } from 'react';
+import { WatermarkSvgOverlay } from '@/components/media/WatermarkSvgOverlay';
 
 export type ProtectedImageProps = Omit<ImageProps, 'onContextMenu' | 'draggable'> & {
   /** Sarmalayıcıya ek Tailwind / sınıf */
   wrapClassName?: string;
-  /** Filigran düzeni: çapraz (-45°) tekrar veya ızgara */
+  /** Geriye dönük uyumluluk — tek SVG pattern kullanılır */
   watermarkPattern?: 'diagonal' | 'grid';
 };
 
 /**
- * next/image: sunucu tarafında WebP/AVIF (next.config `images.formats`), varsayılan lazy-load.
- * Filigran: tam alan, hafif beyaz telefon metni.
- * Sağ tık / sürükleme: üstte şeffaf katman + draggable=false.
+ * next/image: sunucu tarafında WebP/AVIF, varsayılan lazy-load.
+ * Filigran: tek SVG pattern (düşük DOM / paint maliyeti).
  */
 export function ProtectedImage({
   src,
   alt,
   className = '',
   wrapClassName = '',
-  watermarkPattern = 'diagonal',
+  watermarkPattern: _watermarkPattern = 'diagonal',
   loading,
   onDragStart,
   ...rest
 }: ProtectedImageProps) {
+  const patternId = `wm-prot-${useId().replace(/:/g, '')}`;
+
   const blockContextMenu = useCallback((e: MouseEvent) => {
     e.preventDefault();
   }, []);
@@ -36,10 +36,9 @@ export function ProtectedImage({
       e.preventDefault();
       onDragStart?.(e);
     },
-    [onDragStart]
+    [onDragStart],
   );
 
-  /** Yakalama fazında: alt öğedeki img’e gitmeden sağ tık / sürükleme kesilir */
   const blockContextMenuCapture = useCallback((e: MouseEvent) => {
     e.preventDefault();
   }, []);
@@ -47,10 +46,6 @@ export function ProtectedImage({
   const blockDragCapture = useCallback((e: DragEvent) => {
     e.preventDefault();
   }, []);
-
-  const diagonalCells = 28;
-  const gridCols = 3;
-  const gridRows = 4;
 
   return (
     <div
@@ -70,42 +65,8 @@ export function ProtectedImage({
         onDragStart={blockDrag}
       />
 
-      {/* Filigran: tam alan, çok hafif beyaz metinler */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[1] select-none overflow-hidden"
-        aria-hidden
-      >
-        {watermarkPattern === 'diagonal' ? (
-          <div
-            className="absolute inset-0 flex flex-wrap content-center items-center justify-center gap-x-10 gap-y-8 p-4 text-white opacity-20 sm:gap-x-14 sm:gap-y-10"
-            style={{ transform: 'rotate(-45deg)', width: '140%', height: '140%', left: '-20%', top: '-20%' }}
-          >
-            {Array.from({ length: diagonalCells }).map((_, i) => (
-              <span
-                key={i}
-                className="whitespace-nowrap font-semibold tracking-wider"
-                style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.95rem)' }}
-              >
-                {PHONE}
-              </span>
-            ))}
-          </div>
-        ) : (
-          <div className="grid h-full w-full grid-cols-3 gap-2 p-2 text-white opacity-20 sm:grid-cols-4 sm:gap-3">
-            {Array.from({ length: gridCols * gridRows }).map((_, i) => (
-              <span
-                key={i}
-                className="flex select-none items-center justify-center whitespace-nowrap text-center font-semibold tracking-wide"
-                style={{ fontSize: 'clamp(0.55rem, 1.5vw, 0.8rem)' }}
-              >
-                {PHONE}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+      <WatermarkSvgOverlay patternId={patternId} className="z-[1] overflow-hidden" />
 
-      {/* Şeffaf üst katman (tıklamayı engellemez; olaylar yukarıdaki capture ile kesilir) */}
       <div
         className="pointer-events-none absolute inset-0 z-[2] cursor-default bg-transparent"
         aria-hidden

@@ -17,10 +17,11 @@ export default async function SevkiyatlarPage() {
     <main className="bg-[var(--brand-bg-body)]">
       <section className="relative overflow-hidden border-b border-white/10">
         <Image
-          src="/hizmetler/aluminyum-satis.webp"
+          src="/sevkiyat/sevkiyat-hero.png"
           alt="Sevkiyatlar hero görseli"
           fill
           priority
+          fetchPriority="high"
           className="object-cover object-center"
           sizes="100vw"
         />

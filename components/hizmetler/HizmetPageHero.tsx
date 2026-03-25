@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { WatermarkFillClient } from '@/components/media/WatermarkFillClient';
 
 export type HizmetPageHeroProps = {
   /** `public/` altı — örn. `/hizmetler/ornek.webp` */
@@ -15,7 +16,7 @@ export type HizmetPageHeroProps = {
 
 function HeroCorners() {
   return (
-    <div className="pointer-events-none absolute inset-3 md:inset-5" aria-hidden>
+    <div className="pointer-events-none absolute inset-3 z-[5] md:inset-5" aria-hidden>
       <svg className="absolute left-0 top-0 h-10 w-10 text-brand/80 md:h-12 md:w-12" viewBox="0 0 40 40" fill="none">
         <path d="M2 12V2h10" stroke="currentColor" strokeWidth="1.2" />
       </svg>
@@ -70,6 +71,7 @@ export function HizmetPageHero({
           quality={quality}
           className="object-cover object-[60%_center] md:object-center"
           sizes="100vw"
+          fetchPriority={priority ? 'high' : 'low'}
         />
         {/* Okunabilirlik katmanları */}
         <div
@@ -85,9 +87,11 @@ export function HizmetPageHero({
           aria-hidden
         />
 
+        <WatermarkFillClient className="z-[4]" />
+
         <HeroCorners />
 
-        <div className="absolute bottom-0 left-0 right-0 px-4 pb-7 pt-24 md:px-10 md:pb-12 md:pt-32">
+        <div className="absolute bottom-0 left-0 right-0 z-[12] px-4 pb-7 pt-24 md:px-10 md:pb-12 md:pt-32">
           <div className="mx-auto max-w-6xl">
             <div className="max-w-3xl rounded-2xl border border-white/10 bg-black/28 p-4 shadow-[0_12px_34px_rgba(0,0,0,0.45)] backdrop-blur-[2px] md:border-transparent md:bg-transparent md:p-0 md:shadow-none md:backdrop-blur-0">
               <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#b7d8c8] md:text-brand-muted">

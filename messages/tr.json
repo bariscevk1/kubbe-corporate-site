@@ -1,0 +1,466 @@
+{
+  "lang": {
+    "tr": "TR",
+    "en": "EN",
+    "ar": "AR"
+  },
+  "nav": {
+    "home": "Anasayfa",
+    "about": "Hakkımızda",
+    "services": "Hizmetler",
+    "projects": "Projelerimiz",
+    "shipments": "Sevkiyatlar",
+    "contact": "İletişim",
+    "service_categories": "Hizmet kalemleri"
+  },
+  "services": {
+    "all": "Tüm hizmetler",
+    "kubbe": "Camii kubbe kaplama",
+    "aluminyumSatis": "Alüminyum satışı",
+    "aluminyumKubbe": "Alüminyum kubbe kaplama",
+    "bakir": "Bakır levha & kubbe",
+    "kursun": "Kurşun levha satışı",
+    "nakkas": "Camii nakkaş ve süsleme",
+    "alemler": "Camii alemleri",
+    "oluk": "Oluk satışı ve montajı"
+  },
+  "ui": {
+    "language": "Dil",
+    "close": "Kapat",
+    "menu": "Menü"
+  },
+  "mobileBar": {
+    "call": "Hemen Ara",
+    "whatsapp": "WhatsApp"
+  },
+  "footer": {
+    "link_about": "Hakkımızda",
+    "link_services": "Hizmetler",
+    "link_kubbe": "Kubbe kaplama",
+    "link_oluk": "Oluk",
+    "link_alemler": "Alemler",
+    "link_contact": "İletişim",
+    "mapLink": "Haritada bul",
+    "blurb": "Ankara merkez · <strong class=\"font-medium text-slate-400\">Türkiye geneli</strong> montaj ve sevkiyat · <strong class=\"font-medium text-slate-400\">7/24</strong> telefon & WhatsApp · Körfez ve Arap ülkeleri projeleri (EN/AR iletişim) · Tüm yaş gruplarına kurumsal hizmet",
+    "rights": "Tüm hakları Turgut Coşkun'a saklıdır."
+  },
+  "seo": {
+    "home": {
+      "title": "Anasayfa",
+      "description": "Türkiye genelinde camii kubbe kaplama, alüminyum ve bakır kubbe, oluk ve nakkaş işleri. Kurumsal ekip, sevkiyat ve montaj."
+    },
+    "about": {
+      "title": "Hakkımızda",
+      "description": "1987’den beri Turgut Çoşkun Kubbe Kaplama: Türkiye geneli cami ve kubbe işleri, uzman ustalar, proje odaklı hizmet."
+    },
+    "services": {
+      "title": "Hizmetler",
+      "description": "Camii kubbe kaplama, alüminyum satışı ve kubbe kaplama, bakır ve kurşun levha, nakkaş, camii alemleri ve oluk sistemleri."
+    },
+    "contact": {
+      "title": "İletişim",
+      "description": "Telefon, WhatsApp ve adres. Kubbe kaplama ve metal işleri için teklif ve bilgi talebi."
+    },
+    "projects": {
+      "title": "Projeler",
+      "description": "Tamamlanan ve süren referans projelerimiz."
+    },
+    "shipments": {
+      "title": "Sevkiyatlar",
+      "description": "Paketleme, yükleme ve Türkiye geneli sevkiyat süreçleri."
+    },
+    "thanks": {
+      "title": "Teşekkürler",
+      "description": "Mesajınız alındı."
+    }
+  },
+  "home": {
+    "hero": {
+      "leftTitle": "Türkiye genelinde camii kubbe kaplama ve metal çatı uzmanlığı",
+      "leftSubtitle": "Bakır ve alüminyum kubbe, alem, oluk ve nakkaş süsleme uygulamalarında sahada disiplinli ekip, şeffaf süreç ve uzun ömürlü işçilik sunuyoruz.",
+      "rightTitle": "Referanslarımızla sınırlarımızı genişletiyoruz",
+      "rightSubtitle": "Ankara merkezli operasyonumuzla ülke genelinde teslim ettiğimiz projelerde montaj, sevkiyat ve teknik danışmanlıkta aynı kurumsal standardı koruyoruz.",
+      "logoAlt": "Turgut Coşkun Kubbe Kaplama",
+      "kickerBadge1": "Kurumsal Proje Standardı",
+      "kickerBadge2": "Türkiye geneli uygulama",
+      "ctaQuote": "Hemen Teklif Al",
+      "ctaWhatsapp": "WhatsApp'tan Yaz",
+      "signatureLine1": "Turgut Usta",
+      "signatureLine2": "Kubbe kaplama, alem ve oluk uygulamalarında kurumsal disiplin ve uzun ömürlü işçilik.",
+      "callCta": "Hemen Arayın",
+      "colCtaServices": "Hizmetlerimiz",
+      "colCtaProjects": "Projelerimizi inceleyin",
+      "imageLeftAlt": "Bakır kubbe ve cami alemleri — referans proje görseli",
+      "imageRightAlt": "Alüminyum kubbe külliye — referans proje görseli",
+      "ariaSection": "Anasayfa tanıtım"
+    },
+    "services": {
+      "kicker": "Neler sunuyoruz",
+      "title": "Hizmetlerimiz",
+      "leadBefore": "Aşağıda özetlediğimiz iş kalemleri üzerinde uzmanlaştık; detaylı anlatım ve görseller ",
+      "leadLink": "hizmetler",
+      "leadAfter": " sayfamızda yer alacaktır.",
+      "viewAll": "Tümünü gör",
+      "detailCta": "Detaylar",
+      "grid": {
+        "camii-kubbe": {
+          "title": "Camii kubbe kaplama",
+          "description": "Bakır, kurşun ve alüminyum ile kubbe kaplama ve restorasyonu.",
+          "imageAlt": "Kubbe üzerinde alem ile camii kubbe kaplama — mimari fotoğraf"
+        },
+        "aluminyum-satis": {
+          "title": "Alüminyum satışı",
+          "description": "Yüksek kalite levha ve profil; proje ölçülerinize uygun tedarik.",
+          "imageAlt": "Alüminyum renk ve malzeme numuneleri yelpazesi"
+        },
+        "aluminyum-kubbe": {
+          "title": "Alüminyum kubbe kaplama",
+          "description": "Hafif ve dayanıklı alüminyum ile kubbe ve çatı uygulamaları.",
+          "imageAlt": "Alüminyum kaplı camii kubbesi ve altın alem — havadan çekim"
+        },
+        "bakir-kubbe": {
+          "title": "Bakır kubbe kaplama",
+          "description": "Geleneksel bakır işçiliği ile uzun ömürlü kubbe yüzeyleri.",
+          "imageAlt": "Parlak bakır kaplı kubbe ve beyaz kaide — bakır kubbe kaplama"
+        },
+        "kursun-levha": {
+          "title": "Kurşun levha satışı",
+          "description": "Su yalıtımı ve örtü uygulamaları için kurşun levha temini.",
+          "imageAlt": "Metal levha ve ürün satışı — endüstriyel tedarik"
+        },
+        "nakkas": {
+          "title": "Camii nakkaş ve süsleme",
+          "description": "İç ve dış mekânda geleneksel süsleme ve nakkaş işleri.",
+          "imageAlt": "Camii içi nakkaş süsleme — geometrik motifler"
+        },
+        "alemler": {
+          "title": "Camii alemleri",
+          "description": "Tasarım, üretim ve montaj ile alemi çözümleri.",
+          "imageAlt": "Altın renkli camii alemleri — hilal tepeli süslemeler"
+        },
+        "oluk": {
+          "title": "Oluk satışı ve montajı",
+          "description": "Yağmur suyu yönetimi için oluk sistemleri.",
+          "imageAlt": "Metal oluk montajı ve cephe detayı"
+        }
+      }
+    },
+    "aboutTeaser": {
+      "kicker": "Biz kimiz?",
+      "heading": "Hakkımızda",
+      "p1": "{{company}} — 1987’den bu yana otuz yılı aşkın süredir Turgut Çoşkun öncülüğünde, bünyemizde yetişen ustalarla birlikte cami ve kubbe işlerinde hizmet veriyoruz. Türkiye’nin dört bir yanında yürüttüğümüz projelerde; işimizi sadece bir teslimat değil, uzun yıllar sürecek bir güven ilişkisi olarak görüyoruz.",
+      "p2": "Her müşterimizi, yalnızca bir sipariş sahibi değil; yol arkadaşımız olarak kabul ediyoruz. Yaz–kış, yakın–uzak demeden; uzman kadromuz ve profesyonel ekipmanlarımızla işlerinizi en kısa sürede, en yüksek kaliteyle tamamlıyoruz.",
+      "badge": "Kubbe & geleneksel mimari",
+      "storyCta": "Kurumsal hikayemiz",
+      "storyCtaSr": "(Hakkımızda sayfasında tam metin)",
+      "contactCta": "İletişime geçin",
+      "imageAlt": "COŞKUN Mimarlık ve Mühendislik logosu; İnşaat Mühendisi Feramuz Coşkun ve Mimar Gülistan Coşkun Türe kurumsal portre görseli"
+    },
+    "stats": {
+      "heading": "Başarı rakamlarımız",
+      "items": {
+        "calismalar": {
+          "label": "Çalışmalar"
+        },
+        "yapim": {
+          "label": "Yapım aşamasındaki projeler"
+        },
+        "musteri": {
+          "label": "Memnun müşteriler"
+        },
+        "toplam": {
+          "label": "Toplam proje"
+        }
+      }
+    },
+    "values": {
+      "heading": "Değerlerimiz",
+      "subtitle": "Mükemmelliğin sütunları",
+      "items": {
+        "kalite": {
+          "title": "Kalite & uzmanlık",
+          "body": "Çizimden montaja her aşamada yüksek standart; malzeme ve işçilikte tek kalite anlayışı."
+        },
+        "deneyim": {
+          "title": "Yılların deneyimi",
+          "body": "1987'den beri nesillerden gelen zanaatkarlık ve zamana dayanan projeler."
+        },
+        "guven": {
+          "title": "Güven & garanti",
+          "body": "Yazılı garanti ve şeffaf süreç; müşteri memnuniyeti imzamızdır."
+        },
+        "teslimat": {
+          "title": "Zamanında teslimat",
+          "body": "Taahhüt edilen sürede eksiksiz teslim; planlı üretim ve profesyonel lojistik."
+        }
+      }
+    },
+    "map": {
+      "kicker": "Türkiye genelinde referans",
+      "titleAccent": "bizden izler",
+      "headingTitle": "{{count}} ilde gerçekleştirdiğimiz işler",
+      "subtitle": "Önce hizmet türünü seçin; haritadaki işaretlere veya sayılı kümelerine dokunun. Seçtiğiniz konumun özeti sağda görünür. İşaretler il merkezine yakındır; tam adres gösterilmez.",
+      "fullListHint": "tam liste ve görseller",
+      "filterLabel": "Hizmet türü",
+      "filterAll": "Tümü",
+      "panelTitle": "Türkiye haritası",
+      "panelSubtitle": "Yalnızca Türkiye — yakınlaştırma sağ üstte",
+      "locationCount": "{{count}} konum",
+      "loadingShort": "Harita yükleniyor…",
+      "badgeInteractive": "Etkileşimli",
+      "benefit1Title": "Geniş referans ağı",
+      "benefit1Desc": "Yurt içi montaj ve sevkiyat deneyimi",
+      "benefit2Title": "Tek dokunuşla özet",
+      "benefit2Desc": "Harita ve sağdaki kart eş zamanlı güncellenir",
+      "benefit3Title": "Tam liste",
+      "benefit3Desc": "Tüm projeler için Projeler sayfası",
+      "howToTitle": "Kısa kullanım",
+      "howTo1": "Üstteki seçeneklerden hizmet seçin.",
+      "howTo2": "Haritada bir nokta veya küme seçin; harita o bölgeye kayar.",
+      "howTo3": "Sağdaki kartta cami / proje adını ve ili görün.",
+      "selectedLabel": "Seçili referans",
+      "emptyFilter": "Bu filtrede kayıt yok.",
+      "listTab": "Projeler",
+      "mapTab": "Harita",
+      "mapHint": "Görünüm yalnızca Türkiye ile sınırlı; dünyayı kaydıramazsınız. Filtreyi değiştirince harita yeniden tüm ülkeye odaklanır.",
+      "loading": "Türkiye referans katmanı hazırlanıyor…",
+      "listHeading": "Türkiye geneli projeler",
+      "cardAria": "Türkiye referans görünümü",
+      "allProjects": "Tüm projeler",
+      "category": {
+        "kubbe": "Kubbe kaplama",
+        "nakkas": "Nakkaş süsleme",
+        "oluk": "Oluk satışı ve montajı",
+        "diger": "Diğer / sevkiyat"
+      },
+      "imageSoon": "Görsel yakında"
+    },
+    "keywords": {
+      "tagline": "Türkiye geneli · 7/24 iletişim · Körfez ve Arap ülkeleri için uluslararası proje",
+      "description": "Kubbe kaplama, cami alemleri, alüminyum ve bakır kaplama, kurşun levha ve kenet çatı işleri için Türkiye genelinde proje odaklı uygulama ve sevkiyat desteği sunuyoruz.",
+      "heading": "Kubbe kaplama ve metal uygulama hizmetlerimiz",
+      "detailCta": "Detayları incele",
+      "cardBadge": "Hizmet Kartı",
+      "cardsTitle": "Öne çıkan hizmet kartları",
+      "cardsNote": "Her kart, kullanıcı arama niyetine uygun hizmet başlığına yönlenir. Proje detayına göre teklif ve teknik bilgilendirme ayrıca paylaşılır.",
+      "cards": {
+        "kubbe": {
+          "title": "Kubbe Kaplama",
+          "body": "Cami kubbelerinde alüminyum, bakır ve kurşun bazlı kaplama çözümleri."
+        },
+        "kursun": {
+          "title": "Kurşun Satışı ve Kurşun Levha",
+          "body": "Kurşun levha tedariki ve kurşun kaplama ihtiyaçları için proje odaklı destek."
+        },
+        "kenet": {
+          "title": "Kenet Çatı",
+          "body": "Kenet çatı sistemleri için uygulama planı, malzeme yönlendirmesi ve keşif desteği."
+        },
+        "aluminyum": {
+          "title": "Alüminyum Sac ve Levha Satışı",
+          "body": "Alüminyum sac, levha ve tamamlayıcı metal ürünlerde tedarik ve uygulama koordinasyonu."
+        },
+        "usta": {
+          "title": "Cami Ustası ve Kubbe Ustası",
+          "body": "Saha tecrübesi yüksek ekiplerle cami kubbe ve metal uygulama süreçlerinin yönetimi."
+        },
+        "alemler": {
+          "title": "Cami Alemleri ve Minare İşleri",
+          "body": "Cami alemleri, minare üstü detayları ve tamamlayıcı üretimlerde estetik ve dayanıklılık."
+        }
+      },
+      "sections": {
+        "kubbe": {
+          "eyebrow": "Kubbe Kaplama",
+          "title": "Cami kubbe kaplama ve restorasyon uygulamaları",
+          "body": "Yeni imalat ve yenileme projelerinde cami kubbe kaplama süreçlerini malzeme seçimi, saha hazırlığı ve uygulama disipliniyle birlikte yürütüyoruz.",
+          "highlights": [
+            "Alüminyum, bakır ve kurşun bazlı kaplama seçenekleri",
+            "Restorasyon ve yenileme işlerine uygun proje planı",
+            "Türkiye geneli montaj ve sevkiyat koordinasyonu"
+          ]
+        },
+        "alem": {
+          "eyebrow": "Cami Alemleri",
+          "title": "Cami alemleri ve minare üstü tamamlayıcı işler",
+          "body": "Cami alemleri, minare detayları ve kubbe üstü tamamlayıcı üretimlerde estetik görünüm ile dayanıklılığı birlikte ele alıyoruz.",
+          "highlights": [
+            "Cami alemleri ve minare tepesi detay çözümleri",
+            "Mevcut yapıya uyumlu ölçü ve form çalışması",
+            "Uygulama öncesi netleştirilmiş teslim planı"
+          ]
+        },
+        "metal": {
+          "eyebrow": "Alüminyum ve Bakır Kaplama",
+          "title": "Alüminyum, bakır, kurşun ve kenet çatı çözümleri",
+          "body": "Alüminyum ve bakır kaplama ihtiyaçlarının yanında kurşun levha, kenet çatı ve metal kaplama başlıklarında da projeye uygun çözüm sunuyoruz.",
+          "highlights": [
+            "Alüminyum sac ve levha tedariki",
+            "Bakır kaplama ve kurşun levha uygulamaları",
+            "Kenet çatı sistemlerinde uygulama desteği"
+          ]
+        }
+      },
+      "closingTitle": "Uluslararası projeler",
+      "closingLead": "İngilizce ve Arapça iletişim seçenekleriyle Körfez ve bölge projelerinde koordinasyon.",
+      "closingCta": "İletişim formu ve WhatsApp"
+    }
+  },
+  "about": {
+    "sections": {
+      "tarihce": {
+        "title": "Kurumsal kimlik ve güven",
+        "paragraphs": [
+          "1987 yılından bu yana otuz yılı aşkın süredir Turgut Çoşkun öncülüğünde, bünyemizde yetişen ustalarla birlikte siz değerli müşterilerimize hizmet sunuyoruz. Turgut Usta Kubbe Kaplama olarak, geleneksel ustalığı çağdaş standartlarla birleştiriyor; her projede şeffaf iletişim ve sürdürülebilir kaliteyi ön planda tutuyoruz.",
+          "Uzun yıllardır Türkiye’nin hemen hemen her ilinde faaliyet gösterdik. Yaptığımız işlerde sektörün önde gelen isimlerinden biri olmamız, sizi farklı illerde yan yana görmeye ve tüm ihtiyaçlarınızı karşılamaya bugün de aynı kararlılıkla devam etmemizi sağlıyor."
+        ]
+      },
+      "yaklasim": {
+        "title": "İş anlayışımız: proje odaklı, insan odaklı",
+        "paragraphs": [
+          "Yaz kışı, yakın veya uzak mesafeyi gözetmeyerek; alanında uzman kadromuz ve profesyonel ekipmanlarımızla işlerinizi en hızlı sürede, en yüksek kalite standartlarında tamamlıyoruz.",
+          "Sizi yalnızca “müşteri” olarak değil, bir dost olarak görmekteyiz. Tüm işlerimize proje odaklı yaklaşımımızla sektörün ihtiyaç ve beklentilerini karşılayan dört ayrı uzman ekibimizle, dilediğiniz zaman size ulaşabilecek kapasitedeyiz."
+        ]
+      },
+      "vizyon": {
+        "title": "Vizyon ve yenilik",
+        "paragraphs": [
+          "Turgut Usta Kubbe Kaplama olarak çözüm üreten, hızlı ve yaratıcı vizyonumuzla; yeni eğilimleri ve modern cami tasarımlarını yakından takip ederek katma değer yaratacak ürünleri kullanıcılarımızla buluşturmayı ve yeni açılımlar yaratmayı sürdürüyoruz."
+        ]
+      }
+    },
+    "quote": "Bizim için her kubbe, sadece metal ve boya değil; o bölgede yaşayan insanların birlikte yaşadığı bir hatıradır.",
+    "ctaBand": "Edirne’den Kars’a, İskenderun’dan Hopa’ya — cami ve kubbe ihtiyaçlarınız için uygun fiyatlı çözümler için bizimle iletişime geçebilirsiniz.",
+    "motion": {
+      "heroAlt": "Hakkımızda hero görseli",
+      "heroKicker": "Kurumsal",
+      "heroTitle": "Hakkımızda",
+      "heroLeadMid": "{{brandLine}} alanında,",
+      "heroLeadSince": "1987’den beri",
+      "heroLeadEnd": "süren bir gelenek ve Türkiye genelinde süregelen bir hizmet ağıyla yanınızdayız.",
+      "heroPills": [
+        "Kurumsal güven",
+        "Türkiye geneli sevkiyat",
+        "Uzman saha ekipleri"
+      ],
+      "mapSectionTitle": "Türkiye’nin her yerine",
+      "timelineTitle": "Kuruluştan bugüne önemli adımlar",
+      "trustTitle": "Neden bizi tercih ediyorlar?",
+      "trustLines": [
+        "Saha tecrübesi yüksek, çözüm odaklı uzman ekip",
+        "Sevkiyat, montaj ve iletişimde planlı süreç yönetimi",
+        "Uzun ömürlü malzeme ve işçilikte sürdürülebilir kalite"
+      ],
+      "processTitle": "Çalışma sürecimiz",
+      "processSteps": [
+        { "n": "01", "t": "Keşif ve ihtiyaç analizi" },
+        { "n": "02", "t": "Teklif ve teknik planlama" },
+        { "n": "03", "t": "Sevkiyat ve sahaya hazırlık" },
+        { "n": "04", "t": "Uygulama ve teslim" }
+      ],
+      "testimonialsTitle": "Müşteri görüşleri",
+      "ctaCallQuote": "Bizi arayın — teklif alın",
+      "ctaServices": "Hizmetlerimiz",
+      "ctaShipments": "Sevkiyatlar",
+      "backHome": "Anasayfaya dön",
+      "stickyWhatsapp": "Hemen Teklif Al",
+      "stickyCall": "Hızlı Arama",
+      "stickyCallWithPhone": "Hızlı Arama ({{phone}})",
+      "stats": [
+        { "value": 500, "suffix": "+", "label": "Tamamlanan proje" },
+        { "value": 30, "suffix": "+ yıl", "label": "Saha deneyimi" },
+        { "value": 81, "label": "İlde sevkiyat ve uygulama" },
+        { "value": 4, "label": "Uzman ekip organizasyonu" }
+      ],
+      "timeline": [
+        {
+          "year": "1987",
+          "title": "Kuruluş ve Ustalık Temeli",
+          "detail": "Firma temelleri atıldı; kubbe kaplama ve saha ustalığı odaklı ilk ekip yapılanması kuruldu."
+        },
+        {
+          "year": "2000+",
+          "title": "Türkiye Geneli Sevkiyat Ağı",
+          "detail": "Malzeme tedariği ve uygulama koordinasyonu genişletilerek farklı illerde düzenli sevkiyat başladı."
+        },
+        {
+          "year": "2010+",
+          "title": "Yüksek Ölçekli Projeler",
+          "detail": "Camii kubbe, minare ve restorasyon projelerinde çoklu ekip yönetimi ile büyük hacimli işler tamamlandı."
+        },
+        {
+          "year": "Bugün",
+          "title": "Sürdürülebilir Kalite ve Hız",
+          "detail": "Proje, sevkiyat ve montaj süreçleri tek merkezden yönetilerek güvenilir, hızlı ve şeffaf hizmet sürdürülüyor."
+        }
+      ],
+      "testimonials": [
+        {
+          "text": "Sahada söz verdikleri tarihte teslim yaptılar. Ekip koordinasyonu gerçekten profesyoneldi.",
+          "person": "Cami Yaptırma Derneği",
+          "city": "Kahramanmaraş"
+        },
+        {
+          "text": "Hem malzeme kalitesi hem uygulama disiplini beklentimizin üstündeydi. Süreç baştan sona şeffaftı.",
+          "person": "Restorasyon Uygulama Ekibi",
+          "city": "İstanbul"
+        },
+        {
+          "text": "Sevkiyat planı ve montaj hızı sayesinde işlerimiz aksamadı. İletişimleri hızlı ve çözüm odaklı.",
+          "person": "Şantiye Sorumluluğu",
+          "city": "Bursa"
+        },
+        {
+          "text": "Uygulama öncesi keşif ve teknik planlama aşamasında tüm detayları netleştirdiler, süreç çok rahat ilerledi.",
+          "person": "Cami Yönetim Kurulu",
+          "city": "Konya"
+        },
+        {
+          "text": "Kurşun levha tedariği ve sahadaki koordinasyon beklentimizin üstünde çıktı. Zamanında ve temiz teslim aldık.",
+          "person": "Restorasyon Proje Ekibi",
+          "city": "Edirne"
+        },
+        {
+          "text": "Uzaktan yürüttüğümüz projede bile iletişim kopmadı. Fotoğraf ve saha geri bildirimleri düzenli paylaşıldı.",
+          "person": "Yapı Denetim Temsilcisi",
+          "city": "Gaziantep"
+        },
+        {
+          "text": "Hem estetik görünüm hem işçilik kalitesi açısından çok memnun kaldık. Tavsiye edeceğimiz bir ekip.",
+          "person": "Dernek Başkanı",
+          "city": "Amasya"
+        }
+      ]
+    }
+  },
+  "shipments": {
+    "title": "Sevkiyatlar",
+    "heroAlt": "Sevkiyatlar hero görseli",
+    "kicker": "Lojistik ve teslimat",
+    "lead": "Üretim sonrası paketleme, yükleme ve şehir içi / şehirler arası sevkiyat planlamasını proje takviminize uygun şekilde yönetiyoruz.",
+    "photoArchiveTitle": "Sevkiyat fotoğrafları",
+    "photoArchiveLead": "Tüm fotoğraflar web formatında sunulur ve telefon numarası filigranı ile korunur."
+  },
+  "contact": {
+    "mapOpen": "Haritayı aç"
+  },
+  "projects": {
+    "metaTitle": "Projeler"
+  },
+  "thanks": {
+    "title": "Teşekkür ederiz",
+    "lead": "Mesajınız bize ulaştı."
+  },
+  "servicesPage": {
+    "heroAlt": "Hizmetlerimiz hero görseli",
+    "kicker": "Firmamızın yaptığı hizmetler",
+    "title": "Hizmetlerimiz",
+    "lead": "Camii kubbe kaplamadan sevkiyat ve montaja kadar tüm uzmanlık alanlarımızı tek ekranda bulabilirsiniz. Her başlık için detay sayfasına geçip proje bazlı bilgi alabilirsiniz.",
+    "stat1Label": "Hizmet başlığı",
+    "stat2Label": "Saha tecrübesi",
+    "stat2Suffix": "+ yıl",
+    "stat3Label": "İlde hizmet ağı",
+    "cardKicker": "Alt başlık",
+    "detailCta": "Hizmet detayına git"
+  }
+}

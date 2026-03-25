@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { HOME_STATS_HEADING, HOME_STATS_ITEMS } from '@/lib/content/home-stats';
+import { useTranslation } from 'react-i18next';
+import { HOME_STATS_ITEMS } from '@/lib/content/home-stats';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -148,6 +149,7 @@ function IconHouse({ className }: { className?: string }) {
 const ICONS = [IconDocument, IconBuilding, IconPersonInfinity, IconHouse] as const;
 
 export function StatsSection() {
+  const { t } = useTranslation('common');
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, { once: true, margin: '-12% 0px -8% 0px' });
@@ -157,21 +159,21 @@ export function StatsSection() {
     if (inView) setActive(true);
   }, [inView]);
 
-  const t = (seconds: number) => (reduce ? 0 : seconds);
+  const anim = (seconds: number) => (reduce ? 0 : seconds);
 
   const headerVariants = {
     hidden: { opacity: 0, y: reduce ? 0 : 24 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: t(0.7), ease },
+      transition: { duration: anim(0.7), ease },
     },
   };
 
   const gridContainer = {
     hidden: {},
     show: {
-      transition: { staggerChildren: t(0.12), delayChildren: t(0.12) },
+      transition: { staggerChildren: anim(0.12), delayChildren: anim(0.12) },
     },
   };
 
@@ -180,7 +182,7 @@ export function StatsSection() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: t(0.55), ease },
+      transition: { duration: anim(0.55), ease },
     },
   };
 
@@ -199,7 +201,7 @@ export function StatsSection() {
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
+      <div className="relative mx-auto max-w-6xl px-4 py-20 max-md:px-5 max-md:py-24 md:px-6 md:py-28">
         <motion.div
           className="mx-auto max-w-2xl text-center"
           initial="hidden"
@@ -210,7 +212,7 @@ export function StatsSection() {
             id="stats-heading"
             className="font-display text-[11px] font-semibold uppercase tracking-[0.38em] text-[#c5a059] md:text-xs"
           >
-            {HOME_STATS_HEADING}
+            {t('home.stats.heading')}
           </h2>
           <div
             className="mx-auto mt-6 h-px w-20 opacity-80"
@@ -253,7 +255,7 @@ export function StatsSection() {
                   />
                 </p>
                 <p className="mt-3 max-w-[240px] font-display text-[10px] font-semibold uppercase leading-relaxed tracking-[0.18em] text-[#c5a059]/90 md:text-[11px] md:tracking-[0.2em]">
-                  {item.label}
+                  {t(`home.stats.items.${item.id}.label`)}
                 </p>
               </motion.li>
             );

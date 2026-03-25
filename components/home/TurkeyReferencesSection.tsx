@@ -6,43 +6,47 @@ import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Playfair_Display } from 'next/font/google';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import {
-  categoryLabelTr,
   countUniqueProvinces,
   filterReferenceProjects,
-  REFERENCE_KICKER,
-  REFERENCE_TITLE_REST,
   type ReferenceFilter,
   type TurkeyReferenceProject,
   TURKEY_REFERENCE_PROJECTS,
 } from '@/lib/content/turkey-reference-projects';
 
+function MapLoadingPlaceholder() {
+  const { t } = useTranslation('common');
+  return (
+    <div className="relative flex min-h-[min(420px,55vh)] w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-white/[0.08] bg-[#060606] sm:min-h-[440px]">
+      <div
+        className="map-loading-shimmer pointer-events-none absolute inset-0 opacity-40"
+        style={{
+          backgroundImage:
+            'linear-gradient(90deg, transparent 0%, rgba(197,160,89,0.14) 50%, transparent 100%)',
+          backgroundSize: '200% 100%',
+        }}
+      />
+      <div className="relative flex flex-col items-center gap-3 px-4 text-center">
+        <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[#c5a059]/30 bg-[#c5a059]/[0.07]">
+          <span className="absolute inset-0 animate-ping rounded-full bg-[#c5a059]/15 opacity-75 [animation-duration:2s]" />
+          <MapGlobeIcon className="relative h-5 w-5 text-[#c5a059]" />
+        </span>
+        <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c5a059]/90">
+          {t('home.map.loadingShort')}
+        </p>
+        <p className="max-w-xs text-xs text-slate-500">{t('home.map.loading')}</p>
+      </div>
+    </div>
+  );
+}
+
 const ReferenceMap = dynamic(
   () => import('./ReferenceMap').then((m) => m.ReferenceMap),
   {
     ssr: false,
-    loading: () => (
-      <div className="relative flex min-h-[320px] w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-white/[0.08] bg-[#060606]">
-        <div
-          className="map-loading-shimmer pointer-events-none absolute inset-0 opacity-40"
-          style={{
-            backgroundImage:
-              'linear-gradient(90deg, transparent 0%, rgba(197,160,89,0.14) 50%, transparent 100%)',
-            backgroundSize: '200% 100%',
-          }}
-        />
-        <div className="relative flex flex-col items-center gap-3 px-4 text-center">
-          <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[#c5a059]/30 bg-[#c5a059]/[0.07]">
-            <span className="absolute inset-0 animate-ping rounded-full bg-[#c5a059]/15 opacity-75 [animation-duration:2s]" />
-            <MapGlobeIcon className="relative h-5 w-5 text-[#c5a059]" />
-          </span>
-          <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c5a059]/90">
-            Harita yükleniyor
-          </p>
-          <p className="max-w-xs text-xs text-slate-500">Türkiye referans katmanı hazırlanıyor…</p>
-        </div>
-      </div>
-    ),
+    loading: MapLoadingPlaceholder,
   }
 );
 
@@ -55,12 +59,7 @@ const playfair = Playfair_Display({
 const ease = [0.22, 1, 0.36, 1] as const;
 const GOLD = '#c5a059';
 
-const FILTERS: { id: ReferenceFilter; label: string }[] = [
-  { id: 'all', label: 'Tümü' },
-  { id: 'kubbe', label: 'Kubbe kaplama' },
-  { id: 'nakkas', label: 'Nakkaş süsleme' },
-  { id: 'oluk', label: 'Oluk satışı ve montajı' },
-];
+const FILTER_IDS: ReferenceFilter[] = ['all', 'kubbe', 'nakkas', 'oluk'];
 
 function categoryColor(cat: TurkeyReferenceProject['category']): string {
   switch (cat) {
@@ -179,25 +178,13 @@ function MapFrameCorners() {
       <svg className="absolute left-3 top-3 h-10 w-10 sm:left-4 sm:top-4" viewBox="0 0 40 40" fill="none">
         <path d="M2 14V2h12" stroke={stroke} strokeWidth="1.25" strokeLinecap="round" />
       </svg>
-      <svg
-        className="absolute right-3 top-3 h-10 w-10 sm:right-4 sm:top-4"
-        viewBox="0 0 40 40"
-        fill="none"
-      >
+      <svg className="absolute right-3 top-3 h-10 w-10 sm:right-4 sm:top-4" viewBox="0 0 40 40" fill="none">
         <path d="M38 14V2H26" stroke={stroke} strokeWidth="1.25" strokeLinecap="round" />
       </svg>
-      <svg
-        className="absolute bottom-3 left-3 h-10 w-10 sm:bottom-4 sm:left-4"
-        viewBox="0 0 40 40"
-        fill="none"
-      >
+      <svg className="absolute bottom-3 left-3 h-10 w-10 sm:bottom-4 sm:left-4" viewBox="0 0 40 40" fill="none">
         <path d="M2 26v12h12" stroke={stroke} strokeWidth="1.25" strokeLinecap="round" />
       </svg>
-      <svg
-        className="absolute bottom-3 right-3 h-10 w-10 sm:bottom-4 sm:right-4"
-        viewBox="0 0 40 40"
-        fill="none"
-      >
+      <svg className="absolute bottom-3 right-3 h-10 w-10 sm:bottom-4 sm:right-4" viewBox="0 0 40 40" fill="none">
         <path d="M38 26v12H26" stroke={stroke} strokeWidth="1.25" strokeLinecap="round" />
       </svg>
     </div>
@@ -208,9 +195,30 @@ const springSnappy = { type: 'spring' as const, stiffness: 420, damping: 32 };
 const springSoft = { type: 'spring' as const, stiffness: 280, damping: 26 };
 
 export function TurkeyReferencesSection() {
+  const { t } = useTranslation('common');
+  const toHref = useLocalizedPath();
   const reduce = useReducedMotion();
   const [filter, setFilter] = useState<ReferenceFilter>('all');
   const provinceCount = countUniqueProvinces(TURKEY_REFERENCE_PROJECTS);
+
+  const filterItems = useMemo(
+    () =>
+      FILTER_IDS.map((id) => ({
+        id,
+        label: id === 'all' ? t('home.map.filterAll') : t(`home.map.category.${id}`),
+      })),
+    [t]
+  );
+
+  const trustItems = useMemo(
+    () =>
+      [
+        { titleKey: 'home.map.benefit1Title', descKey: 'home.map.benefit1Desc' },
+        { titleKey: 'home.map.benefit2Title', descKey: 'home.map.benefit2Desc' },
+        { titleKey: 'home.map.benefit3Title', descKey: 'home.map.benefit3Desc' },
+      ] as const,
+    []
+  );
 
   const filtered = useMemo(
     () => filterReferenceProjects(TURKEY_REFERENCE_PROJECTS, filter),
@@ -249,6 +257,8 @@ export function TurkeyReferencesSection() {
     },
   };
 
+  const projectsPath = toHref('/projeler');
+
   return (
     <section
       id="turkiye-referans"
@@ -276,9 +286,9 @@ export function TurkeyReferencesSection() {
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-3 py-14 sm:px-4 sm:py-16 md:px-6 md:py-28">
+      <div className="relative mx-auto max-w-6xl px-4 py-16 max-md:px-5 sm:px-5 sm:py-16 md:px-6 md:py-28">
         <motion.header
-          className="mx-auto max-w-4xl text-center"
+          className="mx-auto max-w-3xl text-center"
           variants={headerVariants}
           initial="hidden"
           whileInView="show"
@@ -289,165 +299,74 @@ export function TurkeyReferencesSection() {
             className="font-display text-[11px] font-semibold uppercase tracking-[0.38em] md:text-xs"
             style={{ color: GOLD }}
           >
-            {REFERENCE_KICKER}
+            {t('home.map.kicker')}
           </motion.p>
           <motion.h2
             variants={headerItem}
             id="turkey-ref-heading"
-            className={`${playfair.className} mt-4 text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-white sm:mt-5 sm:text-3xl md:text-4xl lg:text-[2.4rem]`}
+            className={`${playfair.className} mt-4 text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-white sm:mt-5 sm:text-3xl md:text-4xl lg:text-[2.35rem]`}
           >
-            <span className="text-white">81 ilin </span>
-            <motion.span
-              key={provinceCount}
-              className="inline-block text-[#c5a059]"
-              initial={reduce ? false : { opacity: 0.35, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={springSoft}
-            >
-              {provinceCount}
-            </motion.span>
-            <span className="text-white">&apos;inde </span>
-            <span className="text-white/95">{REFERENCE_TITLE_REST}</span>
+            {t('home.map.headingTitle', { count: provinceCount })}
           </motion.h2>
           <motion.p
             variants={headerItem}
-            className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-400 md:text-base"
+            className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-400 md:text-[0.95rem]"
           >
-            İşaretler il plakasına göre (merkez nokta). Tam adres değil; aynı ilden birkaç kayıt varsa haritada üst üste
-            düşebilir, küme halinde görünür. Uzun liste için{' '}
-            <Link href="/projeler" className="font-medium text-[#c5a059]/95 underline-offset-4 hover:underline">
-              Projeler
-            </Link>{' '}
-            sayfasına bakın.
+            {t('home.map.subtitle')}
+          </motion.p>
+          <motion.p
+            variants={headerItem}
+            className="mx-auto mt-3 max-w-2xl text-sm text-slate-500 md:text-[0.95rem]"
+          >
+            <Link
+              href={projectsPath}
+              className="font-medium text-[#c5a059]/95 underline-offset-4 hover:underline"
+            >
+              {t('home.map.allProjects')}
+            </Link>
+            <span className="text-slate-500">
+              {' '}
+              — {t('home.map.fullListHint')}
+            </span>
           </motion.p>
         </motion.header>
 
         <motion.ul
-          className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-2 sm:gap-3"
+          className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-3"
           initial={reduce ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-4%' }}
           transition={{ duration: 0.55, ease, delay: 0.08 }}
-          aria-label="Referans haritası güven özeti"
+          aria-label={t('home.map.kicker')}
         >
-          {[
-            {
-              t: 'Kurumsal referans ağı',
-              d: 'Türkiye geneli projeler',
-            },
-            {
-              t: 'Karo tabanlı',
-              d: 'OSM + CARTO dark',
-            },
-            {
-              t: 'Etkileşimli',
-              d: 'Pin, küme, kart senkronu',
-            },
-          ].map((item) => (
-            <li key={item.t}>
+          {trustItems.map((item) => (
+            <li key={item.titleKey}>
               <motion.div
-                className="group/trust relative overflow-hidden rounded-full border border-white/[0.09] bg-white/[0.02] px-3 py-2 pr-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-colors hover:border-[#c5a059]/25 sm:px-4"
+                className="group/trust relative h-full overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.02] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-colors hover:border-[#c5a059]/22 sm:p-4"
                 whileHover={reduce ? {} : { y: -2 }}
                 transition={springSnappy}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-[#c5a059]/0 via-[#c5a059]/[0.06] to-[#064e3b]/0 opacity-0 transition-opacity duration-500 group-hover/trust:opacity-100" />
+                <span className="absolute inset-0 bg-gradient-to-br from-[#c5a059]/0 via-[#c5a059]/[0.06] to-[#064e3b]/0 opacity-0 transition-opacity duration-500 group-hover/trust:opacity-100" />
                 <p className="relative font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c5a059]/95">
-                  {item.t}
+                  {t(item.titleKey)}
                 </p>
-                <p className="relative mt-0.5 text-[11px] text-slate-500 sm:text-xs">{item.d}</p>
+                <p className="relative mt-2 text-[13px] leading-snug text-slate-400">{t(item.descKey)}</p>
               </motion.div>
             </li>
           ))}
         </motion.ul>
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-8 lg:items-start">
-          <div className="lg:col-span-8">
-            <motion.div
-              className="relative overflow-hidden rounded-2xl border border-[#c5a059]/22 bg-[#060606] shadow-[inset_0_0_0_1px_rgba(197,160,89,0.07),0_48px_100px_-48px_rgba(0,0,0,0.92),0_0_0_1px_rgba(6,78,59,0.06)]"
-              initial={reduce ? false : { opacity: 0, y: 28, scale: 0.985 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-8%' }}
-              transition={{ duration: 0.7, ease }}
+        <div className="mt-12 space-y-6 lg:space-y-8">
+          <div className="space-y-3">
+            <p className="text-center font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500 sm:text-left">
+              {t('home.map.filterLabel')}
+            </p>
+            <div
+              className="-mx-1 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible"
+              role="group"
+              aria-label={t('home.map.filterLabel')}
             >
-              <div className="pointer-events-none absolute -left-px -right-px top-0 h-px bg-gradient-to-r from-transparent via-[#c5a059]/45 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#c5a059]/[0.08] to-transparent opacity-60" />
-
-              <div className="relative flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] bg-gradient-to-b from-[#111]/95 to-[#0a0a0a]/90 px-4 py-3.5 sm:px-5">
-                <div className="flex min-w-0 flex-1 items-center gap-3">
-                  <motion.span
-                    className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#c5a059]/30 bg-[#c5a059]/[0.09] text-[#c5a059] shadow-[0_0_24px_rgba(197,160,89,0.12)]"
-                    whileHover={reduce ? {} : { scale: 1.04 }}
-                    transition={springSnappy}
-                  >
-                    <span className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/[0.06]" />
-                    <MapGlobeIcon className="relative h-5 w-5" />
-                  </motion.span>
-                  <div className="min-w-0 text-left">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <p className="font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c5a059]/95">
-                        Türkiye referans görünümü
-                      </p>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-950/40 px-2 py-0.5 font-display text-[9px] font-bold uppercase tracking-wider text-emerald-300/95">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 [animation-duration:2.5s]" />
-                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        </span>
-                        Canlı
-                      </span>
-                    </div>
-                    <p className="mt-1 text-xs text-slate-400 sm:text-sm">
-                      OSM + CARTO dark · Plaka merkezleri · Küme &amp; seçim senkronu
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <motion.span
-                    key={filtered.length}
-                    initial={reduce ? false : { opacity: 0.5, scale: 0.92 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={springSoft}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-display text-[11px] text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
-                  >
-                    Görünüm{' '}
-                    <span className="font-semibold text-[#e8d5a3] tabular-nums">{filtered.length}</span> kayıt
-                  </motion.span>
-                </div>
-              </div>
-
-              <div className="relative p-2 sm:p-3">
-                <ReferenceMap projects={filtered} selectedId={selectedId} onSelect={onPick} />
-                <MapFrameCorners />
-              </div>
-
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/[0.06] px-4 py-3 text-[10px] text-slate-500 sm:text-[11px]">
-                {(
-                  [
-                    ['kubbe', 'Kubbe'],
-                    ['nakkas', 'Nakkaş'],
-                    ['oluk', 'Oluk'],
-                    ['diger', 'Sevkiyat'],
-                  ] as const
-                ).map(([cat, label]) => (
-                  <span key={cat} className="inline-flex items-center gap-1.5 opacity-90">
-                    <span style={{ color: categoryColor(cat) }} className="opacity-95">
-                      <CategoryGlyph category={cat} className="h-3.5 w-3.5" />
-                    </span>
-                    <span className="text-slate-400">{label}</span>
-                  </span>
-                ))}
-              </div>
-
-              <p className="border-t border-white/[0.06] px-4 py-3 text-left text-[11px] leading-relaxed text-slate-500 md:text-xs md:text-center">
-                Görünüm yalnızca Türkiye ile sınırlı; dünyayı kaydıramazsınız. Filtreyi değiştirince harita yeniden tüm ülkeye
-                yayılır. Sağdan başka kayıt seçtiğinizde harita o noktaya kayar, zoom biraz açılır. Üst üste binen işaretler kümede
-                toplanır; kümeye tıklayınca ayrışır. Yakınlaştırma sağ üstte. Pin’e tıklayınca sağdaki kart değişir.
-              </p>
-            </motion.div>
-          </div>
-
-          <aside className="flex flex-col gap-6 lg:col-span-4">
-            <div className="flex flex-wrap gap-2">
-              {FILTERS.map((f) => {
+              {filterItems.map((f) => {
                 const active = filter === f.id;
                 const glyphCat =
                   f.id === 'all' ? ('all' as const) : (f.id as TurkeyReferenceProject['category']);
@@ -456,10 +375,10 @@ export function TurkeyReferencesSection() {
                     key={f.id}
                     type="button"
                     onClick={() => setFilter(f.id)}
-                    whileHover={reduce ? {} : { scale: 1.03, y: -1 }}
-                    whileTap={reduce ? {} : { scale: 0.97 }}
+                    whileHover={reduce ? {} : { scale: 1.02, y: -1 }}
+                    whileTap={reduce ? {} : { scale: 0.98 }}
                     transition={springSnappy}
-                    className={`relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-3 py-2 font-display text-[10px] font-semibold uppercase tracking-wider transition-colors md:text-[11px] ${
+                    className={`relative inline-flex shrink-0 snap-center items-center gap-2 overflow-hidden rounded-full border px-3.5 py-2.5 font-display text-[10px] font-semibold uppercase tracking-wider transition-colors sm:text-[11px] ${
                       active
                         ? 'border-[#c5a059]/55 bg-[#c5a059]/14 text-[#e8d5a3] shadow-[0_0_28px_rgba(197,160,89,0.14),inset_0_1px_0_rgba(255,255,255,0.06)]'
                         : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-[#c5a059]/25 hover:text-slate-200'
@@ -478,98 +397,206 @@ export function TurkeyReferencesSection() {
                     >
                       <CategoryGlyph category={glyphCat} className="h-3.5 w-3.5" />
                     </span>
-                    <span className="relative z-[1]">{f.label}</span>
+                    <span className="relative z-[1] max-w-[200px] truncate sm:max-w-none">{f.label}</span>
                   </motion.button>
                 );
               })}
             </div>
+          </div>
 
-            <AnimatePresence mode="wait">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
+            <div className="order-1 lg:order-1 lg:col-span-7">
               <motion.div
-                key={selected?.id ?? 'empty'}
-                className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0f0f0f] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
-                initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  filter: reduce ? 'none' : 'blur(0px)',
-                  boxShadow: reduce
-                    ? 'inset 0 1px 0 rgba(255,255,255,0.04)'
-                    : [
-                        '0 0 0 0 rgba(197,160,89,0)',
-                        '0 20px 50px -28px rgba(197,160,89,0.22)',
-                        '0 0 0 0 rgba(197,160,89,0)',
-                      ],
-                }}
-                exit={{ opacity: 0, y: -10, filter: reduce ? undefined : 'blur(2px)' }}
-                transition={{
-                  duration: 0.4,
-                  ease,
-                  boxShadow: reduce ? { duration: 0 } : { duration: 1.1, times: [0, 0.45, 1] },
-                }}
+                className="relative overflow-hidden rounded-2xl border border-[#c5a059]/22 bg-[#060606] shadow-[inset_0_0_0_1px_rgba(197,160,89,0.07),0_48px_100px_-48px_rgba(0,0,0,0.92),0_0_0_1px_rgba(6,78,59,0.06)]"
+                initial={reduce ? false : { opacity: 0, y: 28, scale: 0.985 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-8%' }}
+                transition={{ duration: 0.7, ease }}
+                aria-label={t('home.map.cardAria')}
               >
-                {selected ? (
-                  <>
-                    <div className="relative aspect-[16/10] w-full bg-lead-900">
-                      {selected.imageSrc ? (
-                        <motion.div
-                          className="absolute inset-0"
-                          initial={{ scale: 1.06 }}
-                          animate={{ scale: 1 }}
-                          transition={{ duration: 0.5, ease }}
-                        >
-                          <Image
-                            src={selected.imageSrc}
-                            alt={selected.mosqueName}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 1024px) 100vw, 400px"
-                            quality={82}
-                          />
-                        </motion.div>
-                      ) : (
-                        <div
-                          className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] text-sm text-slate-500"
-                          aria-hidden
-                        >
-                          Görsel yakında
-                        </div>
-                      )}
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      <div className="absolute bottom-3 left-3 right-3">
-                        <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-2.5 py-1 backdrop-blur-sm">
-                          <span style={{ color: categoryColor(selected.category) }}>
-                            <CategoryGlyph category={selected.category} className="h-3.5 w-3.5" />
+                <div className="pointer-events-none absolute -left-px -right-px top-0 h-px bg-gradient-to-r from-transparent via-[#c5a059]/45 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#c5a059]/[0.08] to-transparent opacity-60" />
+
+                <div className="relative flex flex-col gap-3 border-b border-white/[0.06] bg-gradient-to-b from-[#111]/95 to-[#0a0a0a]/90 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                  <div className="flex min-w-0 flex-1 items-center gap-3">
+                    <motion.span
+                      className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#c5a059]/30 bg-[#c5a059]/[0.09] text-[#c5a059] shadow-[0_0_24px_rgba(197,160,89,0.12)]"
+                      whileHover={reduce ? {} : { scale: 1.04 }}
+                      transition={springSnappy}
+                    >
+                      <span className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/[0.06]" />
+                      <MapGlobeIcon className="relative h-5 w-5" />
+                    </motion.span>
+                    <div className="min-w-0 text-left">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c5a059]/95">
+                          {t('home.map.panelTitle')}
+                        </p>
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-950/40 px-2 py-0.5 font-display text-[9px] font-bold uppercase tracking-wider text-emerald-300/95">
+                          <span className="relative flex h-1.5 w-1.5">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 [animation-duration:2.5s]" />
+                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                           </span>
-                          <p className="font-display text-[10px] font-semibold uppercase tracking-wider text-[#c5a059]">
-                            {categoryLabelTr(selected.category)}
+                          {t('home.map.badgeInteractive')}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-400 sm:text-sm">{t('home.map.panelSubtitle')}</p>
+                    </div>
+                  </div>
+                  <motion.span
+                    key={filtered.length}
+                    initial={reduce ? false : { opacity: 0.5, scale: 0.92 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={springSoft}
+                    className="inline-flex shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-display text-[11px] text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                  >
+                    {t('home.map.locationCount', { count: filtered.length })}
+                  </motion.span>
+                </div>
+
+                <div className="relative min-h-[min(420px,55vh)] p-2 sm:min-h-[440px] sm:p-3">
+                  <ReferenceMap projects={filtered} selectedId={selectedId} onSelect={onPick} />
+                  <MapFrameCorners />
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-white/[0.06] px-4 py-3 text-[10px] text-slate-500 sm:text-[11px]">
+                  {(['kubbe', 'nakkas', 'oluk', 'diger'] as const).map((cat) => (
+                    <span key={cat} className="inline-flex items-center gap-1.5 opacity-90">
+                      <span style={{ color: categoryColor(cat) }} className="opacity-95">
+                        <CategoryGlyph category={cat} className="h-3.5 w-3.5" />
+                      </span>
+                      <span className="text-slate-400">{t(`home.map.category.${cat}`)}</span>
+                    </span>
+                  ))}
+                </div>
+
+                <details className="group border-t border-white/[0.06] px-4 py-3 text-left">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 transition hover:text-slate-300 [&::-webkit-details-marker]:hidden">
+                    <span>{t('home.map.howToTitle')}</span>
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4 shrink-0 text-[#c5a059]/80 transition group-open:rotate-180"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      aria-hidden
+                    >
+                      <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </summary>
+                  <ul className="mt-4 list-none space-y-2.5 text-[12px] leading-relaxed text-slate-500">
+                    <li className="flex gap-2.5">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#c5a059]/70" aria-hidden />
+                      {t('home.map.howTo1')}
+                    </li>
+                    <li className="flex gap-2.5">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#c5a059]/70" aria-hidden />
+                      {t('home.map.howTo2')}
+                    </li>
+                    <li className="flex gap-2.5">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#c5a059]/70" aria-hidden />
+                      {t('home.map.howTo3')}
+                    </li>
+                  </ul>
+                  <p className="mt-4 border-t border-white/[0.05] pt-3 text-[11px] leading-relaxed text-slate-600">
+                    {t('home.map.mapHint')}
+                  </p>
+                </details>
+              </motion.div>
+            </div>
+
+            <aside className="order-2 flex flex-col gap-6 lg:order-2 lg:col-span-5">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selected?.id ?? 'empty'}
+                  className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0f0f0f] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    filter: reduce ? 'none' : 'blur(0px)',
+                    boxShadow: reduce
+                      ? 'inset 0 1px 0 rgba(255,255,255,0.04)'
+                      : [
+                          '0 0 0 0 rgba(197,160,89,0)',
+                          '0 20px 50px -28px rgba(197,160,89,0.22)',
+                          '0 0 0 0 rgba(197,160,89,0)',
+                        ],
+                  }}
+                  exit={{ opacity: 0, y: -10, filter: reduce ? undefined : 'blur(2px)' }}
+                  transition={{
+                    duration: 0.4,
+                    ease,
+                    boxShadow: reduce ? { duration: 0 } : { duration: 1.1, times: [0, 0.45, 1] },
+                  }}
+                >
+                  {selected ? (
+                    <>
+                      <p className="border-b border-white/[0.06] px-4 py-2.5 font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c5a059]/90">
+                        {t('home.map.selectedLabel')}
+                      </p>
+                      <div className="relative aspect-[16/10] w-full bg-lead-900">
+                        {selected.imageSrc ? (
+                          <motion.div
+                            className="absolute inset-0"
+                            initial={{ scale: 1.06 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.5, ease }}
+                          >
+                            <Image
+                              src={selected.imageSrc}
+                              alt={selected.mosqueName}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 1024px) 100vw, 420px"
+                              quality={82}
+                            />
+                          </motion.div>
+                        ) : (
+                          <div
+                            className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] text-sm text-slate-500"
+                            aria-hidden
+                          >
+                            {t('home.map.imageSoon')}
+                          </div>
+                        )}
+                        <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3 z-[3] max-md:bottom-4 max-md:left-4 max-md:right-4">
+                          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-2.5 py-1 backdrop-blur-sm">
+                            <span style={{ color: categoryColor(selected.category) }}>
+                              <CategoryGlyph category={selected.category} className="h-3.5 w-3.5" />
+                            </span>
+                            <p className="font-display text-[10px] font-semibold uppercase tracking-wider text-[#c5a059]">
+                              {t(`home.map.category.${selected.category}`)}
+                            </p>
+                          </div>
+                          <p className={`${playfair.className} mt-1 text-lg font-semibold text-white`}>
+                            {selected.mosqueName}
+                          </p>
+                          <p className="text-xs text-slate-400">
+                            {selected.cityLabel}
+                            {selected.period ? ` · ${selected.period}` : ''}
                           </p>
                         </div>
-                        <p className={`${playfair.className} mt-1 text-lg font-semibold text-white`}>
-                          {selected.mosqueName}
-                        </p>
-                        <p className="text-xs text-slate-400">
-                          {selected.cityLabel} · Plaka {selected.plaka.padStart(2, '0')}
-                          {selected.period ? ` · ${selected.period}` : ''}
-                        </p>
                       </div>
-                    </div>
-                    <div className="p-4">
-                      <Link
-                        href="/projeler"
-                        className="inline-flex items-center gap-2 font-display text-xs font-semibold uppercase tracking-wider text-[#c5a059] transition hover:text-[#e8d5a3]"
-                      >
-                        Tüm projeler
-                        <span aria-hidden>→</span>
-                      </Link>
-                    </div>
-                  </>
-                ) : (
-                  <p className="p-6 text-sm text-slate-500">Bu filtrede kayıt yok.</p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </aside>
+                      <div className="p-4 max-md:p-5">
+                        <Link
+                          prefetch
+                          href={projectsPath}
+                          className="inline-flex items-center gap-2 font-display text-xs font-semibold uppercase tracking-wider text-[#c5a059] transition hover:text-[#e8d5a3]"
+                        >
+                          {t('home.map.allProjects')}
+                          <span aria-hidden>→</span>
+                        </Link>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="p-6 text-sm text-slate-500">{t('home.map.emptyFilter')}</p>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </aside>
+          </div>
         </div>
       </div>
     </section>

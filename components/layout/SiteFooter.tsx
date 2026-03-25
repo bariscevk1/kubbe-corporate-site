@@ -1,6 +1,11 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { telHrefTr } from '@/lib/phone';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
+import { i18n } from '@/lib/i18n/i18n';
 
 const DEFAULT_PHONE = '05323236627';
 
@@ -19,6 +24,8 @@ export function SiteFooter({
   logoAlt,
   companyLegalName = 'Turgut Çoşkun Kubbe Kaplama',
 }: SiteFooterProps) {
+  const { t } = useTranslation('common', { i18n });
+  const toHref = useLocalizedPath();
   const telHref = telHrefTr(phone);
   const mapsUrl =
     process.env.NEXT_PUBLIC_GOOGLE_MAPS_PLACE_URL?.trim() ||
@@ -45,11 +52,10 @@ export function SiteFooter({
               ) : null}
               <p className="font-display text-sm font-semibold text-slate-200">{companyLegalName}</p>
             </div>
-            <p className="mt-1 max-w-md text-xs leading-relaxed text-slate-500">
-              Ankara merkez · <strong className="font-medium text-slate-400">Türkiye geneli</strong> montaj
-              ve sevkiyat · <strong className="font-medium text-slate-400">7/24</strong> telefon & WhatsApp ·
-              Körfez ve Arap ülkeleri projeleri (EN/AR iletişim) · Tüm yaş gruplarına kurumsal hizmet
-            </p>
+            <p
+              className="mt-1 max-w-md text-xs leading-relaxed text-slate-500"
+              dangerouslySetInnerHTML={{ __html: t('footer.blurb') }}
+            />
             <p className="mt-2 text-sm">
               <a href={telHref} className="text-brand-muted transition hover:text-white">
                 {phone}
@@ -57,23 +63,27 @@ export function SiteFooter({
             </p>
           </div>
           <div className="flex flex-wrap gap-4 text-sm">
-            <Link href="/hakkimizda" className="footer-link-micro text-slate-400 hover:text-brand-muted">
-              Hakkımızda
+            <Link prefetch href={toHref('/hakkimizda')} className="footer-link-micro text-slate-400 hover:text-brand-muted">
+              {t('footer.link_about')}
             </Link>
-            <Link href="/hizmetler" className="footer-link-micro text-slate-400 hover:text-brand-muted">
-              Hizmetler
+            <Link prefetch href={toHref('/hizmetler')} className="footer-link-micro text-slate-400 hover:text-brand-muted">
+              {t('footer.link_services')}
             </Link>
-            <Link href="/hizmetler/kubbe-kaplama" className="footer-link-micro text-slate-400 hover:text-brand-muted">
-              Kubbe kaplama
+            <Link
+              prefetch
+              href={toHref('/hizmetler/kubbe-kaplama')}
+              className="footer-link-micro text-slate-400 hover:text-brand-muted"
+            >
+              {t('footer.link_kubbe')}
             </Link>
-            <Link href="/hizmetler/oluk" className="footer-link-micro text-slate-400 hover:text-brand-muted">
-              Oluk
+            <Link prefetch href={toHref('/hizmetler/oluk')} className="footer-link-micro text-slate-400 hover:text-brand-muted">
+              {t('footer.link_oluk')}
             </Link>
-            <Link href="/hizmetler/alemler" className="footer-link-micro text-slate-400 hover:text-brand-muted">
-              Alemler
+            <Link prefetch href={toHref('/hizmetler/alemler')} className="footer-link-micro text-slate-400 hover:text-brand-muted">
+              {t('footer.link_alemler')}
             </Link>
-            <Link href="/iletisim" className="footer-link-micro text-slate-400 hover:text-brand-muted">
-              İletişim
+            <Link prefetch href={toHref('/iletisim')} className="footer-link-micro text-slate-400 hover:text-brand-muted">
+              {t('footer.link_contact')}
             </Link>
             <a
               href={mapsUrl}
@@ -81,12 +91,12 @@ export function SiteFooter({
               rel="noopener noreferrer"
               className="footer-link-micro text-slate-400 hover:text-brand-muted"
             >
-              Haritada bul
+              {t('footer.mapLink')}
             </a>
           </div>
         </div>
         <p className="mt-8 text-center text-xs text-slate-600">
-          © {new Date().getFullYear()} Tüm hakları saklıdır.
+          © {new Date().getFullYear()} {t('footer.rights')}
         </p>
       </div>
     </footer>

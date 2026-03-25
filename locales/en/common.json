@@ -10,7 +10,8 @@
     "services": "Services",
     "projects": "Projects",
     "shipments": "Shipments",
-    "contact": "Contact"
+    "contact": "Contact",
+    "service_categories": "Service categories"
   },
   "services": {
     "all": "All services",

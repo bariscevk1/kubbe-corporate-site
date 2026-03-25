@@ -1,11 +1,8 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import {
-  HOME_VALUES_HEADING,
-  HOME_VALUES_ITEMS,
-  HOME_VALUES_SUBTITLE,
-} from '@/lib/content/home-values';
+import { useTranslation } from 'react-i18next';
+import { HOME_VALUES_ITEMS } from '@/lib/content/home-values';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -93,13 +90,14 @@ const ICONS = [IconKalite, IconDeneyim, IconGuven, IconTeslimat] as const;
  * Anasayfa — Hakkımızda altı: dört sütunlu kurumsal değerler bloğu.
  */
 export function ValuesSection() {
+  const { t } = useTranslation('common');
   const reduce = useReducedMotion();
-  const t = (seconds: number) => (reduce ? 0 : seconds);
+  const anim = (seconds: number) => (reduce ? 0 : seconds);
 
   const headerContainer = {
     hidden: {},
     show: {
-      transition: { staggerChildren: t(0.14), delayChildren: t(0.08) },
+      transition: { staggerChildren: anim(0.14), delayChildren: anim(0.08) },
     },
   };
 
@@ -108,14 +106,14 @@ export function ValuesSection() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: t(0.65), ease },
+      transition: { duration: anim(0.65), ease },
     },
   };
 
   const gridContainer = {
     hidden: {},
     show: {
-      transition: { staggerChildren: t(0.11), delayChildren: t(0.25) },
+      transition: { staggerChildren: anim(0.11), delayChildren: anim(0.25) },
     },
   };
 
@@ -124,7 +122,7 @@ export function ValuesSection() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: t(0.58), ease },
+      transition: { duration: anim(0.58), ease },
     },
   };
 
@@ -152,7 +150,7 @@ export function ValuesSection() {
 
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(6,78,59,0.12),transparent_55%)]" />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
+      <div className="relative mx-auto max-w-6xl px-4 py-20 max-md:px-5 max-md:py-24 md:px-6 md:py-28">
         <motion.div
           className="mx-auto max-w-3xl text-center"
           variants={headerContainer}
@@ -165,13 +163,13 @@ export function ValuesSection() {
             variants={headerItem}
             className="font-display text-3xl font-bold uppercase tracking-[0.22em] text-white md:text-4xl md:tracking-[0.28em]"
           >
-            {HOME_VALUES_HEADING}
+            {t('home.values.heading')}
           </motion.h2>
           <motion.p
             variants={headerItem}
             className={`mt-5 font-display text-[11px] font-semibold uppercase tracking-[0.42em] md:text-xs ${gold}`}
           >
-            {HOME_VALUES_SUBTITLE}
+            {t('home.values.subtitle')}
           </motion.p>
           <motion.div
             variants={headerItem}
@@ -198,10 +196,10 @@ export function ValuesSection() {
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-white md:text-xl">
-                    {item.title}
+                    {t(`home.values.items.${item.id}.title`)}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-slate-400 md:text-[15px]">
-                    {item.body}
+                    {t(`home.values.items.${item.id}.body`)}
                   </p>
                 </div>
               </motion.li>

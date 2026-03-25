@@ -10,7 +10,8 @@
     "services": "الخدمات",
     "projects": "مشاريعنا",
     "shipments": "الشحنات",
-    "contact": "تواصل معنا"
+    "contact": "تواصل معنا",
+    "service_categories": "بنود الخدمات"
   },
   "services": {
     "all": "كل الخدمات",

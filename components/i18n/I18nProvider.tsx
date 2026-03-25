@@ -2,6 +2,7 @@
 
 import { I18nextProvider } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   DEFAULT_LANG,
   STORAGE_KEY,
@@ -33,6 +34,7 @@ function setLocaleCookie(lang: SupportedLang) {
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
+  const pathname = usePathname();
 
   const initialLang = useMemo<SupportedLang>(() => {
     if (typeof window === 'undefined') return DEFAULT_LANG;
@@ -73,6 +75,14 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       i18n.off('languageChanged', onLang);
     };
   }, [ready]);
+
+  useEffect(() => {
+    if (!ready || !pathname) return;
+    const seg = pathname.split('/').filter(Boolean)[0];
+    if (isSupportedLang(seg) && i18n.language !== seg) {
+      void ensureI18nInit(seg);
+    }
+  }, [pathname, ready]);
 
   // render immediately; header is client so it can hydrate with default
   return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>;

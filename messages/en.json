@@ -1,0 +1,492 @@
+{
+  "lang": {
+    "tr": "TR",
+    "en": "EN",
+    "ar": "AR"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "services": "Services",
+    "projects": "Our projects",
+    "shipments": "Shipments",
+    "contact": "Contact",
+    "service_categories": "Service lines"
+  },
+  "services": {
+    "all": "All services",
+    "kubbe": "Mosque dome cladding",
+    "aluminyumSatis": "Aluminium sales",
+    "aluminyumKubbe": "Aluminium dome cladding",
+    "bakir": "Copper sheet & dome",
+    "kursun": "Lead sheet sales",
+    "nakkas": "Mosque decorative painting (nakkaÅŸ)",
+    "alemler": "Mosque finials (alem)",
+    "oluk": "Gutter supply & installation"
+  },
+  "ui": {
+    "language": "Language",
+    "close": "Close",
+    "menu": "Menu"
+  },
+  "mobileBar": {
+    "call": "Call now",
+    "whatsapp": "WhatsApp"
+  },
+  "footer": {
+    "link_about": "About us",
+    "link_services": "Services",
+    "link_kubbe": "Dome cladding",
+    "link_oluk": "Gutters",
+    "link_alemler": "Finials",
+    "link_contact": "Contact",
+    "mapLink": "View on map",
+    "blurb": "Ankara HQ Â· <strong class=\"font-medium text-slate-400\">Nationwide</strong> installation & shipping Â· <strong class=\"font-medium text-slate-400\">24/7</strong> phone & WhatsApp Â· Gulf & Arab region projects (EN/AR support) Â· Corporate service for all ages",
+    "rights": "All rights reserved by Turgut Coşkun."
+  },
+  "seo": {
+    "home": {
+      "title": "Home",
+      "description": "Nationwide mosque dome cladding, aluminium and copper domes, gutters and decorative painting across Turkey. Professional crews, shipping and installation."
+    },
+    "about": {
+      "title": "About us",
+      "description": "Since 1987, Turgut Ã‡oÅŸkun Kubbe Kaplama: nationwide mosque & dome works, master craftspeople, project-focused service."
+    },
+    "services": {
+      "title": "Services",
+      "description": "Mosque dome cladding, aluminium sales & dome cladding, copper and lead sheet, decorative painting, mosque finials and gutter systems."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Phone, WhatsApp and address. Quotes and enquiries for dome cladding and metal works."
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "Completed and ongoing reference projects."
+    },
+    "shipments": {
+      "title": "Shipments",
+      "description": "Packing, loading and nationwide logistics."
+    },
+    "thanks": {
+      "title": "Thank you",
+      "description": "Your message has been received."
+    }
+  },
+  "home": {
+    "hero": {
+      "leftTitle": "Nationwide mosque dome cladding and metal roofing expertise",
+      "leftSubtitle": "For copper and aluminium domes, finials, gutters and traditional decoration we deliver disciplined site teams, transparent processes and durable workmanship.",
+      "rightTitle": "Growing with our references",
+      "rightSubtitle": "From Ankara we keep the same corporate standards for installation, shipping and technical support on projects delivered across the country.",
+      "logoAlt": "Turgut CoÅŸkun Kubbe Kaplama",
+      "kickerBadge1": "Corporate project standard",
+      "kickerBadge2": "Nationwide delivery",
+      "ctaQuote": "Get a quote",
+      "ctaWhatsapp": "Message on WhatsApp",
+      "signatureLine1": "Turgut Usta",
+      "signatureLine2": "Corporate discipline and long-lasting workmanship in dome, finial and gutter work.",
+      "callCta": "Call now",
+      "colCtaServices": "Our services",
+      "colCtaProjects": "See our projects",
+      "imageLeftAlt": "Copper dome and mosque finials â€” reference project",
+      "imageRightAlt": "Aluminium dome campus â€” reference project",
+      "ariaSection": "Home hero"
+    },
+    "services": {
+      "kicker": "What we offer",
+      "title": "Our services",
+      "leadBefore": "We specialise in the lines below; full copy and images are on our ",
+      "leadLink": "services",
+      "leadAfter": " page.",
+      "viewAll": "View all",
+      "detailCta": "Details",
+      "grid": {
+        "camii-kubbe": {
+          "title": "Mosque dome cladding",
+          "description": "Dome cladding and restoration in copper, lead and aluminium.",
+          "imageAlt": "Mosque dome with finial â€” architectural photo"
+        },
+        "aluminyum-satis": {
+          "title": "Aluminium sales",
+          "description": "High-quality sheet and profiles; supply tailored to your drawings.",
+          "imageAlt": "Aluminium colour and sheet samples"
+        },
+        "aluminyum-kubbe": {
+          "title": "Aluminium dome cladding",
+          "description": "Light, durable aluminium for domes and roofing.",
+          "imageAlt": "Gold finial on aluminium-clad dome â€” aerial"
+        },
+        "bakir-kubbe": {
+          "title": "Copper dome cladding",
+          "description": "Traditional copper workmanship for long-lasting dome surfaces.",
+          "imageAlt": "Bright copper dome and white base"
+        },
+        "kursun-levha": {
+          "title": "Lead sheet sales",
+          "description": "Lead sheet supply for waterproofing and roofing.",
+          "imageAlt": "Metal sheet supply â€” industrial stock"
+        },
+        "nakkas": {
+          "title": "Mosque decoration (nakkaÅŸ)",
+          "description": "Traditional interior and exterior decorative painting.",
+          "imageAlt": "Interior mosque geometric decoration"
+        },
+        "alemler": {
+          "title": "Mosque finials (alem)",
+          "description": "Design, fabrication and installation of finials.",
+          "imageAlt": "Gold mosque finials with crescent"
+        },
+        "oluk": {
+          "title": "Gutters â€” supply & fit",
+          "description": "Rainwater systems for mosques and buildings.",
+          "imageAlt": "Metal gutter installation detail"
+        }
+      }
+    },
+    "aboutTeaser": {
+      "kicker": "Who we are?",
+      "heading": "About us",
+      "p1": "{{company}} â€” For over thirty years since 1987, under Turgut Ã‡oÅŸkun and the craftsmen who grew up in our workshop, we have served mosque and dome projects. Wherever we work in Turkey we see each job as a long-term relationship, not just a handover.",
+      "p2": "We treat every client as a partner, not only an order. Summer or winter, near or far, our specialist crews and equipment complete your work on time and to the highest quality.",
+      "badge": "Dome & traditional architecture",
+      "storyCta": "Our corporate story",
+      "storyCtaSr": "(Full text on the About page)",
+      "contactCta": "Contact us",
+      "imageAlt": "COÅKUN Architecture & Engineering logo; corporate portrait of Civil Engineer Feramuz CoÅŸkun and Architect GÃ¼listan CoÅŸkun TÃ¼re"
+    },
+    "stats": {
+      "heading": "Our milestones",
+      "items": {
+        "calismalar": {
+          "label": "Projects delivered"
+        },
+        "yapim": {
+          "label": "Projects in progress"
+        },
+        "musteri": {
+          "label": "Satisfied clients"
+        },
+        "toplam": {
+          "label": "Total projects"
+        }
+      }
+    },
+    "values": {
+      "heading": "Our values",
+      "subtitle": "Pillars of quality",
+      "items": {
+        "kalite": {
+          "title": "Quality & expertise",
+          "body": "High standards from drawings to installation; one clear quality policy for materials and workmanship."
+        },
+        "deneyim": {
+          "title": "Decades of experience",
+          "body": "Craft heritage since 1987 and projects built to last."
+        },
+        "guven": {
+          "title": "Trust & warranty",
+          "body": "Written warranty and transparent process; your satisfaction is our signature."
+        },
+        "teslimat": {
+          "title": "On-time delivery",
+          "body": "Full handover within agreed schedules; planned production and logistics."
+        }
+      }
+    },
+    "map": {
+      "kicker": "References across Turkey",
+      "titleAccent": "our footprint",
+      "headingTitle": "Work delivered in {{count}} provinces",
+      "subtitle": "Choose a service type first; tap the coloured markers or numbered clusters. A summary appears on the right. Markers are near the city centre, not street addresses.",
+      "fullListHint": "full list & photos",
+      "filterLabel": "Service type",
+      "filterAll": "All",
+      "panelTitle": "Map of Turkey",
+      "panelSubtitle": "Turkey only â€” use zoom top right",
+      "locationCount": "{{count}} locations",
+      "loadingShort": "Loading mapâ€¦",
+      "badgeInteractive": "Interactive",
+      "benefit1Title": "Broad reference network",
+      "benefit1Desc": "Nationwide installation & shipping experience",
+      "benefit2Title": "One-tap summary",
+      "benefit2Desc": "Map and side card update together",
+      "benefit3Title": "Full project list",
+      "benefit3Desc": "See the Projects page for the complete list",
+      "howToTitle": "Quick tips",
+      "howTo1": "Pick a service with the buttons above.",
+      "howTo2": "Tap a point or cluster â€” the map moves to that area.",
+      "howTo3": "The card shows the mosque or project name and city.",
+      "selectedLabel": "Selected reference",
+      "emptyFilter": "No entries for this filter.",
+      "listTab": "Projects",
+      "mapTab": "Map",
+      "mapHint": "The view is limited to Turkey; you cannot pan the world. Changing the filter recentres the map on the country.",
+      "loading": "Loading Turkey reference layerâ€¦",
+      "listHeading": "Projects nationwide",
+      "cardAria": "Turkey references view",
+      "allProjects": "All projects",
+      "category": {
+        "kubbe": "Dome cladding",
+        "nakkas": "Decorative painting",
+        "oluk": "Gutters",
+        "diger": "Other / shipping"
+      },
+      "imageSoon": "Image coming soon"
+    },
+    "keywords": {
+      "tagline": "Nationwide Â· 24/7 contact Â· International projects for the Gulf & Arab world",
+      "description": "We provide project-focused nationwide support for dome cladding, mosque finials, aluminium and copper cladding, lead sheet and standing seam roofing works.",
+      "heading": "Dome cladding and metal application services",
+      "detailCta": "View details",
+      "cardBadge": "Service card",
+      "cardsTitle": "Featured service cards",
+      "cardsNote": "Each card leads to a service heading aligned with user search intent. Quotations and technical details are shared according to the project scope.",
+      "cards": {
+        "kubbe": {
+          "title": "Dome Cladding",
+          "body": "Aluminium, copper and lead-based cladding solutions for mosque domes."
+        },
+        "kursun": {
+          "title": "Lead Supply & Lead Sheet",
+          "body": "Project-based support for lead sheet supply and lead cladding requirements."
+        },
+        "kenet": {
+          "title": "Standing Seam Roofing",
+          "body": "Application planning, material guidance and survey support for standing seam roof systems."
+        },
+        "aluminyum": {
+          "title": "Aluminium Sheet & Plate Supply",
+          "body": "Supply and implementation coordination for aluminium sheet, plate and complementary metal products."
+        },
+        "usta": {
+          "title": "Mosque & Dome Craft Teams",
+          "body": "Management of mosque dome and metalwork processes with experienced field crews."
+        },
+        "alemler": {
+          "title": "Mosque Finials & Minaret Works",
+          "body": "Visual and durable production for mosque finials, minaret-top details and finishing works."
+        }
+      },
+      "sections": {
+        "kubbe": {
+          "eyebrow": "Dome Cladding",
+          "title": "Mosque dome cladding and restoration works",
+          "body": "For new builds and renovation projects, we manage mosque dome cladding with material selection, site preparation and disciplined installation planning.",
+          "highlights": [
+            "Aluminium, copper and lead-based cladding options",
+            "Project planning suitable for restoration and renewal works",
+            "Nationwide installation and shipping coordination"
+          ]
+        },
+        "alem": {
+          "eyebrow": "Mosque Finials",
+          "title": "Mosque finials and minaret-top finishing works",
+          "body": "In mosque finials, minaret details and dome-top finishing works, we combine visual character with long-term durability.",
+          "highlights": [
+            "Solutions for mosque finials and minaret-top details",
+            "Measured forms matched to the existing structure",
+            "Delivery planning clarified before installation"
+          ]
+        },
+        "metal": {
+          "eyebrow": "Aluminium & Copper Cladding",
+          "title": "Aluminium, copper, lead and standing seam solutions",
+          "body": "Alongside aluminium and copper cladding needs, we also support lead sheet, standing seam roofing and broader metal cladding requirements.",
+          "highlights": [
+            "Supply of aluminium sheet and plate materials",
+            "Copper cladding and lead sheet applications",
+            "Installation support for standing seam roof systems"
+          ]
+        }
+      },
+      "closingTitle": "International projects",
+      "closingLead": "Coordination for Gulf and regional work with English and Arabic contact options.",
+      "closingCta": "Contact form & WhatsApp"
+    }
+  },
+  "about": {
+    "sections": {
+      "tarihce": {
+        "title": "Corporate identity & trust",
+        "paragraphs": [
+          "Since 1987, for more than three decades, we have served you together with Turgut Ã‡oÅŸkun and the master craftsmen trained in our company. As Turgut Usta Kubbe Kaplama we combine traditional skill with modern standards and prioritise transparent communication and sustainable quality.",
+          "We have worked in almost every province of Turkey for many years. Being among the leading names in our field is what drives us to stand beside you in different cities and meet every need with the same determination today."
+        ]
+      },
+      "yaklasim": {
+        "title": "Our approach: project-led, people-led",
+        "paragraphs": [
+          "Whatever the season or distance, our expert crews and professional equipment finish your work as quickly as possible to the highest quality standards.",
+          "We do not see you only as a â€œcustomerâ€ but as a friend. With four specialist teams that meet sector needs with a project focus, we can reach you whenever you need us."
+        ]
+      },
+      "vizyon": {
+        "title": "Vision & innovation",
+        "paragraphs": [
+          "As Turgut Usta Kubbe Kaplama we follow new trends and modern mosque designs with a fast, creative vision and keep bringing added-value products and new opportunities to our clients."
+        ]
+      }
+    },
+    "quote": "For us every dome is not only metal and paint; it is a shared memory for the people who live there.",
+    "ctaBand": "From Edirne to Kars, Ä°skenderun to Hopa â€” contact us for fair-value solutions to your mosque and dome needs.",
+    "motion": {
+      "heroAlt": "About us hero image",
+      "heroKicker": "Corporate",
+      "heroTitle": "About us",
+      "heroLeadMid": "in {{brandLine}},",
+      "heroLeadSince": "Since 1987",
+      "heroLeadEnd": "we have upheld a tradition and a nationwide service network by your side.",
+      "heroPills": [
+        "Corporate trust",
+        "Nationwide shipping",
+        "Expert site crews"
+      ],
+      "mapSectionTitle": "Across Turkey",
+      "timelineTitle": "Key milestones since our founding",
+      "trustTitle": "Why clients choose us",
+      "trustLines": [
+        "Highly experienced, solution-focused expert teams",
+        "Planned processes for shipping, installation and communication",
+        "Sustainable quality in durable materials and workmanship"
+      ],
+      "processTitle": "How we work",
+      "processSteps": [
+        {
+          "n": "01",
+          "t": "Site survey & needs analysis"
+        },
+        {
+          "n": "02",
+          "t": "Quotation & technical planning"
+        },
+        {
+          "n": "03",
+          "t": "Shipping & site preparation"
+        },
+        {
+          "n": "04",
+          "t": "Execution & handover"
+        }
+      ],
+      "testimonialsTitle": "Client feedback",
+      "ctaCallQuote": "Call us â€” get a quote",
+      "ctaServices": "Our services",
+      "ctaShipments": "Shipments",
+      "backHome": "Back to home",
+      "stickyWhatsapp": "Get a quote",
+      "stickyCall": "Quick call",
+      "stickyCallWithPhone": "Quick call ({{phone}})",
+      "stats": [
+        {
+          "value": 500,
+          "suffix": "+",
+          "label": "Completed projects"
+        },
+        {
+          "value": 30,
+          "suffix": "+ yrs",
+          "label": "Field experience"
+        },
+        {
+          "value": 81,
+          "label": "Provinces served"
+        },
+        {
+          "value": 4,
+          "label": "Specialist team units"
+        }
+      ],
+      "timeline": [
+        {
+          "year": "1987",
+          "title": "Founding & craft base",
+          "detail": "The company was founded; the first team focused on dome cladding and site craftsmanship."
+        },
+        {
+          "year": "2000+",
+          "title": "Nationwide logistics network",
+          "detail": "Material supply and site coordination expanded with regular shipments to many provinces."
+        },
+        {
+          "year": "2010+",
+          "title": "Large-scale projects",
+          "detail": "Mosque domes, minarets and restorations delivered with multi-team management."
+        },
+        {
+          "year": "Today",
+          "title": "Sustainable quality & speed",
+          "detail": "Projects, shipping and installation managed from one centre with reliable, fast, transparent service."
+        }
+      ],
+      "testimonials": [
+        {
+          "text": "They delivered on the dates promised on site. Coordination was truly professional.",
+          "person": "Mosque building association",
+          "city": "Kahramanmaras"
+        },
+        {
+          "text": "Material quality and site discipline exceeded expectations. The process was transparent from start to finish.",
+          "person": "Restoration team",
+          "city": "Istanbul"
+        },
+        {
+          "text": "Shipping and installation speed kept our programme on track. Communication was fast and solution-oriented.",
+          "person": "Site manager",
+          "city": "Bursa"
+        },
+        {
+          "text": "They clarified every detail in survey and technical planning; the process ran very smoothly.",
+          "person": "Mosque board",
+          "city": "Konya"
+        },
+        {
+          "text": "Lead supply and site coordination exceeded expectations. We received a clean, on-time handover.",
+          "person": "Restoration project team",
+          "city": "Edirne"
+        },
+        {
+          "text": "Even on a remote project communication never dropped; photos and feedback were shared regularly.",
+          "person": "Building inspector",
+          "city": "Gaziantep"
+        },
+        {
+          "text": "We were very satisfied with both appearance and workmanship. A team we would recommend.",
+          "person": "Association chair",
+          "city": "Amasya"
+        }
+      ]
+    }
+  },
+  "shipments": {
+    "title": "Shipments",
+    "heroAlt": "Shipments hero image",
+    "kicker": "Logistics & delivery",
+    "lead": "After production we manage packing, loading and urban / inter-city shipping plans to match your project schedule.",
+    "photoArchiveTitle": "Shipment photos",
+    "photoArchiveLead": "All photos are delivered in web formats and protected with a phone-number watermark."
+  },
+  "contact": {
+    "mapOpen": "Open map"
+  },
+  "projects": {
+    "metaTitle": "Projects"
+  },
+  "thanks": {
+    "title": "Thank you",
+    "lead": "Your message reached us."
+  },
+  "servicesPage": {
+    "heroAlt": "Services hero image",
+    "kicker": "Services we provide",
+    "title": "Our services",
+    "lead": "Browse every area of expertise from mosque dome cladding to shipping and installation on one screen. Open each item for project-specific detail.",
+    "stat1Label": "Service lines",
+    "stat2Label": "Field experience",
+    "stat2Suffix": "+ yrs",
+    "stat3Label": "Provinces covered",
+    "cardKicker": "Overview",
+    "detailCta": "Open service detail"
+  }
+}

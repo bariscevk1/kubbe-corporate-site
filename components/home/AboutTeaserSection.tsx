@@ -3,8 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import { ABOUT_TEASER_IMAGE } from '@/lib/brand-assets';
-import { HAKKIMIZDA_TEASER_PARAGRAPHS } from '@/lib/content/hakkimizda';
 
 type Props = {
   companyName?: string;
@@ -56,6 +57,8 @@ function DomeAccentLine() {
  */
 export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplama' }: Props) {
   const reduce = useReducedMotion();
+  const { t } = useTranslation('common');
+  const toHref = useLocalizedPath();
 
   return (
     <section
@@ -79,8 +82,8 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+      <div className="relative mx-auto max-w-6xl px-4 py-16 max-md:px-5 max-md:py-20 md:px-6 md:py-24">
+        <div className="grid items-center gap-12 max-md:gap-14 lg:grid-cols-12 lg:gap-10">
           {/* —— Görsel kolonu: katmanlı kart + clip açılışı —— */}
           <div className="relative lg:col-span-5">
             {!reduce && <DomeAccentLine />}
@@ -115,25 +118,24 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
                 transition={{ duration: 0.75, ease }}
               >
                 {/* clip-path kaldırıldı: bazı tarayıcılarda whileInView tetiklenmezse görsel tamamen gizleniyordu */}
-                <div className="relative aspect-[3/4] min-h-[220px] w-full sm:aspect-[4/5] sm:min-h-[280px]">
+                <div className="relative aspect-[3/4] min-h-[220px] w-full bg-white sm:aspect-[4/5] sm:min-h-[280px]">
                   <Image
                     src={ABOUT_TEASER_IMAGE}
-                    alt="Yeşil kubbeli cami — geleneksel mimari referans"
+                    alt={t('home.aboutTeaser.imageAlt')}
                     fill
                     priority
-                    className="object-cover object-center"
+                    className="object-contain object-center"
                     sizes="(max-width: 1024px) 96vw, 480px"
-                    quality={82}
+                    quality={90}
                   />
-                  {/* mix-blend-multiply kaldırıldı: koyu temada görseli neredeyse görünmez yapıyordu */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-[#2E5A47]/20"
+                    className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/35 via-transparent to-transparent"
                     aria-hidden
                   />
                   <motion.div
-                    className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent"
-                    initial={{ opacity: 0.6 }}
-                    whileHover={{ opacity: 0.85 }}
+                    className="absolute inset-x-0 bottom-0 z-[2] h-1/4 bg-gradient-to-t from-black/55 to-transparent"
+                    initial={{ opacity: 0.5 }}
+                    whileHover={{ opacity: 0.75 }}
                     transition={{ duration: 0.35 }}
                     aria-hidden
                   />
@@ -166,7 +168,7 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
                   transition={{ delay: 0.55, duration: 0.5, ease }}
                 >
                   <span className="inline-flex items-center rounded-full border border-white/15 bg-black/45 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-white/95 backdrop-blur-md md:text-xs">
-                    Kubbe &amp; geleneksel mimari
+                    {t('home.aboutTeaser.badge')}
                   </span>
                 </motion.div>
               </motion.div>
@@ -195,7 +197,7 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
               variants={textItem}
               className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#a7d4c8]"
             >
-              Biz kimiz?
+              {t('home.aboutTeaser.kicker')}
             </motion.p>
             <motion.h2
               id="about-teaser-heading"
@@ -203,7 +205,7 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
               className="mt-3 font-display text-3xl font-bold tracking-tight text-white md:text-4xl"
             >
               <span className="bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-                Hakkımızda
+                {t('home.aboutTeaser.heading')}
               </span>
             </motion.h2>
             <motion.div
@@ -211,27 +213,18 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
               className="mt-2 h-1 w-20 rounded-full bg-gradient-to-r from-[var(--brand)] to-brand-muted"
               aria-hidden
             />
-            {HAKKIMIZDA_TEASER_PARAGRAPHS.map((paragraph, idx) => (
-              <motion.p
-                key={idx}
-                variants={textItem}
-                className={
-                  idx === 0
-                    ? 'mt-6 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg'
-                    : 'mt-4 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base'
-                }
-              >
-                {idx === 0 ? (
-                  <>
-                    <strong className="font-semibold text-white">{companyName}</strong>
-                    {' — '}
-                    {paragraph}
-                  </>
-                ) : (
-                  paragraph
-                )}
-              </motion.p>
-            ))}
+            <motion.p
+              variants={textItem}
+              className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg"
+            >
+              {t('home.aboutTeaser.p1', { company: companyName })}
+            </motion.p>
+            <motion.p
+              variants={textItem}
+              className="mt-4 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base"
+            >
+              {t('home.aboutTeaser.p2')}
+            </motion.p>
 
             <motion.div
               variants={textItem}
@@ -239,11 +232,12 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
             >
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Link
-                  href="/hakkimizda"
+                  prefetch
+                  href={toHref('/hakkimizda')}
                   className="group inline-flex items-center gap-2 rounded-xl bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[var(--brand)]/20 ring-1 ring-white/15 transition hover:bg-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)]"
                 >
-                  <span>Kurumsal hikayemiz</span>
-                  <span className="sr-only">(Hakkımızda sayfasında tam metin)</span>
+                  <span>{t('home.aboutTeaser.storyCta')}</span>
+                  <span className="sr-only">{t('home.aboutTeaser.storyCtaSr')}</span>
                   <motion.span
                     aria-hidden
                     className="inline-block"
@@ -255,10 +249,11 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
                 </Link>
               </motion.div>
               <Link
-                href="/iletisim"
+                prefetch
+                href={toHref('/iletisim')}
                 className="group relative text-sm font-medium text-slate-400 transition hover:text-brand-muted"
               >
-                <span className="relative z-[1]">İletişime geçin</span>
+                <span className="relative z-[1]">{t('home.aboutTeaser.contactCta')}</span>
                 <span className="absolute bottom-0 left-0 h-px w-0 bg-brand-muted transition-all duration-300 group-hover:w-full" />
               </Link>
             </motion.div>

@@ -4,7 +4,7 @@
 
 :root {
   color-scheme: dark;
-  /* Marka — Tailwind `brand` sınıfları; layout’ta logo rengine göre güncellenir */
+  /* Kurşun + yeşil tema — Tailwind `brand` ve yüzeyler bu değişkenlerden türetilir */
   --brand: #064e3b;
   --brand-light: #047857;
   --brand-muted: #0d9488;
@@ -13,6 +13,16 @@
   --brand-hero-overlay: rgba(17, 24, 39, 0.62);
   --brand-hero-overlay-hover: rgba(17, 24, 39, 0.44);
   --brand-logo-glow: rgba(6, 78, 59, 0.35);
+  --brand-accent-gold: #c5a059;
+  --brand-accent-gold-soft: #e8d5a3;
+}
+
+html[data-site-theme='green'] {
+  --brand: #047857;
+  --brand-light: #059669;
+  --brand-muted: #14b8a6;
+  --brand-radial: rgba(4, 120, 87, 0.38);
+  --brand-logo-glow: rgba(5, 150, 105, 0.35);
 }
 
 html {
@@ -70,7 +80,7 @@ body {
   background-color: var(--brand-bg-body);
 }
 
-/* Sanity “Genel Ayarlar” → tema: yeşil — marka zemini + emerald */
+/* Yeşil tema: gövde zemini (marka token’ları yukarıda) */
 html[data-site-theme='green'] body {
   background-color: color-mix(in srgb, var(--brand-bg-body) 82%, #022c22 18%);
 }
@@ -80,6 +90,10 @@ img,
 video {
   height: auto;
   max-width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
 }
 
 /* ProtectedImage: sürüklemeyi caydır */

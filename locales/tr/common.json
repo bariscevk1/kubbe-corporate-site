@@ -10,7 +10,8 @@
     "services": "Hizmetler",
     "projects": "Projelerimiz",
     "shipments": "Sevkiyatlar",
-    "contact": "İletişim"
+    "contact": "İletişim",
+    "service_categories": "Hizmet kalemleri"
   },
   "services": {
     "all": "Tüm hizmetler",

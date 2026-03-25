@@ -16,6 +16,7 @@ import {
 } from '@/lib/i18n/i18n';
 import { useRouter } from 'next/navigation';
 import { formatPhoneDisplay, telHrefTr } from '@/lib/phone';
+import { localizePath, pathnameToInternal } from '@/lib/i18n/paths';
 
 const SERVICE_LINKS = [
   { href: '/hizmetler', key: 'services.all' },
@@ -70,7 +71,7 @@ function NavUnderlineLink({
   className?: string;
 }) {
   return (
-    <Link href={href} className={`group relative inline-flex py-2 ${className}`}>
+    <Link prefetch href={href} className={`group relative inline-flex py-2 ${className}`}>
       <span>{children}</span>
       <span
         className="absolute bottom-1 left-1/2 h-[2px] w-full origin-center -translate-x-1/2 scale-x-0 rounded-full bg-white/90 transition-transform duration-300 ease-out group-hover:scale-x-100"
@@ -92,9 +93,8 @@ export function SiteHeader({
   const { t } = useTranslation('common', { i18n });
   const router = useRouter();
   const pathname = usePathname();
-  /** URL tabanli dil: anasayfa /tr, /en veya /ar olabilir */
-  const isHome =
-    pathname === '/' || /^\/(tr|en|ar)\/?$/.test(pathname);
+  const internalPath = pathnameToInternal(pathname || '/');
+  const isHome = internalPath === '/';
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesMobileOpen, setServicesMobileOpen] = useState(false);
@@ -105,25 +105,12 @@ export function SiteHeader({
 
   const currentLang = (isSupportedLang(i18n.language) ? i18n.language : 'tr') as SupportedLang;
 
-  const stripLocale = useCallback(
-    (p: string) => {
-      const seg = p.split('/')[1];
-      if (isSupportedLang(seg)) {
-        const rest = p.replace(new RegExp(`^/${seg}`), '');
-        return rest || '/';
-      }
-      return p || '/';
+  const toHref = useCallback(
+    (internalHref: string) => {
+      if (!internalHref.startsWith('/')) return internalHref;
+      return localizePath(internalHref, currentLang);
     },
-    [],
-  );
-
-  const withLocale = useCallback(
-    (href: string) => {
-      if (!href.startsWith('/')) return href;
-      const clean = stripLocale(href);
-      return `/${currentLang}${clean === '/' ? '' : clean}`;
-    },
-    [currentLang, stripLocale],
+    [currentLang],
   );
 
   const setLang = async (lng: SupportedLang) => {
@@ -136,9 +123,8 @@ export function SiteHeader({
     void i18n.changeLanguage(lng);
     setLangMenuOpen(false);
 
-    // URL tabanlı geçiş: aynı path, farklı locale
-    const rest = stripLocale(pathname);
-    router.push(`/${lng}${rest === '/' ? '' : rest}`);
+    const internal = pathnameToInternal(pathname || '/');
+    router.push(localizePath(internal, lng));
   };
 
   const onScroll = useCallback(() => {
@@ -176,11 +162,12 @@ export function SiteHeader({
     <header
       className={`${headerPlacement} z-50 pt-[env(safe-area-inset-top,0px)] transition-all duration-300 ease-out ${barBg}`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
         {/* Mobil: marka + masaüstünde boş (nav merkezde) */}
         <div className="flex min-w-0 flex-1 items-center gap-2 md:gap-5">
           <Link
-            href={withLocale('/')}
+            prefetch
+            href={toHref('/')}
             className="flex min-w-0 shrink items-center gap-2 rounded-lg py-1.5 outline-none ring-offset-2 ring-offset-[#0b0f14] focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:hidden"
           >
             {logoUrl ? (
@@ -210,7 +197,8 @@ export function SiteHeader({
             item.hasDropdown ? (
               <div key={item.key} className="group relative px-1">
                 <Link
-                  href={withLocale(item.href)}
+                  prefetch
+                  href={toHref(item.href)}
                   className="group/nav relative inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition hover:text-white"
                 >
                   {t(item.key)}
@@ -228,7 +216,8 @@ export function SiteHeader({
                     {SERVICE_LINKS.map((s) => (
                       <Link
                         key={s.href}
-                        href={withLocale(s.href)}
+                        prefetch
+                        href={toHref(s.href)}
                         className="block px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
                         role="menuitem"
                       >
@@ -241,7 +230,7 @@ export function SiteHeader({
             ) : (
               <NavUnderlineLink
                 key={item.href}
-                href={withLocale(item.href)}
+                href={toHref(item.href)}
                 className="px-3 text-sm font-medium text-slate-200 transition hover:text-white"
               >
                 {t(item.key)}
@@ -338,11 +327,11 @@ export function SiteHeader({
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-              className="fixed bottom-0 right-0 top-0 z-[101] flex w-[min(100vw-2.5rem,22rem)] flex-col border-l border-white/10 bg-lead-900 pt-[env(safe-area-inset-top,0px)] shadow-2xl md:hidden"
+              transition={{ type: 'spring', damping: 32, stiffness: 300 }}
+              className="fixed bottom-0 right-0 top-0 z-[101] flex w-[min(100vw-1rem,24rem)] flex-col border-l border-white/10 bg-lead-950/98 pt-[env(safe-area-inset-top,0px)] shadow-2xl md:hidden"
             >
-              <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
-                <span className="font-display text-sm font-semibold text-white">Menü</span>
+              <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+                <span className="font-display text-sm font-semibold tracking-wide text-white">Menü</span>
                 <button
                   type="button"
                   className="rounded-lg p-2 text-slate-300 hover:bg-white/10 hover:text-white"
@@ -354,31 +343,33 @@ export function SiteHeader({
                   </svg>
                 </button>
               </div>
-              <div className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4">
+              <div className="flex flex-1 flex-col gap-2 overflow-y-auto overscroll-contain px-4 py-5">
                 <Link
-                  href={withLocale('/')}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-slate-100 hover:bg-white/10"
+                  prefetch
+                  href={toHref('/')}
+                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
                   onClick={() => setMobileOpen(false)}
                 >
                   {t('nav.home')}
                 </Link>
                 <Link
-                  href={withLocale('/hakkimizda')}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-slate-100 hover:bg-white/10"
+                  prefetch
+                  href={toHref('/hakkimizda')}
+                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
                   onClick={() => setMobileOpen(false)}
                 >
                   {t('nav.about')}
                 </Link>
-                <div>
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-2">
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-base font-medium text-slate-100 hover:bg-white/10"
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-[15px] font-semibold text-slate-100 transition hover:bg-white/[0.06]"
                     aria-expanded={servicesMobileOpen}
                     onClick={() => setServicesMobileOpen((v) => !v)}
                   >
                     {t('nav.services')}
                     <ChevronDown
-                      className={`h-5 w-5 transition-transform ${servicesMobileOpen ? 'rotate-180' : ''}`}
+                      className={`h-5 w-5 shrink-0 opacity-80 transition-transform ${servicesMobileOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
                   <AnimatePresence initial={false}>
@@ -387,50 +378,59 @@ export function SiteHeader({
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="overflow-hidden pl-2"
+                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden border-t border-white/[0.06]"
                       >
-                        {SERVICE_LINKS.map((s) => (
-                          <Link
-                            key={s.href}
-                            href={withLocale(s.href)}
-                            className="block rounded-lg py-2.5 pl-2 text-sm text-slate-300 hover:text-white"
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            {t(s.key)}
-                          </Link>
-                        ))}
+                        <p className="px-3 pt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                          {t('nav.service_categories')}
+                        </p>
+                        <div className="flex flex-col gap-0.5 px-2 pb-2 pt-2">
+                          {SERVICE_LINKS.map((s) => (
+                            <Link
+                              key={s.href}
+                              prefetch
+                              href={toHref(s.href)}
+                              className="rounded-lg px-3 py-3 text-sm leading-snug text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                              onClick={() => setMobileOpen(false)}
+                            >
+                              {t(s.key)}
+                            </Link>
+                          ))}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
                 <Link
-                  href={withLocale('/projeler')}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-slate-100 hover:bg-white/10"
+                  prefetch
+                  href={toHref('/projeler')}
+                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
                   onClick={() => setMobileOpen(false)}
                 >
                   {t('nav.projects')}
                 </Link>
                 <Link
-                  href={withLocale('/sevkiyatlar')}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-slate-100 hover:bg-white/10"
+                  prefetch
+                  href={toHref('/sevkiyatlar')}
+                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
                   onClick={() => setMobileOpen(false)}
                 >
                   {t('nav.shipments')}
                 </Link>
                 <Link
-                  href={withLocale('/iletisim')}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-slate-100 hover:bg-white/10"
+                  prefetch
+                  href={toHref('/iletisim')}
+                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
                   onClick={() => setMobileOpen(false)}
                 >
                   {t('nav.contact')}
                 </Link>
 
-                <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.03] p-2">
-                  <p className="px-2 pb-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3">
+                  <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
                     {t('ui.language')}
                   </p>
-                  <div className="grid grid-cols-3 gap-2 px-2 pb-2">
+                  <div className="grid grid-cols-3 gap-2 px-1 pb-1">
                     {SUPPORTED_LANGS.map((lng) => (
                       <button
                         key={lng}
@@ -449,7 +449,7 @@ export function SiteHeader({
                 </div>
                 <a
                   href={telHref}
-                  className="mt-4 rounded-lg border border-white/15 bg-white/5 px-3 py-3 text-center font-display text-sm font-bold text-brand-muted"
+                  className="mb-[max(0.5rem,env(safe-area-inset-bottom,0px))] mt-4 rounded-xl border border-white/15 bg-white/5 px-3 py-3.5 text-center font-display text-sm font-bold text-brand-muted"
                 >
                   {phonePretty}
                 </a>

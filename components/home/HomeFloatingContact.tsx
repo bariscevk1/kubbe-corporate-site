@@ -19,7 +19,7 @@ export function HomeFloatingContact({ phone }: Props) {
 
   return (
     <div
-      className="pointer-events-none fixed bottom-[max(5.5rem,calc(env(safe-area-inset-bottom,0px)+4.5rem))] right-[max(1rem,env(safe-area-inset-right,0px))] z-[45] flex flex-col gap-3 md:bottom-8 md:right-6"
+      className="pointer-events-none fixed bottom-[max(5.5rem,calc(env(safe-area-inset-bottom,0px)+4.5rem))] right-[max(1rem,env(safe-area-inset-right,0px))] z-[45] hidden flex-col gap-3 md:bottom-8 md:right-6 md:flex"
       aria-label="Hızlı iletişim"
     >
       <div className="pointer-events-auto flex flex-col gap-3">
