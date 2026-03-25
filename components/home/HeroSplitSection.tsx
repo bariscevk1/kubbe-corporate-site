@@ -271,6 +271,7 @@ type ColumnProps = {
   imageAlt: string;
   priority?: boolean;
   side: 'left' | 'right';
+  bottomCta?: { href: string; label: string };
 };
 
 function HeroColumn({
@@ -278,10 +279,9 @@ function HeroColumn({
   imageAlt,
   priority = false,
   side,
+  bottomCta,
 }: ColumnProps) {
   const { reduce, imgScale, imgScaleEnd } = useHeroMotion();
-
-  const xEnter = side === 'left' ? -48 : 48;
 
   return (
     <motion.div
@@ -322,6 +322,17 @@ function HeroColumn({
       <HeroCornerFrame side={side} />
 
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+
+      {bottomCta ? (
+        <div className="pointer-events-auto absolute inset-x-0 bottom-[5.5rem] z-[20] flex justify-center px-4 md:bottom-[6.5rem]">
+          <Link
+            href={bottomCta.href}
+            className="rounded-full border border-[#c5a059]/75 bg-black/35 px-5 py-2.5 text-center font-display text-[10px] font-semibold uppercase tracking-[0.18em] text-[#e8d5a3] shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-sm transition hover:border-[#e8d5a3]/95 hover:bg-black/50 md:text-[11px] md:tracking-[0.22em]"
+          >
+            {bottomCta.label}
+          </Link>
+        </div>
+      ) : null}
     </motion.div>
   );
 }
@@ -387,6 +398,9 @@ export type HeroSplitSectionProps = {
   logoAlt?: string | null;
   brandWordPrimary?: string;
   brandWordAccent?: string;
+  /** Görsel sütunun altındaki altın çerçeveli kısayol (ör. Hizmetlerimiz / Projeler) */
+  leftColumnCta?: { href: string; label: string };
+  rightColumnCta?: { href: string; label: string };
 };
 
 export function HeroSplitSection({
@@ -401,6 +415,8 @@ export function HeroSplitSection({
   logoAlt,
   brandWordPrimary = 'Kubbe',
   brandWordAccent = 'Kaplama',
+  leftColumnCta,
+  rightColumnCta,
 }: HeroSplitSectionProps) {
   const resolvedLogo = logoUrl ?? null;
   const resolvedAlt = logoAlt?.trim() || `${brandWordPrimary} ${brandWordAccent}`;
@@ -419,6 +435,7 @@ export function HeroSplitSection({
                 imageAlt="Bakır kubbe ve cami alemleri — referans proje görseli"
                 priority
                 side="left"
+                bottomCta={leftColumnCta}
               />
             </ColumnParallax>
             <ColumnParallax>
@@ -426,6 +443,7 @@ export function HeroSplitSection({
                 imageSrc={rightImageSrc}
                 imageAlt="Alüminyum kubbe külliye — referans proje görseli"
                 side="right"
+                bottomCta={rightColumnCta}
               />
             </ColumnParallax>
           </div>

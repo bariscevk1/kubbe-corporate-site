@@ -1,5 +1,13 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { DEFAULT_LOGO_SRC } from '@/lib/brand-assets';
+import { HeroSplitSection } from '@/components/home/HeroSplitSection';
+import { ServicesTeaserSection } from '@/components/home/ServicesTeaserSection';
+import { AboutTeaserSection } from '@/components/home/AboutTeaserSection';
+import { TurkeyReferencesSection } from '@/components/home/TurkeyReferencesSection';
+import { StatsSection } from '@/components/home/StatsSection';
+import { ValuesSection } from '@/components/home/ValuesSection';
+import { HomeKeywordSection } from '@/components/home/HomeKeywordSection';
+import { HomeFloatingContact } from '@/components/home/HomeFloatingContact';
 import { DEFAULT_SITE_DESCRIPTION_TR } from '@/lib/seo/seo-copy';
 
 export const metadata: Metadata = {
@@ -7,50 +15,31 @@ export const metadata: Metadata = {
   description: DEFAULT_SITE_DESCRIPTION_TR,
 };
 
+const PHONE = '05323236627';
+
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)] px-4 py-24 md:px-6">
-      <div className="mx-auto max-w-5xl">
-        <h1 className="font-display text-3xl font-bold text-slate-100 md:text-4xl">
-          Kubbe Kurumsal Site
-        </h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
-          Anasayfa gecici hizli modda. Hizmetler, Projeler ve diger sayfalar calisiyor.
-        </p>
-
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Link
-            href="/hizmetler"
-            className="rounded-xl border border-white/10 bg-black/20 p-4 text-slate-100 hover:border-white/25"
-          >
-            Hizmetler
-          </Link>
-          <Link
-            href="/projeler"
-            className="rounded-xl border border-white/10 bg-black/20 p-4 text-slate-100 hover:border-white/25"
-          >
-            Projeler
-          </Link>
-          <Link
-            href="/sevkiyatlar"
-            className="rounded-xl border border-white/10 bg-black/20 p-4 text-slate-100 hover:border-white/25"
-          >
-            Sevkiyatlar
-          </Link>
-          <Link
-            href="/iletisim"
-            className="rounded-xl border border-white/10 bg-black/20 p-4 text-slate-100 hover:border-white/25"
-          >
-            Iletisim
-          </Link>
-          <Link
-            href="/hakkimizda"
-            className="rounded-xl border border-white/10 bg-black/20 p-4 text-slate-100 hover:border-white/25"
-          >
-            Hakkimizda
-          </Link>
-        </div>
-      </div>
+    <main className="min-w-0">
+      <HeroSplitSection
+        phone={PHONE}
+        leftTitle="Türkiye genelinde camii kubbe kaplama ve metal çatı uzmanlığı"
+        leftSubtitle="Bakır ve alüminyum kubbe, alem, oluk ve nakkaş süsleme uygulamalarında sahada disiplinli ekip, şeffaf süreç ve uzun ömürlü işçilik sunuyoruz."
+        rightTitle="Referanslarımızla sınırlarımızı genişletiyoruz"
+        rightSubtitle="Ankara merkezli operasyonumuzla ülke genelinde teslim ettiğimiz projelerde montaj, sevkiyat ve teknik danışmanlıkta aynı kurumsal standardı koruyoruz."
+        logoUrl={DEFAULT_LOGO_SRC}
+        logoAlt="Turgut Coşkun Kubbe Kaplama"
+        brandWordPrimary="Turgut"
+        brandWordAccent="Coşkun"
+        leftColumnCta={{ href: '/hizmetler', label: 'Hizmetlerimiz' }}
+        rightColumnCta={{ href: '/projeler', label: 'Projelerimizi inceleyin' }}
+      />
+      <ServicesTeaserSection phone={PHONE} />
+      <AboutTeaserSection companyName="Turgut Coşkun Kubbe Kaplama" />
+      <TurkeyReferencesSection />
+      <StatsSection />
+      <ValuesSection />
+      <HomeKeywordSection />
+      <HomeFloatingContact phone={PHONE} />
     </main>
   );
 }
