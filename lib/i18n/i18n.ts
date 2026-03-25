@@ -21,27 +21,34 @@ export function langDir(lang: SupportedLang) {
 
 export const i18n = i18next.createInstance();
 
-// init is idempotent-ish; we guard with isInitialized anyway
+const baseInit = {
+  lng: DEFAULT_LANG,
+  fallbackLng: DEFAULT_LANG,
+  supportedLngs: [...SUPPORTED_LANGS],
+  ns: ['common'],
+  defaultNS: 'common',
+  resources: {
+    tr: { common: trCommon },
+    en: { common: enCommon },
+    ar: { common: arCommon },
+  },
+  react: { useSuspense: false },
+  initImmediate: false,
+  interpolation: { escapeValue: false },
+  returnEmptyString: false,
+} as const;
+
+/**
+ * SSR + üretim: I18nProvider’ın useEffect’i çalışmadan SiteHeader useTranslation kullanıyor.
+ * Modül yüklenirken init şart; aksi halde 500 / yanıt takılması görülebiliyor.
+ */
+i18n.use(initReactI18next).init({ ...baseInit });
+
 export async function ensureI18nInit(lang?: SupportedLang) {
-  if (i18n.isInitialized) return i18n;
-  await i18n.use(initReactI18next).init({
-    lng: lang || DEFAULT_LANG,
-    fallbackLng: DEFAULT_LANG,
-    supportedLngs: [...SUPPORTED_LANGS],
-    ns: ['common'],
-    defaultNS: 'common',
-    resources: {
-      tr: { common: trCommon },
-      en: { common: enCommon },
-      ar: { common: arCommon },
-    },
-    /** App Router + client: ilk renderda askiya alma / suspense beklemesi olmasin */
-    react: { useSuspense: false },
-    /** Kaynaklar zaten bundle'da; ilk paint oncesi init tamamlansin */
-    initImmediate: false,
-    interpolation: { escapeValue: false },
-    returnEmptyString: false,
-  });
+  const lng = lang || DEFAULT_LANG;
+  if (i18n.language !== lng) {
+    await i18n.changeLanguage(lng);
+  }
   return i18n;
 }
 
