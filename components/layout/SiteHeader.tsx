@@ -39,6 +39,15 @@ const MAIN_NAV = [
   { href: '/iletisim', key: 'nav.contact', hasDropdown: false as const },
 ];
 
+const MOBILE_MENU_LINKS = [
+  { href: '/', labelKey: 'nav.home' },
+  { href: '/hakkimizda', labelKey: 'nav.about' },
+  { href: '/hizmetler', labelKey: 'nav.services' },
+  { href: '/projeler', labelKey: 'nav.projects' },
+  { href: '/sevkiyatlar', labelKey: 'nav.shipments' },
+  { href: '/iletisim', labelKey: 'nav.contact' },
+] as const;
+
 export type SiteHeaderProps = {
   theme?: 'lead' | 'green';
   phone?: string;
@@ -365,15 +374,7 @@ export function SiteHeader({
               </div>
               <div className="flex flex-1 flex-col overflow-y-auto overscroll-contain">
                 <nav aria-label="Mobil ana menü" className="flex flex-col gap-1 py-6">
-                  {[
-                    { href: '/', label: t('nav.home') },
-                    { href: '/hakkimizda', label: t('nav.about') },
-                    { href: '/hizmetler/kubbe-kaplama', label: t('services.kubbe') },
-                    { href: '/hizmetler', label: t('nav.services') },
-                    { href: '/projeler', label: t('nav.projects') },
-                    { href: '/sevkiyatlar', label: t('nav.shipments') },
-                    { href: '/iletisim', label: t('nav.contact') },
-                  ].map((item) => (
+                  {MOBILE_MENU_LINKS.map((item) => (
                     <Link
                       key={item.href}
                       prefetch
@@ -381,11 +382,31 @@ export function SiteHeader({
                       className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-4 font-display text-[1.125rem] font-semibold tracking-tight text-white transition hover:bg-white/[0.06]"
                       onClick={() => setMobileOpen(false)}
                     >
-                      <span>{item.label}</span>
+                      <span>{t(item.labelKey)}</span>
                       <ArrowRight className="h-5 w-5 shrink-0 text-white/70" />
                     </Link>
                   ))}
                 </nav>
+
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3">
+                  <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+                    {t('nav.service_categories')}
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    {SERVICE_LINKS.map((item) => (
+                      <Link
+                        key={item.href}
+                        prefetch
+                        href={toHref(item.href)}
+                        className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-4 py-3 text-[15px] font-medium text-slate-100 transition hover:bg-white/[0.06]"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <span>{t(item.key)}</span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-white/60" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
 
                 <div className="mt-2 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
                   <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
