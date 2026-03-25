@@ -127,6 +127,28 @@ export function SiteHeader({
   const phonePretty = formatPhoneDisplay(phone);
 
   const currentLang = (isSupportedLang(i18n.language) ? i18n.language : 'tr') as SupportedLang;
+  const mobileMenuLinks = [
+    { href: '/', label: t('nav.home') || 'Anasayfa' },
+    { href: '/hakkimizda', label: t('nav.about') || 'Hakkimizda' },
+    { href: '/hizmetler', label: t('nav.services') || 'Hizmetler' },
+    { href: '/projeler', label: t('nav.projects') || 'Projelerimiz' },
+    { href: '/sevkiyatlar', label: t('nav.shipments') || 'Sevkiyatlar' },
+    { href: '/iletisim', label: t('nav.contact') || 'Iletisim' },
+  ] as const;
+  const mobileServiceLinks = [
+    { href: '/hizmetler', label: t('services.all') || 'Tum hizmetler' },
+    { href: '/hizmetler/kubbe-kaplama', label: t('services.kubbe') || 'Camii kubbe kaplama' },
+    { href: '/hizmetler/aluminyum-satis', label: t('services.aluminyumSatis') || 'Aluminyum satisi' },
+    {
+      href: '/hizmetler/aluminyum-kubbe-kaplama',
+      label: t('services.aluminyumKubbe') || 'Aluminyum kubbe kaplama',
+    },
+    { href: '/hizmetler/bakir-levha-satis', label: t('services.bakir') || 'Bakir levha ve kubbe' },
+    { href: '/hizmetler/kursun-levha-satis', label: t('services.kursun') || 'Kursun levha satisi' },
+    { href: '/hizmetler/nakkas-susleme', label: t('services.nakkas') || 'Camii nakkas ve susleme' },
+    { href: '/hizmetler/alemler', label: t('services.alemler') || 'Camii alemleri' },
+    { href: '/hizmetler/oluk', label: t('services.oluk') || 'Oluk satisi ve montaji' },
+  ] as const;
 
   const toHref = useCallback(
     (internalHref: string) => {
@@ -372,15 +394,18 @@ export function SiteHeader({
                   {t('ui.close')}
                 </button>
               </div>
-              <div className="flex min-h-0 flex-1 flex-col">
+              <div className="relative z-[2] flex min-h-0 flex-1 flex-col">
                 <div className="flex-1 overflow-y-auto overscroll-contain py-6">
                   <div className="mx-auto flex w-full max-w-md flex-col gap-4">
                     <nav
                       aria-label="Mobil ana menü"
                       className="rounded-[28px] border border-white/10 bg-[#3f4347] p-3 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.65)]"
                     >
+                      <div className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+                        Sayfalar
+                      </div>
                       <div className="flex flex-col gap-2">
-                        {MOBILE_MENU_LINKS.map((item) => (
+                        {mobileMenuLinks.map((item) => (
                           <Link
                             key={item.href}
                             prefetch
@@ -388,7 +413,7 @@ export function SiteHeader({
                             className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-4 font-display text-[1.125rem] font-semibold tracking-tight text-white transition hover:bg-white/[0.08]"
                             onClick={() => setMobileOpen(false)}
                           >
-                            <span>{t(item.labelKey)}</span>
+                            <span>{item.label}</span>
                             <ArrowRight className="h-5 w-5 shrink-0 text-white/70" />
                           </Link>
                         ))}
@@ -400,7 +425,7 @@ export function SiteHeader({
                         {t('nav.service_categories')}
                       </p>
                       <div className="flex flex-col gap-2">
-                        {SERVICE_LINKS.map((item) => (
+                        {mobileServiceLinks.map((item) => (
                           <Link
                             key={item.href}
                             prefetch
@@ -408,7 +433,7 @@ export function SiteHeader({
                             className="flex items-center justify-between rounded-xl border border-white/8 bg-black/10 px-4 py-3 text-[15px] font-medium text-slate-100 transition hover:bg-white/[0.06]"
                             onClick={() => setMobileOpen(false)}
                           >
-                            <span>{t(item.key)}</span>
+                            <span>{item.label}</span>
                             <ArrowRight className="h-4 w-4 shrink-0 text-white/60" />
                           </Link>
                         ))}
