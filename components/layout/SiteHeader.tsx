@@ -15,7 +15,7 @@ import {
   isSupportedLang,
 } from '@/lib/i18n/i18n';
 import { useRouter } from 'next/navigation';
-import { formatPhoneDisplay, telHrefTr } from '@/lib/phone';
+import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { localizePath, pathnameToInternal } from '@/lib/i18n/paths';
 
 const SERVICE_LINKS = [
@@ -60,6 +60,20 @@ function ChevronDown({ className }: { className?: string }) {
   );
 }
 
+function ArrowRight({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d="M7 4.5 12.5 10 7 15.5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /** Hover’da ortadan genişleyen alt çizgi */
 function NavUnderlineLink({
   href,
@@ -97,10 +111,10 @@ export function SiteHeader({
   const isHome = internalPath === '/';
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesMobileOpen, setServicesMobileOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const telHref = telHrefTr(phone);
+  const waHref = waHrefTr(phone);
   const phonePretty = formatPhoneDisplay(phone);
 
   const currentLang = (isSupportedLang(i18n.language) ? i18n.language : 'tr') as SupportedLang;
@@ -146,7 +160,6 @@ export function SiteHeader({
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
-      setServicesMobileOpen(false);
     }
     return () => {
       document.body.style.overflow = '';
@@ -286,148 +299,96 @@ export function SiteHeader({
         {/* Mobil: hamburger */}
         <button
           type="button"
-          className="inline-flex h-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white transition active:scale-95 hover:bg-white/10 md:hidden"
+          className="inline-flex h-12 min-h-[48px] items-center justify-center gap-2 rounded-xl border border-[#004B23] bg-[#004B23]/10 px-4 text-white shadow-[0_10px_24px_-18px_rgba(0,75,35,0.85)] transition active:scale-95 hover:bg-[#004B23]/18 md:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-sheet"
           aria-label={mobileOpen ? 'Menüyü kapat' : 'Menüyü aç'}
           onClick={() => setMobileOpen((o) => !o)}
         >
-          <span className="sr-only">Menü</span>
-          {mobileOpen ? (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
+          <span className="font-display text-[11px] font-semibold uppercase tracking-[0.26em]">
+            {t('ui.menu')}
+          </span>
+          <span className="relative h-4 w-4" aria-hidden>
+            <span className="absolute left-0 top-[2px] h-[1.5px] w-4 rounded-full bg-current" />
+            <span className="absolute left-0 top-[7px] h-[1.5px] w-4 rounded-full bg-current" />
+            <span className="absolute left-0 top-[12px] h-[1.5px] w-4 rounded-full bg-current" />
+          </span>
         </button>
       </div>
 
-      {/* Mobil sheet — sağdan */}
+      {/* Mobil tam ekran menü */}
       <AnimatePresence>
         {mobileOpen && (
           <>
-            <motion.button
-              type="button"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm md:hidden"
-              aria-label="Menüyü kapat"
-              onClick={() => setMobileOpen(false)}
-            />
             <motion.div
               id="mobile-nav-sheet"
               role="dialog"
               aria-modal="true"
               aria-label="Mobil navigasyon"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 32, stiffness: 300 }}
-              className="fixed bottom-0 right-0 top-0 z-[101] flex w-[min(100vw-1rem,24rem)] flex-col border-l border-white/10 bg-lead-950/98 pt-[env(safe-area-inset-top,0px)] shadow-2xl md:hidden"
+              initial={{ opacity: 0, y: -18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-0 z-[101] flex flex-col bg-[#4A4E52]/[0.985] px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] shadow-2xl backdrop-blur-md md:hidden"
             >
-              <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-                <span className="font-display text-sm font-semibold tracking-wide text-white">Menü</span>
-                <button
-                  type="button"
-                  className="rounded-lg p-2 text-slate-300 hover:bg-white/10 hover:text-white"
-                  onClick={() => setMobileOpen(false)}
-                  aria-label="Kapat"
-                >
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div className="flex flex-1 flex-col gap-2 overflow-y-auto overscroll-contain px-4 py-5">
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <Link
                   prefetch
                   href={toHref('/')}
-                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
+                  className="flex min-w-0 items-center gap-2"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {t('nav.home')}
-                </Link>
-                <Link
-                  prefetch
-                  href={toHref('/hakkimizda')}
-                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {t('nav.about')}
-                </Link>
-                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-2">
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-[15px] font-semibold text-slate-100 transition hover:bg-white/[0.06]"
-                    aria-expanded={servicesMobileOpen}
-                    onClick={() => setServicesMobileOpen((v) => !v)}
-                  >
-                    {t('nav.services')}
-                    <ChevronDown
-                      className={`h-5 w-5 shrink-0 opacity-80 transition-transform ${servicesMobileOpen ? 'rotate-180' : ''}`}
+                  {logoUrl ? (
+                    <Image
+                      src={logoUrl}
+                      alt={logoAlt || 'Kubbe Kaplama'}
+                      width={140}
+                      height={42}
+                      className="h-8 w-auto max-w-[140px] object-contain object-left"
+                      sizes="140px"
+                      priority
                     />
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {servicesMobileOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden border-t border-white/[0.06]"
-                      >
-                        <p className="px-3 pt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                          {t('nav.service_categories')}
-                        </p>
-                        <div className="flex flex-col gap-0.5 px-2 pb-2 pt-2">
-                          {SERVICE_LINKS.map((s) => (
-                            <Link
-                              key={s.href}
-                              prefetch
-                              href={toHref(s.href)}
-                              className="rounded-lg px-3 py-3 text-sm leading-snug text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
-                              onClick={() => setMobileOpen(false)}
-                            >
-                              {t(s.key)}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-                <Link
-                  prefetch
-                  href={toHref('/projeler')}
-                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {t('nav.projects')}
+                  ) : (
+                    <span className="truncate font-display text-[13px] font-bold leading-tight tracking-tight text-white">
+                      <span className="text-[#c5a059]">{brandWordPrimary}</span> {brandWordAccent}
+                    </span>
+                  )}
                 </Link>
-                <Link
-                  prefetch
-                  href={toHref('/sevkiyatlar')}
-                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
+                <button
+                  type="button"
+                  className="inline-flex h-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-white/15 bg-white/5 px-3 text-sm font-semibold text-slate-100 transition hover:bg-white/10"
                   onClick={() => setMobileOpen(false)}
+                  aria-label={t('ui.close')}
                 >
-                  {t('nav.shipments')}
-                </Link>
-                <Link
-                  prefetch
-                  href={toHref('/iletisim')}
-                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium leading-snug text-slate-100 transition hover:bg-white/[0.07]"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {t('nav.contact')}
-                </Link>
+                  {t('ui.close')}
+                </button>
+              </div>
+              <div className="flex flex-1 flex-col overflow-y-auto overscroll-contain">
+                <nav aria-label="Mobil ana menü" className="flex flex-col gap-1 py-6">
+                  {[
+                    { href: '/', label: t('nav.home') },
+                    { href: '/hakkimizda', label: t('nav.about') },
+                    { href: '/hizmetler/kubbe-kaplama', label: t('services.kubbe') },
+                    { href: '/hizmetler', label: t('nav.services') },
+                    { href: '/projeler', label: t('nav.projects') },
+                    { href: '/sevkiyatlar', label: t('nav.shipments') },
+                    { href: '/iletisim', label: t('nav.contact') },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      prefetch
+                      href={toHref(item.href)}
+                      className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-4 font-display text-[1.125rem] font-semibold tracking-tight text-white transition hover:bg-white/[0.06]"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <span>{item.label}</span>
+                      <ArrowRight className="h-5 w-5 shrink-0 text-white/70" />
+                    </Link>
+                  ))}
+                </nav>
 
-                <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3">
-                  <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                <div className="mt-2 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
+                  <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
                     {t('ui.language')}
                   </p>
                   <div className="grid grid-cols-3 gap-2 px-1 pb-1">
@@ -436,10 +397,10 @@ export function SiteHeader({
                         key={lng}
                         type="button"
                         onClick={() => setLang(lng)}
-                        className={`rounded-lg border px-2 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition ${
+                        className={`rounded-xl border px-2 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] transition ${
                           lng === currentLang
                             ? 'border-[#c5a059]/55 bg-[#c5a059]/12 text-[#e8d5a3]'
-                            : 'border-white/15 bg-white/[0.02] text-slate-200 hover:border-white/30'
+                            : 'border-white/15 bg-white/[0.02] text-slate-100 hover:border-white/30'
                         }`}
                       >
                         {t(`lang.${lng}`)}
@@ -447,12 +408,24 @@ export function SiteHeader({
                     ))}
                   </div>
                 </div>
-                <a
-                  href={telHref}
-                  className="mb-[max(0.5rem,env(safe-area-inset-bottom,0px))] mt-4 rounded-xl border border-white/15 bg-white/5 px-3 py-3.5 text-center font-display text-sm font-bold text-brand-muted"
-                >
-                  {phonePretty}
-                </a>
+
+                <div className="mt-auto grid grid-cols-2 gap-3 pt-6">
+                  <a
+                    href={waHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex min-h-[54px] items-center justify-center rounded-2xl bg-[#0f7a3f] px-4 text-center font-display text-sm font-bold text-white shadow-[0_16px_32px_-18px_rgba(15,122,63,0.8)]"
+                  >
+                    {t('mobileBar.whatsappLine')}
+                  </a>
+                  <a
+                    href={telHref}
+                    className="flex min-h-[54px] items-center justify-center rounded-2xl border border-white/18 bg-[#f3f4f6] px-4 text-center font-display text-sm font-bold text-[#1f2937] shadow-[0_16px_32px_-18px_rgba(0,0,0,0.4)]"
+                  >
+                    {t('mobileBar.call')}
+                  </a>
+                </div>
+                <p className="pt-3 text-center text-xs text-slate-300/80">{phonePretty}</p>
               </div>
             </motion.div>
           </>

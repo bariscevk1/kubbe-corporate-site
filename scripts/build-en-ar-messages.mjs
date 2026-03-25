@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Generates messages/en.json and messages/ar.json from messages/tr.json + patches below.
  * Fails if EN still equals TR anywhere (except brand/code allowlist) â€” update enPatch when tr.json changes.
  *
@@ -36,7 +36,7 @@ const enPatch = {
     oluk: 'Gutter supply & installation',
   },
   ui: { language: 'Language', close: 'Close', menu: 'Menu' },
-  mobileBar: { call: 'Call now', whatsapp: 'WhatsApp' },
+  mobileBar: { call: 'Call now', whatsapp: 'WhatsApp', whatsappLine: 'WhatsApp line' },
   footer: {
     link_about: 'About us',
     link_services: 'Services',
@@ -485,7 +485,7 @@ const arPatch = {
     oluk: 'Ø¨ÙŠØ¹ ÙˆØªØ±ÙƒÙŠØ¨ Ø§Ù„Ù…Ø²Ø§Ø±ÙŠØ¨',
   },
   ui: { language: 'Ø§Ù„Ù„ØºØ©', close: 'Ø¥ØºÙ„Ø§Ù‚', menu: 'Ø§Ù„Ù‚Ø§Ø¦Ù…Ø©' },
-  mobileBar: { call: 'Ø§ØªØµÙ„ Ø§Ù„Ø¢Ù†', whatsapp: 'ÙˆØ§ØªØ³Ø§Ø¨' },
+  mobileBar: { call: 'Ø§ØªØµÙ„ Ø§Ù„Ø¢Ù†', whatsapp: 'ÙˆØ§ØªØ³Ø§Ø¨', whatsappLine: 'Ø®Ø· ÙˆØ§ØªØ³Ø§Ø¨' },
   footer: {
     link_about: 'Ù…Ù† Ù†Ø­Ù†',
     link_services: 'Ø§Ù„Ø®Ø¯Ù…Ø§Øª',

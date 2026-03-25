@@ -31,7 +31,8 @@
   },
   "mobileBar": {
     "call": "Hemen Ara",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "whatsappLine": "WhatsApp Hattı"
   },
   "footer": {
     "link_about": "Hakkımızda",

@@ -31,7 +31,8 @@
   },
   "mobileBar": {
     "call": "Call now",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "whatsappLine": "WhatsApp line"
   },
   "footer": {
     "link_about": "About us",
