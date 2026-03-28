@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
@@ -97,7 +98,7 @@ function NavUnderlineLink({
     <Link prefetch href={href} className={`group relative inline-flex py-2 ${className}`}>
       <span>{children}</span>
       <span
-        className="absolute bottom-1 left-1/2 h-[2px] w-full origin-center -translate-x-1/2 scale-x-0 rounded-full bg-white/90 transition-transform duration-300 ease-out group-hover:scale-x-100"
+        className="absolute bottom-1 left-1/2 h-[2px] w-full origin-center -translate-x-1/2 scale-x-0 rounded-full bg-[#c5a059]/90 transition-transform duration-300 ease-out group-hover:scale-x-100"
         aria-hidden
       />
     </Link>
@@ -121,6 +122,7 @@ export function SiteHeader({
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const mobileDrawerScrollRef = useRef<HTMLDivElement | null>(null);
 
   const telHref = telHrefTr(phone);
@@ -173,6 +175,10 @@ export function SiteHeader({
   }, [onScroll]);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => {
@@ -188,8 +194,8 @@ export function SiteHeader({
 
   const barBg =
     scrolled || !isHome
-      ? 'border-b border-white/10 bg-[linear-gradient(180deg,rgba(6,14,20,0.72),rgba(6,14,20,0.5))] shadow-[0_10px_30px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl'
-      : 'border-b border-white/10 bg-[linear-gradient(180deg,rgba(6,14,20,0.72),rgba(6,14,20,0.5))] shadow-[0_10px_30px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl md:border-transparent md:bg-transparent md:shadow-none md:backdrop-blur-0';
+      ? 'site-light-header border-b backdrop-blur-xl'
+      : 'site-light-header border-b backdrop-blur-xl md:border-transparent md:bg-transparent md:shadow-none md:backdrop-blur-0';
   const headerPlacement = 'sticky top-0';
 
   return (
@@ -202,7 +208,22 @@ export function SiteHeader({
           <Link
             prefetch
             href={toHref('/')}
-            className="flex min-w-0 shrink items-center gap-2 rounded-lg py-1.5 outline-none ring-offset-2 ring-offset-[#0b0f14] focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:hidden"
+            className="header-brand-lockup group hidden min-w-0 rounded-xl px-1 py-1.5 outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:flex"
+          >
+            <span className="flex flex-col leading-none">
+              <span className="font-display text-[10px] font-semibold uppercase tracking-[0.34em] text-brand-muted">
+                Turgut Coşkun
+              </span>
+              <span className="mt-1 font-display text-[13px] font-semibold tracking-[0.08em] text-[var(--text-heading)] lg:text-[14px]">
+                Camii Kubbe Kaplama
+              </span>
+              <span className="header-brand-underline mt-2 h-px w-full rounded-full bg-gradient-to-r from-transparent via-[#c5a059]/80 to-transparent" />
+            </span>
+          </Link>
+          <Link
+            prefetch
+            href={toHref('/')}
+            className="flex min-w-0 shrink items-center gap-2 rounded-lg py-1.5 outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:hidden"
           >
             {logoUrl ? (
               <Image
@@ -215,7 +236,7 @@ export function SiteHeader({
                 priority
               />
             ) : (
-              <span className="truncate font-display text-[13px] font-bold leading-tight tracking-tight text-white">
+              <span className="truncate font-display text-[13px] font-bold leading-tight tracking-tight text-[var(--text-heading)]">
                 <span className="text-[#c5a059]">{brandWordPrimary}</span> {brandWordAccent}
               </span>
             )}
@@ -233,12 +254,12 @@ export function SiteHeader({
                 <Link
                   prefetch
                   href={toHref(item.href)}
-                  className="group/nav relative inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition hover:text-white"
+                  className="group/nav relative inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-[var(--text-body)] transition hover:text-[var(--text-heading)]"
                 >
                   {t(item.key)}
                   <ChevronDown className="h-4 w-4 opacity-80 transition group-hover/nav:translate-y-px" />
                   <span
-                    className="absolute bottom-1 left-1/2 h-[2px] w-[calc(100%-1.5rem)] origin-center -translate-x-1/2 scale-x-0 rounded-full bg-white/90 transition-transform duration-300 ease-out group-hover/nav:scale-x-100"
+                    className="absolute bottom-1 left-1/2 h-[2px] w-[calc(100%-1.5rem)] origin-center -translate-x-1/2 scale-x-0 rounded-full bg-[#c5a059]/90 transition-transform duration-300 ease-out group-hover/nav:scale-x-100"
                     aria-hidden
                   />
                 </Link>
@@ -246,13 +267,13 @@ export function SiteHeader({
                   className="invisible absolute left-0 top-full z-[60] min-w-[220px] pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
                   role="menu"
                 >
-                  <div className="rounded-xl border border-white/10 bg-lead-900/95 py-2 shadow-xl shadow-black/40 backdrop-blur-md">
+                  <div className="rounded-xl border border-[var(--border-soft)] bg-white/95 py-2 shadow-xl shadow-slate-200/70 backdrop-blur-md">
                     {SERVICE_LINKS.map((s) => (
                       <Link
                         key={s.href}
                         prefetch
                         href={toHref(s.href)}
-                        className="block px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
+                        className="block px-4 py-2 text-sm text-[var(--text-body)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--text-heading)]"
                         role="menuitem"
                       >
                         {t(s.key)}
@@ -265,7 +286,7 @@ export function SiteHeader({
               <NavUnderlineLink
                 key={item.href}
                 href={toHref(item.href)}
-                className="px-3 text-sm font-medium text-slate-200 transition hover:text-white"
+                className="px-3 text-sm font-medium text-[var(--text-body)] transition hover:text-[var(--text-heading)]"
               >
                 {t(item.key)}
               </NavUnderlineLink>
@@ -280,10 +301,10 @@ export function SiteHeader({
             onClick={() => setLangMenuOpen((v) => !v)}
             aria-expanded={langMenuOpen}
             aria-label={t('ui.language')}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-white/14 bg-white/[0.04] px-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-white/26 hover:bg-white/[0.07]"
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white/80 px-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-body)] transition hover:border-[var(--border-strong)] hover:bg-white"
           >
-            <span className="text-slate-400">{t('ui.language')}</span>
-            <span className="font-display text-slate-100">{t(`lang.${currentLang}`)}</span>
+            <span className="text-[var(--text-muted)]">{t('ui.language')}</span>
+            <span className="font-display text-[var(--text-heading)]">{t(`lang.${currentLang}`)}</span>
             <ChevronDown className={`h-4 w-4 opacity-80 transition ${langMenuOpen ? 'rotate-180' : ''}`} />
           </button>
           <AnimatePresence>
@@ -293,7 +314,7 @@ export function SiteHeader({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.18 }}
-                className="absolute right-0 mt-2 w-[160px] overflow-hidden rounded-xl border border-white/10 bg-lead-900/95 shadow-xl shadow-black/40 backdrop-blur-md"
+                className="absolute right-0 mt-2 w-[160px] overflow-hidden rounded-xl border border-[var(--border-soft)] bg-white/95 shadow-xl shadow-slate-200/80 backdrop-blur-md"
               >
                 <div className="p-1.5">
                   {SUPPORTED_LANGS.map((lng) => (
@@ -303,12 +324,12 @@ export function SiteHeader({
                       onClick={() => setLang(lng)}
                       className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs font-semibold uppercase tracking-[0.14em] transition ${
                         lng === currentLang
-                          ? 'bg-white/[0.08] text-white'
-                          : 'text-slate-200 hover:bg-white/[0.06] hover:text-white'
+                          ? 'bg-[var(--surface-soft)] text-[var(--text-heading)]'
+                          : 'text-[var(--text-body)] hover:bg-[var(--surface-soft)] hover:text-[var(--text-heading)]'
                       }`}
                     >
                       <span>{t(`lang.${lng}`)}</span>
-                      <span className="text-[11px] text-slate-400">{lng.toUpperCase()}</span>
+                      <span className="text-[11px] text-[var(--text-muted)]">{lng.toUpperCase()}</span>
                     </button>
                   ))}
                 </div>
@@ -320,7 +341,7 @@ export function SiteHeader({
         {/* Mobil: hamburger */}
         <button
           type="button"
-          className="inline-flex h-12 min-h-[48px] items-center justify-center gap-2 rounded-xl border border-[#004B23] bg-[#004B23]/10 px-4 text-white shadow-[0_10px_24px_-18px_rgba(0,75,35,0.85)] transition active:scale-95 hover:bg-[#004B23]/18 md:hidden"
+          className="inline-flex h-12 min-h-[48px] items-center justify-center gap-2 rounded-xl border border-[var(--border-strong)] bg-white/90 px-4 text-[var(--text-heading)] shadow-[0_12px_28px_-20px_rgba(31,41,55,0.18)] transition active:scale-95 hover:bg-white md:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-sheet"
           aria-label={mobileOpen ? 'Menüyü kapat' : 'Menüyü aç'}
@@ -338,86 +359,110 @@ export function SiteHeader({
       </div>
 
       {/* Mobil sidebar menü */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <>
-            <motion.div
-              className="fixed inset-0 z-[130] bg-black/60 backdrop-blur-[3px] md:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setMobileOpen(false)}
-              aria-hidden
-            />
-            <motion.aside
-              id="mobile-nav-sheet"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobil navigasyon"
-              initial={{ opacity: 0, x: 28 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 28 }}
-              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-y-0 right-0 z-[140] flex h-dvh max-h-dvh w-[min(86vw,360px)] flex-col border-l border-white/10 bg-[#4A4E52] px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] shadow-2xl md:hidden"
-            >
-              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
-                <Link
-                  prefetch
-                  href={toHref('/')}
-                  className="flex min-w-0 items-center gap-2"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {logoUrl ? (
-                    <Image
-                      src={logoUrl}
-                      alt={logoAlt || 'Kubbe Kaplama'}
-                      width={140}
-                      height={42}
-                      className="h-8 w-auto max-w-[140px] object-contain object-left"
-                      sizes="140px"
-                      priority
-                    />
-                  ) : (
-                    <span className="truncate font-display text-[13px] font-bold leading-tight tracking-tight text-white">
-                      <span className="text-[#c5a059]">{brandWordPrimary}</span> {brandWordAccent}
-                    </span>
-                  )}
-                </Link>
-                <button
-                  type="button"
-                  className="inline-flex h-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-white/15 bg-white/5 px-3 text-sm font-semibold text-slate-100 transition hover:bg-white/10"
-                  onClick={() => setMobileOpen(false)}
-                  aria-label={t('ui.close')}
-                >
-                  {t('ui.close')}
-                </button>
-              </div>
-              <div className="flex min-h-0 flex-1 flex-col">
-                <div ref={mobileDrawerScrollRef} className="flex-1 overflow-y-auto overscroll-contain py-5">
-                  <p className="px-1 pb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
-                    Sayfalar
-                  </p>
-                  <nav aria-label="Mobil ana menü" className="flex flex-col gap-2">
-                    {mobileMenuLinks.map((item) => (
+      {isClient
+        ? createPortal(
+            <AnimatePresence>
+              {mobileOpen && (
+                <>
+                  <motion.div
+                    className="fixed inset-0 z-[130] bg-slate-900/28 backdrop-blur-[3px] md:hidden"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={() => setMobileOpen(false)}
+                    aria-hidden
+                  />
+                  <motion.aside
+                    id="mobile-nav-sheet"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Mobil navigasyon"
+                    initial={{ opacity: 0, x: 28 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 28 }}
+                    transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                    className="fixed inset-y-0 right-0 z-[140] flex h-dvh max-h-dvh w-[min(88vw,380px)] flex-col border-l border-[var(--border-soft)] bg-[var(--surface-base)] px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] shadow-2xl shadow-slate-300/60 md:hidden"
+                  >
+                    <div className="flex items-center justify-between gap-3 border-b border-[var(--border-soft)] pb-4">
                       <Link
-                        key={item.href}
                         prefetch
-                        href={toHref(item.href)}
-                        className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.05] px-4 py-4 font-display text-[1.05rem] font-semibold tracking-tight text-white transition hover:bg-white/[0.08]"
+                        href={toHref('/')}
+                        className="flex min-w-0 items-center gap-2"
                         onClick={() => setMobileOpen(false)}
                       >
-                        <span>{item.label}</span>
-                        <ArrowRight className="h-5 w-5 shrink-0 text-white/70" />
+                        {logoUrl ? (
+                          <Image
+                            src={logoUrl}
+                            alt={logoAlt || 'Kubbe Kaplama'}
+                            width={140}
+                            height={42}
+                            className="h-8 w-auto max-w-[140px] object-contain object-left"
+                            sizes="140px"
+                            priority
+                          />
+                        ) : (
+                          <span className="truncate font-display text-[13px] font-bold leading-tight tracking-tight text-[var(--text-heading)]">
+                            <span className="text-[#c5a059]">{brandWordPrimary}</span> {brandWordAccent}
+                          </span>
+                        )}
                       </Link>
-                    ))}
-                  </nav>
-                </div>
-              </div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+                      <button
+                        type="button"
+                        className="inline-flex h-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-[var(--border-soft)] bg-[var(--surface-soft)] px-3 text-sm font-semibold text-[var(--text-heading)] transition hover:bg-white"
+                        onClick={() => setMobileOpen(false)}
+                        aria-label={t('ui.close')}
+                      >
+                        {t('ui.close')}
+                      </button>
+                    </div>
+                    <div className="flex min-h-0 flex-1 flex-col">
+                      <div ref={mobileDrawerScrollRef} className="flex-1 overflow-y-auto overscroll-contain py-5">
+                        <p className="px-1 pb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                          Sayfalar
+                        </p>
+                        <nav aria-label="Mobil ana menü" className="flex flex-col gap-2">
+                          {mobileMenuLinks.map((item) => (
+                            <Link
+                              key={item.href}
+                              prefetch
+                              href={toHref(item.href)}
+                              className="flex items-center justify-between rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-soft)] px-4 py-4 font-display text-[1.05rem] font-semibold tracking-tight text-[var(--text-heading)] shadow-[0_12px_26px_-24px_rgba(31,41,55,0.18)] transition hover:border-[var(--border-strong)] hover:bg-white"
+                              onClick={() => setMobileOpen(false)}
+                            >
+                              <span>{item.label}</span>
+                              <ArrowRight className="h-5 w-5 shrink-0 text-[var(--text-muted)]" />
+                            </Link>
+                          ))}
+                        </nav>
+                        <div className="mt-6 border-t border-[var(--border-soft)] pt-5">
+                          <p className="px-1 pb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                            Hizmet kalemleri
+                          </p>
+                          <div className="grid grid-cols-1 gap-2">
+                            {SERVICE_LINKS.slice(1).map((item) => (
+                              <Link
+                                key={item.href}
+                                prefetch
+                                href={toHref(item.href)}
+                                className="flex min-h-[44px] items-center justify-between rounded-xl border border-[var(--border-soft)] bg-[var(--surface-soft)] px-4 py-3 text-sm font-semibold text-[var(--text-heading)] shadow-[0_12px_24px_-24px_rgba(31,41,55,0.16)] transition hover:border-[var(--border-strong)] hover:bg-white"
+                                onClick={() => setMobileOpen(false)}
+                              >
+                                <span className="min-w-0 truncate">{t(item.key)}</span>
+                                <ArrowRight className="h-4 w-4 shrink-0 text-[var(--text-muted)]" />
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.aside>
+                </>
+              )}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </header>
   );
 }

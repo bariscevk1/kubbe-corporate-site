@@ -8,6 +8,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Playfair_Display } from 'next/font/google';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 import {
   countUniqueProvinces,
   filterReferenceProjects,
@@ -30,10 +31,10 @@ function MapLoadingPlaceholder() {
       />
       <div className="relative flex flex-col items-center gap-3 px-4 text-center">
         <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[#c5a059]/30 bg-[#c5a059]/[0.07]">
-          <span className="absolute inset-0 animate-ping rounded-full bg-[#c5a059]/15 opacity-75 [animation-duration:2s]" />
+          <span className="absolute inset-0 rounded-full bg-[#c5a059]/15 opacity-75 motion-safe:animate-ping [animation-duration:2s]" />
           <MapGlobeIcon className="relative h-5 w-5 text-[#c5a059]" />
         </span>
-        <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c5a059]/90">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#c5a059]/90">
           {t('home.map.loadingShort')}
         </p>
         <p className="max-w-xs text-xs text-slate-500">{t('home.map.loading')}</p>
@@ -199,7 +200,7 @@ export function TurkeyReferencesSection() {
   const toHref = useLocalizedPath();
   const reduce = useReducedMotion();
   const [filter, setFilter] = useState<ReferenceFilter>('all');
-  const provinceCount = countUniqueProvinces(TURKEY_REFERENCE_PROJECTS);
+  const provinceCount = 81;
 
   const filterItems = useMemo(
     () =>
@@ -358,7 +359,7 @@ export function TurkeyReferencesSection() {
 
         <div className="mt-12 space-y-6 lg:space-y-8">
           <div className="space-y-3">
-            <p className="text-center font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500 sm:text-left">
+            <p className="text-center font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500 sm:text-left">
               {t('home.map.filterLabel')}
             </p>
             <div
@@ -378,7 +379,7 @@ export function TurkeyReferencesSection() {
                     whileHover={reduce ? {} : { scale: 1.02, y: -1 }}
                     whileTap={reduce ? {} : { scale: 0.98 }}
                     transition={springSnappy}
-                    className={`relative inline-flex shrink-0 snap-center items-center gap-2 overflow-hidden rounded-full border px-3.5 py-2.5 font-display text-[10px] font-semibold uppercase tracking-wider transition-colors sm:text-[11px] ${
+                    className={`relative inline-flex min-h-[44px] shrink-0 snap-center items-center gap-2 overflow-hidden rounded-full border px-4 py-2.5 font-display text-[11px] font-semibold uppercase tracking-wider transition-colors ${
                       active
                         ? 'border-[#c5a059]/55 bg-[#c5a059]/14 text-[#e8d5a3] shadow-[0_0_28px_rgba(197,160,89,0.14),inset_0_1px_0_rgba(255,255,255,0.06)]'
                         : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-[#c5a059]/25 hover:text-slate-200'
@@ -429,12 +430,12 @@ export function TurkeyReferencesSection() {
                     </motion.span>
                     <div className="min-w-0 text-left">
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c5a059]/95">
+                        <p className="font-display text-[11px] font-semibold uppercase tracking-[0.22em] text-[#c5a059]/95">
                           {t('home.map.panelTitle')}
                         </p>
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-950/40 px-2 py-0.5 font-display text-[9px] font-bold uppercase tracking-wider text-emerald-300/95">
+                        <span className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-950/40 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-wider text-emerald-300/95">
                           <span className="relative flex h-1.5 w-1.5">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 [animation-duration:2.5s]" />
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping [animation-duration:2.5s]" />
                             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                           </span>
                           {t('home.map.badgeInteractive')}
@@ -471,7 +472,7 @@ export function TurkeyReferencesSection() {
                 </div>
 
                 <details className="group border-t border-white/[0.06] px-4 py-3 text-left">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 transition hover:text-slate-300 [&::-webkit-details-marker]:hidden">
+                  <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-3 font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 transition hover:text-slate-300 [&::-webkit-details-marker]:hidden">
                     <span>{t('home.map.howToTitle')}</span>
                     <svg
                       viewBox="0 0 24 24"
@@ -544,7 +545,7 @@ export function TurkeyReferencesSection() {
                             transition={{ duration: 0.5, ease }}
                           >
                             <Image
-                              src={selected.imageSrc}
+                              src={watermarkedSrc(selected.imageSrc)}
                               alt={selected.mosqueName}
                               fill
                               className="object-cover"

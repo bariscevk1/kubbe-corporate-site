@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function OlukPage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <HizmetPageHero
         imageSrc="/hizmetler/oluk-satis-montaj.webp"
         imageAlt="Çatı oluk ve düşen boru montajı"
         title="Oluk Satışı ve Montajı"
         kicker="Hizmet"
-        subtitle="Yağmur suyu tahliyesi; Türkiye geneli satış ve montaj."
+        subtitle="Turgut Usta ekibiyle yagmur suyu tahliyesi icin Turkiye geneli satis ve montaj."
       />
 
       <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">

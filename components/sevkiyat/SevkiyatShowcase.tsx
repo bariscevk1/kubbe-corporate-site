@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { ProtectedImage } from '@/components/ProtectedImage';
 import { SevkiyatVideoArchiveLazy } from '@/components/sevkiyat/SevkiyatVideoArchiveLazy';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import {
   SEVKIYAT_IMAGES as IMAGES,
   sevkiyatImageSrc as imageSrc,
@@ -38,49 +39,54 @@ export function SevkiyatShowcase() {
       <SevkiyatVideoArchiveLazy />
 
       <section className="mx-auto max-w-6xl px-4 py-3 md:px-6 md:py-5">
-        <div className="rounded-2xl border border-white/10 bg-[#0a0d10]/70 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:p-8">
+        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-elevated)] p-6 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.18)] md:p-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">
                 Fotograf arsivi
               </p>
-              <h2 className="mt-2 font-display text-2xl font-semibold text-white md:text-3xl">
-                Sevkiyat fotograflari
-              </h2>
-              <p className="mt-2 max-w-3xl text-slate-300">
-                Tum fotograflar web formatinda sunulur ve telefon numarasi filigrani ile korunur.
+              <div className="mt-2">
+                <SubpageHeading as="h2">
+                  Turgut Usta sevkiyat fotograflari
+                </SubpageHeading>
+              </div>
+              <p className="max-w-3xl text-[var(--text-body)]">
+                Turgut Usta ekibinin tum fotograflari web formatinda sunulur ve telefon numarasi filigrani ile korunur.
               </p>
             </div>
           </div>
 
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {IMAGES.map((img, idx) => (
               <motion.li
                 key={img.id}
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-5%' }}
-                transition={{ duration: 0.45, delay: reduce ? 0 : Math.min(idx * 0.03, 0.22), ease: easeOut }}
+                initial={false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: reduce ? 0.12 : 0.32, delay: reduce ? 0 : Math.min(idx * 0.02, 0.12), ease: easeOut }}
+                className="min-w-0"
               >
                 <button
                   type="button"
                   onClick={() => setActiveImageId(img.id)}
-                  className="group relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#0d1216] text-left transition hover:border-[#c5a059]/35"
+                  className="group relative block w-full overflow-hidden rounded-xl border border-[var(--border-soft)] bg-white text-left shadow-[0_16px_34px_-28px_rgba(31,41,55,0.18)] transition hover:border-[#c5a059]/35"
                 >
-                  <div className="relative aspect-[4/3]">
+                  <div className="relative aspect-[4/3] min-h-[220px] w-full overflow-hidden bg-[var(--surface-soft)] sm:min-h-0">
                     <ProtectedImage
                       src={imageSrc(img.id)}
                       alt={img.title}
                       fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover object-center"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       quality={76}
                       wrapClassName="block h-full w-full"
+                      loading={idx < 4 ? 'eager' : 'lazy'}
+                      priority={idx < 2}
+                      unoptimized
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/35 via-transparent to-transparent" />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <p className="text-sm font-semibold text-white">{img.title}</p>
+                    <p className="text-sm font-semibold text-[var(--text-heading)]">{img.title}</p>
                   </div>
                 </button>
               </motion.li>

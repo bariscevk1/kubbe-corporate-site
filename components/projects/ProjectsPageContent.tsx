@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useDeferredValue, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Playfair_Display } from 'next/font/google';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import {
   TURKEY_REFERENCE_PROJECTS,
   categoryLabelTr,
@@ -13,6 +14,7 @@ import {
   type ReferenceFilter,
   type TurkeyReferenceProject,
 } from '@/lib/content/turkey-reference-projects';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 
 const playfair = Playfair_Display({
   subsets: ['latin', 'latin-ext'],
@@ -65,6 +67,7 @@ function ProjectCard({
   const reduce = useReducedMotion();
   const c = categoryColor(project.category);
   const plaka = project.plaka.padStart(2, '0');
+  const projectPreviewSrc = project.imageSrc ? watermarkedSrc(project.imageSrc) : undefined;
 
   return (
     <motion.article
@@ -77,16 +80,16 @@ function ProjectCard({
         delay: reduce ? 0 : Math.min(index * 0.025, 0.35),
         ease,
       }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#090b0d] shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_24px_48px_-32px_rgba(0,0,0,0.8)] transition-colors duration-300 hover:border-[#c5a059]/26"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-white shadow-[0_20px_40px_-30px_rgba(31,41,55,0.18)] transition-colors duration-300 hover:border-[#c5a059]/26"
     >
       <span className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition duration-500 group-hover:opacity-100">
         <span className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(197,160,89,0.14),transparent_52%)]" />
       </span>
-      <div className="pointer-events-none absolute -right-px -top-px z-[2] rounded-bl-xl border-b border-l border-[#c5a059]/25 bg-black/55 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-wider text-[#e8d5a3] backdrop-blur-sm">
+      <div className="pointer-events-none absolute -right-px -top-px z-[2] rounded-bl-xl border-b border-l border-[#c5a059]/25 bg-white/88 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-wider text-[#8b6a2d] backdrop-blur-sm">
         Plaka {plaka}
       </div>
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#111]">
-        {project.imageSrc ? (
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)]">
+        {projectPreviewSrc ? (
           <motion.button
             type="button"
             className="absolute inset-0 text-left"
@@ -96,20 +99,20 @@ function ProjectCard({
             aria-label={`${project.mosqueName} görselini aç`}
           >
             <Image
-              src={project.imageSrc}
+              src={projectPreviewSrc}
               alt={project.mosqueName}
               fill
               className="object-cover saturate-[1.05] contrast-[1.04]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               quality={80}
             />
-            <span className="pointer-events-none absolute bottom-2 right-2 rounded-full border border-white/20 bg-black/55 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-100 backdrop-blur-sm">
+            <span className="pointer-events-none absolute bottom-2 right-2 rounded-full border border-[var(--border-soft)] bg-white/85 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--text-heading)] backdrop-blur-sm">
               Gorseli ac
             </span>
           </motion.button>
         ) : (
           <div
-            className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-[#1a1a1a] via-[#0d0d0d] to-[#050505] p-4 text-center"
+            className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-white via-[var(--surface-soft)] to-[#eef2ec] p-4 text-center"
             aria-hidden
           >
             <span
@@ -118,16 +121,16 @@ function ProjectCard({
             >
               {categoryLabelTr(project.category)}
             </span>
-            <span className="text-xs text-slate-500">Görsel yakında</span>
+            <span className="text-xs text-[var(--text-muted)]">Görsel yakında</span>
           </div>
         )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/20 to-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_52%,rgba(0,0,0,0.25)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/35 via-slate-900/8 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_52%,rgba(255,255,255,0.08)_100%)]" />
         <div className="absolute bottom-0 left-0 right-0 p-3">
-          <p className={`${playfair.className} line-clamp-2 text-base font-semibold leading-snug text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] md:text-lg`}>
+          <p className={`${playfair.className} line-clamp-2 text-base font-semibold leading-snug text-[var(--text-heading)] md:text-lg`}>
             {project.mosqueName}
           </p>
-          <p className="mt-1 text-xs text-slate-300">
+          <p className="mt-1 text-xs text-[var(--text-body)]">
             {project.cityLabel}
             {project.period ? ` · ${project.period}` : ''}
           </p>
@@ -135,7 +138,7 @@ function ProjectCard({
       </div>
       <div className="flex items-center justify-between gap-2 border-t border-white/[0.06] px-3 py-2.5">
         <span
-          className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-300"
+          className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-soft)] bg-[var(--surface-soft)] px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-body)]"
           style={{ borderColor: `${c}44` }}
         >
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: c }} />
@@ -143,14 +146,14 @@ function ProjectCard({
         </span>
         <div className="flex items-center gap-2">
           <motion.span
-            className="text-[10px] font-medium text-slate-500 opacity-0 transition group-hover:opacity-100"
+            className="text-[10px] font-medium text-[var(--text-muted)] opacity-0 transition group-hover:opacity-100"
             aria-hidden
           >
             Referans
           </motion.span>
           <Link
             href="/#turkiye-referans"
-            className="inline-flex items-center gap-1 rounded-full border border-white/12 bg-white/[0.03] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-300 transition hover:border-[#c5a059]/35 hover:text-[#e8d5a3]"
+            className="inline-flex items-center gap-1 rounded-full border border-[var(--border-soft)] bg-[var(--surface-soft)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--text-body)] transition hover:border-[#c5a059]/35 hover:text-[#c5a059]"
           >
             Haritada
             <span aria-hidden>↗</span>
@@ -176,7 +179,7 @@ export function ProjectsPageContent() {
     [],
   );
 
-  const provinceCount = countUniqueProvinces(projectsWithImage);
+  const provinceCount = 81;
   const total = projectsWithImage.length;
 
   const filtered = useMemo(() => {
@@ -260,7 +263,7 @@ export function ProjectsPageContent() {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="site-subpage-light projects-page relative overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.32]"
         style={{
@@ -282,7 +285,7 @@ export function ProjectsPageContent() {
         }}
       />
 
-      <section className="relative overflow-hidden border-b border-white/10">
+      <section className="relative overflow-hidden border-b border-[var(--border-soft)]">
         <Image
           src="/api/hizmetler-hero"
           alt="Projelerimiz hero görseli"
@@ -292,8 +295,8 @@ export function ProjectsPageContent() {
           sizes="100vw"
           quality={86}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-black/72 to-[#0b1014]/95" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_0%,rgba(0,0,0,0.08),rgba(0,0,0,0.52))]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/34 via-white/70 to-[#f8f9fa]/94" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_0%,rgba(255,255,255,0.16),rgba(248,249,250,0.46))]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:30px_30px]" />
 
         <motion.div
@@ -302,16 +305,18 @@ export function ProjectsPageContent() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease }}
         >
-          <div className="max-w-3xl rounded-2xl border border-white/12 bg-black/40 p-4 shadow-[0_14px_44px_rgba(0,0,0,0.5)] backdrop-blur-[4px] md:p-7">
-            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.34em] text-[#c5dfd3] md:text-xs">
+          <div className="max-w-3xl rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-hero-card)] p-4 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.2)] backdrop-blur-[4px] md:p-7">
+            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.34em] text-brand-muted md:text-xs">
               Türkiye referans ağı
             </p>
-            <h1 className={`${playfair.className} mt-4 text-[1.9rem] font-semibold leading-tight tracking-tight text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.8)] sm:text-3xl md:text-4xl lg:text-[2.5rem]`}>
-              Projelerimiz
-            </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-100/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.72)] md:text-base md:text-slate-200 md:drop-shadow-none">
-              Türkiye genelindeki uygulama, sevkiyat ve referans kayıtlarımızı tek ekranda inceleyin.
-              Filtreleme ve arama ile şehir, kategori ve dönem bazında hızlıca sonuca ulaşın.
+            <div className="mt-4">
+              <SubpageHeading as="h1" size="hero" className={playfair.className}>
+                Projelerimiz
+              </SubpageHeading>
+            </div>
+            <p className="max-w-2xl text-[clamp(0.98rem,3.8vw,1rem)] leading-relaxed text-[var(--text-body)]">
+              Turgut Usta imzali Türkiye genelindeki uygulama, sevkiyat ve referans kayitlarimizi tek ekranda inceleyin.
+              Filtreleme ve arama ile sehir, kategori ve donem bazinda hizlica sonuca ulasin.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {[
@@ -323,7 +328,7 @@ export function ProjectsPageContent() {
                   key={chip}
                   whileHover={reduce ? {} : { y: -1 }}
                   transition={springSoft}
-                  className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-100"
+                  className="rounded-full border border-[var(--border-soft)] bg-white/85 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-body)]"
                 >
                   {chip}
                 </motion.span>
@@ -332,14 +337,14 @@ export function ProjectsPageContent() {
             <div className="mt-5 flex flex-wrap gap-2">
               <Link
                 href="#projeler-filtre"
-                className="inline-flex items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#8b6a2d] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20"
               >
                 Filtrelere git
                 <span aria-hidden>↓</span>
               </Link>
               <Link
                 href="/#turkiye-referans"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-white/35 hover:bg-white/[0.08]"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
               >
                 Haritaya git
                 <span aria-hidden>↗</span>
@@ -365,7 +370,7 @@ export function ProjectsPageContent() {
           ].map((row) => (
             <li key={row.l}>
               <motion.div
-                className="relative min-w-[140px] overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.02] px-4 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm"
+                className="relative min-w-[140px] overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-white/85 px-4 py-3 text-center shadow-[0_14px_30px_-24px_rgba(31,41,55,0.14)] backdrop-blur-sm"
                 whileHover={reduce ? {} : { y: -3, scale: 1.02 }}
                 transition={springSnappy}
               >
@@ -374,7 +379,7 @@ export function ProjectsPageContent() {
                   initial={reduce ? false : { scale: 0.92, opacity: 0.6 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={springSoft}
-                  className="font-display text-2xl font-bold tabular-nums text-[#e8d5a3] md:text-3xl"
+                  className="font-display text-2xl font-bold tabular-nums text-[#8b6a2d] md:text-3xl"
                 >
                   {row.k}
                 </motion.p>
@@ -389,7 +394,7 @@ export function ProjectsPageContent() {
 
         <motion.div
           id="projeler-filtre"
-          className="relative mx-auto mt-10 rounded-2xl border border-[#c5a059]/20 bg-[#060606]/80 p-4 shadow-[inset_0_0_0_1px_rgba(197,160,89,0.06),0_32px_80px_-40px_rgba(0,0,0,0.85)] backdrop-blur-sm md:p-6"
+          className="relative mx-auto mt-10 rounded-2xl border border-[#c5a059]/20 bg-[var(--surface-elevated)] p-4 shadow-[0_20px_40px_-32px_rgba(31,41,55,0.16)] backdrop-blur-sm md:p-6"
           initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
@@ -408,7 +413,7 @@ export function ProjectsPageContent() {
                   placeholder="Cami, şehir veya plaka…"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-black/40 py-3 pl-4 pr-10 text-sm text-slate-100 placeholder:text-slate-500 outline-none ring-0 transition focus:border-[#c5a059]/35 focus:bg-black/55"
+                  className="w-full rounded-xl border border-[var(--border-soft)] bg-white py-3 pl-4 pr-10 text-sm text-[var(--text-heading)] placeholder:text-[var(--text-muted)] outline-none ring-0 transition focus:border-[#c5a059]/35 focus:bg-white"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden>
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -425,7 +430,7 @@ export function ProjectsPageContent() {
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as SortKey)}
-                  className="mt-2 w-full min-w-[180px] rounded-xl border border-white/10 bg-black/40 py-2.5 pl-3 pr-8 text-sm text-slate-200 outline-none focus:border-[#c5a059]/35 sm:w-auto"
+                  className="mt-2 min-h-[44px] w-full min-w-[180px] rounded-xl border border-[var(--border-soft)] bg-white py-2.5 pl-3 pr-8 text-sm text-[var(--text-heading)] outline-none focus:border-[#c5a059]/35 sm:w-auto"
                   aria-label="Sıralama"
                 >
                   <option value="plaka">İl plakası (01→81)</option>
@@ -451,10 +456,10 @@ export function ProjectsPageContent() {
                   whileTap={reduce ? {} : { scale: 0.98 }}
                   transition={springSnappy}
                   aria-pressed={active}
-                  className={`relative overflow-hidden rounded-full border px-3 py-2 font-display text-[10px] font-semibold uppercase tracking-wider transition-colors md:text-[11px] ${
+                  className={`relative min-h-[44px] overflow-hidden rounded-full border px-3.5 py-2.5 font-display text-[11px] font-semibold uppercase tracking-wider transition-colors ${
                     active
-                      ? 'border-[#c5a059]/55 bg-[#c5a059]/14 text-[#e8d5a3] shadow-[0_0_24px_rgba(197,160,89,0.12)]'
-                      : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-[#c5a059]/22 hover:text-slate-200'
+                      ? 'border-[#c5a059]/55 bg-[#c5a059]/14 text-[#8b6a2d] shadow-[0_0_24px_rgba(197,160,89,0.12)]'
+                      : 'border-[var(--border-soft)] bg-[var(--surface-soft)] text-[var(--text-muted)] hover:border-[#c5a059]/22 hover:text-[var(--text-heading)]'
                   }`}
                 >
                   {active ? (
@@ -473,8 +478,8 @@ export function ProjectsPageContent() {
           </div>
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.06] pt-4">
-            <p className="text-xs text-slate-500">
-              Aktif görünüm: <span className="font-medium text-slate-300">{sorted.length}</span> / {total}
+            <p className="text-xs text-[var(--text-muted)]">
+              Aktif görünüm: <span className="font-medium text-[var(--text-heading)]">{sorted.length}</span> / {total}
             </p>
             <div className="flex flex-wrap gap-2">
               {hasActiveFilter ? (
@@ -485,14 +490,14 @@ export function ProjectsPageContent() {
                     setQuery('');
                     setSort('plaka');
                   }}
-                  className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition hover:border-white/30 hover:bg-white/[0.06]"
+                  className="inline-flex min-h-[44px] items-center gap-1 rounded-full border border-[var(--border-soft)] bg-white px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--text-body)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
                 >
                   Filtreleri sifirla
                 </button>
               ) : null}
               <Link
                 href="/#turkiye-referans"
-                className="inline-flex items-center gap-1 rounded-full border border-[#c5a059]/35 bg-[#c5a059]/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#e8d5a3] transition hover:border-[#c5a059]/55 hover:bg-[#c5a059]/18"
+                className="inline-flex min-h-[44px] items-center gap-1 rounded-full border border-[#c5a059]/35 bg-[#c5a059]/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b6a2d] transition hover:border-[#c5a059]/55 hover:bg-[#c5a059]/18"
               >
                 Harita görünümü
                 <span aria-hidden>↗</span>
@@ -511,9 +516,9 @@ export function ProjectsPageContent() {
             className="mt-9"
           >
             {sorted.length === 0 ? (
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] px-6 py-12 text-center">
-                <p className="text-slate-400">Bu kriterlere uygun kayıt bulunamadı.</p>
-                <p className="mt-1 text-sm text-slate-500">Filtreleri sıfırlayarak tüm projeleri tekrar görüntüleyin.</p>
+              <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-6 py-12 text-center shadow-[0_18px_40px_-32px_rgba(31,41,55,0.14)]">
+                <p className="text-[var(--text-heading)]">Bu kriterlere uygun kayıt bulunamadı.</p>
+                <p className="mt-1 text-sm text-[var(--text-muted)]">Filtreleri sıfırlayarak tüm projeleri tekrar görüntüleyin.</p>
                 <button
                   type="button"
                   onClick={() => {
@@ -521,7 +526,7 @@ export function ProjectsPageContent() {
                     setQuery('');
                     setSort('plaka');
                   }}
-                  className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-200 transition hover:border-white/30 hover:bg-white/[0.06]"
+                  className="mt-5 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-soft)] bg-[var(--surface-soft)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-body)] transition hover:border-[var(--border-strong)] hover:bg-white"
                 >
                   Tum filtreleri temizle
                 </button>
@@ -554,7 +559,7 @@ export function ProjectsPageContent() {
               <button
                 type="button"
                 aria-label="Galeriyi kapat"
-                className="absolute right-3 top-3 z-[130] rounded-full border border-white/20 bg-black/55 p-2 text-white transition hover:bg-black/75 md:right-6 md:top-6"
+                className="absolute right-3 top-3 z-[130] inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 bg-black/55 p-2 text-white transition hover:bg-black/75 md:right-6 md:top-6"
                 onClick={() => setActiveImageProjectId(null)}
               >
                 ✕
@@ -566,7 +571,7 @@ export function ProjectsPageContent() {
                     type="button"
                     onClick={goPrevImage}
                     aria-label="Önceki görsel"
-                    className="absolute left-1 z-[125] rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:left-4"
+                    className="absolute left-1 z-[125] inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:left-4"
                   >
                     ‹
                   </button>
@@ -574,7 +579,7 @@ export function ProjectsPageContent() {
                     type="button"
                     onClick={goNextImage}
                     aria-label="Sonraki görsel"
-                    className="absolute right-1 z-[125] rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:right-4"
+                    className="absolute right-1 z-[125] inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:right-4"
                   >
                     ›
                   </button>
@@ -588,7 +593,7 @@ export function ProjectsPageContent() {
                     className="relative h-full max-h-[75vh] w-full"
                   >
                     <Image
-                      src={activeGalleryItem.imageSrc}
+                      src={watermarkedSrc(activeGalleryItem.imageSrc)}
                       alt={activeGalleryItem.mosqueName}
                       fill
                       className="object-contain"
@@ -626,7 +631,7 @@ export function ProjectsPageContent() {
                       >
                         {item.imageSrc ? (
                           <Image
-                            src={item.imageSrc}
+                            src={watermarkedSrc(item.imageSrc)}
                             alt={item.mosqueName}
                             fill
                             className="object-cover"
@@ -644,7 +649,7 @@ export function ProjectsPageContent() {
         </AnimatePresence>
 
         <motion.div
-          className="relative mx-auto mt-12 overflow-hidden rounded-2xl border border-[#c5a059]/25 bg-gradient-to-br from-[#c5a059]/[0.09] via-[#064e3b]/[0.12] to-transparent p-8 text-center md:p-10"
+          className="relative mx-auto mt-12 overflow-hidden rounded-2xl border border-[#c5a059]/25 bg-gradient-to-br from-[#fffaf0] via-white to-[#f5f7f2] p-8 text-center shadow-[0_20px_40px_-32px_rgba(31,41,55,0.16)] md:p-10"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -653,15 +658,15 @@ export function ProjectsPageContent() {
           <div className="pointer-events-none absolute inset-0 opacity-30">
             <div className="map-sheen-overlay absolute inset-y-0 left-0 w-full opacity-50" />
           </div>
-          <p className={`${playfair.className} relative text-xl font-semibold text-white md:text-2xl`}>
+          <p className={`${playfair.className} relative text-xl font-semibold text-[var(--text-heading)] md:text-2xl`}>
             Haritada konumları görün
           </p>
-          <p className="relative mx-auto mt-3 max-w-lg text-sm text-slate-300">
+          <p className="relative mx-auto mt-3 max-w-lg text-sm text-[var(--text-body)]">
             Aynı referanslar plaka merkezlerinde işaretli; kümeleşme ve zoom ile detaylı gezinti.
           </p>
           <Link
             href="/#turkiye-referans"
-            className="relative mt-6 inline-flex items-center gap-2 rounded-full border border-[#c5a059]/40 bg-black/30 px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/10"
+            className="relative mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-[#8b6a2d] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/18"
           >
             Türkiye haritasına git
             <span aria-hidden>→</span>

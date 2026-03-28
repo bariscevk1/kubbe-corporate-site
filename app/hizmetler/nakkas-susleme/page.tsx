@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function NakkasSuslemePage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <HizmetPageHero
         imageSrc="/hizmetler/camii-nakkas-susleme.webp"
         imageAlt="Camii içi nakkaş süsleme — geleneksel motifler"
         title="Camii Nakkaş Süsleme"
         kicker="Hizmet"
-        subtitle="Kubbe, tavan ve iç duvarlarda kalemkâr işçiliği ve restorasyon."
+        subtitle="Turgut Usta ekibiyle kubbe, tavan ve ic duvarlarda kalemkar isciligi ve restorasyon."
       />
 
       <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">

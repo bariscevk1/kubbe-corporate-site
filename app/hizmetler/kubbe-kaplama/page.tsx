@@ -5,7 +5,7 @@ import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
 export const metadata: Metadata = {
   title: 'Camii Kubbe Kaplama',
   description:
-    'Osmanlı kubbe geleneğine uygun camii kubbe kaplama, montaj ve malzeme tedariği. 30 yılı aşkın tecrübe, Türkiye geneli referanslar.',
+    "Osmanlı kubbe geleneğine uygun camii kubbe kaplama, montaj ve malzeme tedariği. 1987'den bu yana 39 yıldır devam eden tecrübe ve Türkiye geneli referanslar.",
   openGraph: {
     title: 'Camii Kubbe Kaplama | Kubbe Kaplama',
     description:
@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function KubbeKaplamaPage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <HizmetPageHero
-        imageSrc="/hizmetler/camii-kubbe-kaplama.webp"
+        imageSrc="/hizmetler/camii-kubbe-kaplama-hero.png"
         imageAlt="Camii kubbe kaplama uygulaması — kubbe ve çatı hattı"
         title="Camii Kubbe Kaplama"
         kicker="Hizmet"
-        subtitle="Osmanlı kubbe geleneğine uygun montaj ve malzeme tedariği."
+        subtitle="Turgut Usta ekibiyle Osmanlı kubbe geleneğine uygun montaj ve malzeme tedariği."
       />
 
       <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
@@ -35,8 +35,9 @@ export default function KubbeKaplamaPage() {
 
           <p>
             Kullandığımız ürünler yıllar içinde kalite dalgalanması göstermeyecek şekilde seçilir; böylece
-            uygulamanın ömrü boyunca performansını korur. Otuz yılı aşkın süredir Türkiye&apos;de yüzlerce camii
-            ve referans projede gerçekleştirdiğimiz kubbe kaplama çalışmaları, bu yaklaşımın somut karşılığıdır.
+            uygulamanın ömrü boyunca performansını korur. 1987&apos;den bu yana 39 yıldır devam eden kubbe kaplama
+            tecrübemizle Türkiye&apos;de yüzlerce camii ve referans projede gerçekleştirdiğimiz çalışmalar, bu
+            yaklaşımın somut karşılığıdır.
           </p>
 
           <p>

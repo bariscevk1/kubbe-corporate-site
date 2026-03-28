@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function AlemlerPage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <HizmetPageHero
         imageSrc="/hizmetler/camii-alemleri.webp"
         imageAlt="Camii alemleri — hilal ve süslemeli alemi modelleri"
         title="Camii Alemleri"
         kicker="Hizmet"
-        subtitle="Tasarım, üretim ve montaj ile alemi çözümleri."
+        subtitle="Turgut Usta ekibiyle tasarim, uretim ve montaj destekli alemi cozumleri."
       />
 
       <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">

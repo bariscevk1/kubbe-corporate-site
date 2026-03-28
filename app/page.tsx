@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { DEFAULT_LOGO_SRC } from '@/lib/brand-assets';
 import { HeroSplitSection } from '@/components/home/HeroSplitSection';
+import { PremiumColorPaletteSection } from '@/components/home/PremiumColorPaletteSection';
 import { ServicesTeaserSection } from '@/components/home/ServicesTeaserSection';
 import { AboutTeaserSection } from '@/components/home/AboutTeaserSection';
 import { TurkeyReferencesSection } from '@/components/home/TurkeyReferencesSection';
@@ -26,13 +27,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function HomePage() {
   return (
-    <main className="min-w-0">
+    <main className="home-light-palette min-w-0">
       <HeroSplitSection
         phone={PHONE}
         logoUrl={DEFAULT_LOGO_SRC}
         brandWordPrimary="Turgut"
         brandWordAccent="Coşkun"
       />
+      <PremiumColorPaletteSection />
       <ServicesTeaserSection phone={PHONE} />
       <AboutTeaserSection companyName="Turgut Coşkun Kubbe Kaplama" />
       <TurkeyReferencesSection />

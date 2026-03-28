@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
 
 export const metadata: Metadata = {
   title: 'Alüminyum Satışı',
@@ -14,17 +15,17 @@ export const metadata: Metadata = {
 
 export default function AluminyumSatisPage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <HizmetPageHero
         imageSrc="/hizmetler/aluminyum-satis.webp"
         imageAlt="Alüminyum renk ve malzeme numuneleri yelpazesi"
         title="Alüminyum Satışı"
         kicker="Hizmet"
-        subtitle="Her renk ve kalınlıkta ürün; projeye özel tedarik ve sevkiyat."
+        subtitle="Turgut Usta guvencesiyle her renk ve kalinlikta urun; projeye ozel tedarik ve sevkiyat."
       />
 
       <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
-        <div className="space-y-5 leading-relaxed text-slate-300">
+        <div className="space-y-5 leading-relaxed text-[var(--text-body)]">
           <p>
             Kullanım alanınıza göre standart ölçülerin dışında alüminyum ürünleri de temin edebiliyoruz.
             İhtiyacınıza uygun kalınlık, alaşım ve yüzey seçeneklerini birlikte belirliyor; doğru ürünü doğru
@@ -39,9 +40,11 @@ export default function AluminyumSatisPage() {
             sunar.
           </p>
 
-          <div className="rounded-xl border border-white/10 bg-lead-900/35 p-5">
-            <h2 className="font-display text-xl font-semibold text-white">Neden Alüminyum?</h2>
-            <ul className="mt-4 space-y-2 text-slate-300">
+          <div className="rounded-xl border border-[var(--border-soft)] bg-[var(--surface-elevated)] p-5 shadow-[0_16px_32px_-28px_rgba(31,41,55,0.16)]">
+            <SubpageHeading as="h2" spacing="compact" className="text-[clamp(1rem,3.2vw,1.25rem)]">
+              Neden Alüminyum?
+            </SubpageHeading>
+            <ul className="mt-2 space-y-2 text-[var(--text-body)]">
               <li>- Hafif ve dayanıklıdır (kurşuna göre çok daha düşük ağırlık).</li>
               <li>- Kolay şekillenir, montajı hızlı ve pratiktir.</li>
               <li>- Dekoratif görünüm sunar; boyalı ve desenli seçenekler mevcuttur.</li>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
 import {
@@ -69,18 +70,17 @@ type VideoPreviewTileProps = {
 function VideoPreviewTile({ v, idx, reduce, onOpen }: VideoPreviewTileProps) {
   return (
     <motion.li
-      initial={reduce ? false : { opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-5%' }}
-      transition={{ duration: 0.45, delay: reduce ? 0 : Math.min(idx * 0.04, 0.2), ease: easeOut }}
+      initial={false}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduce ? 0.12 : 0.32, delay: reduce ? 0 : Math.min(idx * 0.02, 0.12), ease: easeOut }}
     >
       <button
         type="button"
         onClick={() => onOpen(v.id)}
         aria-label={`${v.city || 'Sevkiyat'} ${v.year ? `· ${v.year}` : ''} — videoyu ac, videolar arasi gec`}
-        className="group relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#0d1216] text-left transition hover:border-[#c5a059]/35"
+        className="group relative block w-full overflow-hidden rounded-xl border border-[var(--border-soft)] bg-white text-left shadow-[0_16px_34px_-28px_rgba(31,41,55,0.18)] transition hover:border-[#c5a059]/35"
       >
-        <div className="relative aspect-video w-full overflow-hidden bg-black">
+        <div className="relative aspect-video w-full overflow-hidden bg-[var(--surface-soft)]">
           <LazyVideoPreview videoId={v.id} className="relative h-full w-full" />
           <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/85 via-black/25 to-black/40" />
           <div className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition duration-500 group-hover:opacity-100">
@@ -169,6 +169,9 @@ export function SevkiyatVideoArchive() {
       }
       return;
     }
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches) {
+      return;
+    }
     const raf = requestAnimationFrame(() => {
       const el = videoStageRef.current;
       if (!el) return;
@@ -202,18 +205,20 @@ export function SevkiyatVideoArchive() {
   return (
     <>
       <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-        <div className="rounded-2xl border border-white/10 bg-[#0a0d10]/70 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:p-8">
+        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-elevated)] p-6 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.18)] md:p-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">
                 Video arsivi
               </p>
-              <h2 className="mt-2 font-display text-2xl font-semibold text-white md:text-3xl">
-                Sevkiyat kayitlari
-              </h2>
-              <p className="mt-2 max-w-3xl text-slate-300">
-                Videoya tiklayinca genis izleme acilir (sessiz). Ok tuslari veya yan oklarla videolar arasinda
-                gecin; mobilde saga/sola kaydirin. Alt seritten istediginiz kayda gecebilirsiniz.
+              <div className="mt-2">
+                <SubpageHeading as="h2">
+                  Turgut Usta sevkiyat kayitlari
+                </SubpageHeading>
+              </div>
+              <p className="max-w-3xl text-[var(--text-body)]">
+                Turgut Usta ekibine ait videolara tiklayinca genis izleme acilir (sessiz). Ok tuslari veya yan
+                oklarla videolar arasinda gecin; mobilde saga/sola kaydirin. Alt seritten istediginiz kayda gecebilirsiniz.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -222,7 +227,7 @@ export function SevkiyatVideoArchive() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick('sevkiyat_page')}
-                className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200 transition hover:bg-emerald-500/22"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700 transition hover:bg-emerald-500/22"
               >
                 WhatsApp
                 <span aria-hidden>↗</span>
@@ -230,7 +235,7 @@ export function SevkiyatVideoArchive() {
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('sevkiyat_page')}
-                className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/[0.04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08]"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
               >
                 Hizli arama
                 <span aria-hidden>{phoneLabel}</span>
@@ -244,7 +249,7 @@ export function SevkiyatVideoArchive() {
             ))}
           </ul>
 
-          <p className="mt-6 text-xs text-slate-500">
+          <p className="mt-6 text-xs text-[var(--text-muted)]">
             Donusum takibi: WhatsApp ve telefon butonlari event/conversion tetikler. Gerekirse{' '}
             <Link href="/tesekkurler" className="text-brand-muted underline-offset-2 hover:underline">
               Tesekkurler
@@ -270,7 +275,7 @@ export function SevkiyatVideoArchive() {
               <button
                 type="button"
                 onClick={() => setActiveId(null)}
-                className="absolute right-3 top-3 z-[150] rounded-full border border-white/20 bg-black/55 p-2 text-white transition hover:bg-black/75 md:right-6 md:top-6"
+                className="absolute right-3 top-3 z-[150] inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 bg-black/55 p-2 text-white transition hover:bg-black/75 md:right-6 md:top-6"
                 aria-label="Videoyu kapat"
               >
                 ✕
@@ -295,7 +300,7 @@ export function SevkiyatVideoArchive() {
                     type="button"
                     onClick={prev}
                     aria-label="Onceki video"
-                    className="absolute left-1 z-[145] rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:left-0"
+                    className="absolute left-1 z-[145] inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:left-0"
                   >
                     ‹
                   </button>
@@ -303,7 +308,7 @@ export function SevkiyatVideoArchive() {
                     type="button"
                     onClick={next}
                     aria-label="Sonraki video"
-                    className="absolute right-1 z-[145] rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:right-0"
+                    className="absolute right-1 z-[145] inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 bg-black/55 p-2.5 text-white transition hover:bg-black/75 md:right-0"
                   >
                     ›
                   </button>

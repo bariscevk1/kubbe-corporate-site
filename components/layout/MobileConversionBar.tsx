@@ -27,7 +27,7 @@ export function MobileConversionBar({ phone = DEFAULT_PHONE }: Props) {
       <div className="mx-auto flex max-w-md items-stretch gap-2 rounded-[20px] border border-white/10 bg-lead-950/92 p-2 shadow-[0_-12px_40px_-18px_rgba(0,0,0,0.75)] backdrop-blur-xl">
         <a
           href={tel}
-          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-2xl border border-[#c5a059]/40 bg-[#c5a059]/12 px-3 py-2.5 font-display text-[11px] font-bold uppercase tracking-[0.12em] text-[#e8d5a3] ring-1 ring-[#c5a059]/20 transition active:scale-[0.98] hover:bg-[#c5a059]/18"
+          className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl border border-[#c5a059]/40 bg-[#c5a059]/12 px-3 py-2.5 font-display text-xs font-bold uppercase tracking-[0.12em] text-[#e8d5a3] ring-1 ring-[#c5a059]/20 transition active:scale-[0.98] hover:bg-[#c5a059]/18"
           onClick={() => trackPhoneClick('mobile_sticky_bar')}
         >
           <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -39,7 +39,7 @@ export function MobileConversionBar({ phone = DEFAULT_PHONE }: Props) {
           </svg>
           <span className="text-center leading-tight">
             Hemen Ara
-            <span className="mt-0.5 block text-[10px] font-semibold normal-case tracking-normal text-slate-200/95">
+            <span className="mt-0.5 block text-[11px] font-semibold normal-case tracking-normal text-slate-200/95">
               {label}
             </span>
           </span>
@@ -48,7 +48,7 @@ export function MobileConversionBar({ phone = DEFAULT_PHONE }: Props) {
           href={wa}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-2xl border border-emerald-400/35 bg-emerald-600/18 px-3 py-2.5 font-display text-[11px] font-bold uppercase tracking-[0.12em] text-emerald-100 ring-1 ring-emerald-500/25 transition active:scale-[0.98] hover:bg-emerald-600/26"
+          className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl border border-emerald-400/35 bg-emerald-600/18 px-3 py-2.5 font-display text-xs font-bold uppercase tracking-[0.12em] text-emerald-100 ring-1 ring-emerald-500/25 transition active:scale-[0.98] hover:bg-emerald-600/26"
           onClick={() => trackWhatsAppClick('mobile_sticky_bar')}
         >
           <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden>

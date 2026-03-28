@@ -8,7 +8,7 @@
     "home": "Anasayfa",
     "about": "Hakkımızda",
     "services": "Hizmetler",
-    "projects": "Projelerimiz",
+    "projects": "Referanslarımız",
     "shipments": "Sevkiyatlar",
     "contact": "İletişim",
     "service_categories": "Hizmet kalemleri"
@@ -52,7 +52,7 @@
     },
     "about": {
       "title": "Hakkımızda",
-      "description": "1987’den beri Turgut Çoşkun Kubbe Kaplama: Türkiye geneli cami ve kubbe işleri, uzman ustalar, proje odaklı hizmet."
+      "description": "1987'den bu yana Turgut Usta öncülüğünde 39 yıldır devam eden cami ve kubbe ustalığı, uzman ekipler ve proje odaklı hizmet."
     },
     "services": {
       "title": "Hizmetler",
@@ -60,15 +60,15 @@
     },
     "contact": {
       "title": "İletişim",
-      "description": "Telefon, WhatsApp ve adres. Kubbe kaplama ve metal işleri için teklif ve bilgi talebi."
+      "description": "Telefon, WhatsApp ve adres. Turgut Usta ekibinden kubbe kaplama ve metal işleri için teklif ve bilgi talebi."
     },
     "projects": {
       "title": "Projeler",
-      "description": "Tamamlanan ve süren referans projelerimiz."
+      "description": "Turgut Usta imzalı tamamlanan ve süren referans projelerimiz."
     },
     "shipments": {
       "title": "Sevkiyatlar",
-      "description": "Paketleme, yükleme ve Türkiye geneli sevkiyat süreçleri."
+      "description": "Turgut Usta ekibinin paketleme, yükleme ve Türkiye geneli sevkiyat süreçleri."
     },
     "thanks": {
       "title": "Teşekkürler",
@@ -77,17 +77,18 @@
   },
   "home": {
     "hero": {
+      "brandLine": "Turgut Coşkun Camii Kubbe Kaplama",
       "leftTitle": "Türkiye genelinde camii kubbe kaplama ve metal çatı uzmanlığı",
-      "leftSubtitle": "Bakır ve alüminyum kubbe, alem, oluk ve nakkaş süsleme uygulamalarında sahada disiplinli ekip, şeffaf süreç ve uzun ömürlü işçilik sunuyoruz.",
+      "leftSubtitle": "Turgut Usta ve ekibi olarak bakır ve alüminyum kubbe, alem, oluk ve nakkaş süsleme uygulamalarında sahada disiplinli ekip, şeffaf süreç ve uzun ömürlü işçilik sunuyoruz.",
       "rightTitle": "Referanslarımızla sınırlarımızı genişletiyoruz",
-      "rightSubtitle": "Ankara merkezli operasyonumuzla ülke genelinde teslim ettiğimiz projelerde montaj, sevkiyat ve teknik danışmanlıkta aynı kurumsal standardı koruyoruz.",
+      "rightSubtitle": "Ankara merkezli operasyonumuzla Turgut Usta imzasını taşıyan projelerde montaj, sevkiyat ve teknik danışmanlıkta aynı kurumsal standardı koruyoruz.",
       "logoAlt": "Turgut Coşkun Kubbe Kaplama",
       "kickerBadge1": "Kurumsal Proje Standardı",
       "kickerBadge2": "Türkiye geneli uygulama",
       "ctaQuote": "Hemen Teklif Al",
       "ctaWhatsapp": "WhatsApp'tan Yaz",
       "signatureLine1": "Turgut Usta",
-      "signatureLine2": "Kubbe kaplama, alem ve oluk uygulamalarında kurumsal disiplin ve uzun ömürlü işçilik.",
+      "signatureLine2": "Kubbe kaplama, alem ve oluk uygulamalarında Turgut Usta imzasiyla kurumsal disiplin ve uzun omurlu iscilik.",
       "callCta": "Hemen Arayın",
       "colCtaServices": "Hizmetlerimiz",
       "colCtaProjects": "Projelerimizi inceleyin",
@@ -98,7 +99,7 @@
     "services": {
       "kicker": "Neler sunuyoruz",
       "title": "Hizmetlerimiz",
-      "leadBefore": "Aşağıda özetlediğimiz iş kalemleri üzerinde uzmanlaştık; detaylı anlatım ve görseller ",
+      "leadBefore": "Aşağıda Turgut Usta ekibinin uzmanlaştığı iş kalemlerini özetledik; detaylı anlatım ve görseller ",
       "leadLink": "hizmetler",
       "leadAfter": " sayfamızda yer alacaktır.",
       "viewAll": "Tümünü gör",
@@ -149,8 +150,8 @@
     "aboutTeaser": {
       "kicker": "Biz kimiz?",
       "heading": "Hakkımızda",
-      "p1": "{{company}} — 1987’den bu yana otuz yılı aşkın süredir Turgut Çoşkun öncülüğünde, bünyemizde yetişen ustalarla birlikte cami ve kubbe işlerinde hizmet veriyoruz. Türkiye’nin dört bir yanında yürüttüğümüz projelerde; işimizi sadece bir teslimat değil, uzun yıllar sürecek bir güven ilişkisi olarak görüyoruz.",
-      "p2": "Her müşterimizi, yalnızca bir sipariş sahibi değil; yol arkadaşımız olarak kabul ediyoruz. Yaz–kış, yakın–uzak demeden; uzman kadromuz ve profesyonel ekipmanlarımızla işlerinizi en kısa sürede, en yüksek kaliteyle tamamlıyoruz.",
+      "p1": "{{company}} — 1987'den bu yana Turgut Usta öncülüğünde 39 yıldır devam eden cami ve kubbe tecrübesiyle hizmet veriyoruz. Türkiye'nin dört bir yanında yürüttüğümüz projelerde; işimizi sadece bir teslimat değil, uzun yıllar sürecek bir güven ilişkisi olarak görüyoruz.",
+      "p2": "Her müşterimizi, yalnızca bir sipariş sahibi değil; yol arkadaşımız olarak kabul ediyoruz. Turgut Usta yaklaşımıyla yaz–kış, yakın–uzak demeden; uzman kadromuz ve profesyonel ekipmanlarımızla işlerinizi en kısa sürede, en yüksek kaliteyle tamamlıyoruz.",
       "badge": "Kubbe & geleneksel mimari",
       "storyCta": "Kurumsal hikayemiz",
       "storyCtaSr": "(Hakkımızda sayfasında tam metin)",
@@ -184,7 +185,7 @@
         },
         "deneyim": {
           "title": "Yılların deneyimi",
-          "body": "1987'den beri nesillerden gelen zanaatkarlık ve zamana dayanan projeler."
+          "body": "1987'den bu yana nesillerden gelen zanaatkarlık ve 40 yılı aşkın süredir sektöre yön veren birikim."
         },
         "guven": {
           "title": "Güven & garanti",
@@ -210,7 +211,7 @@
       "loadingShort": "Harita yükleniyor…",
       "badgeInteractive": "Etkileşimli",
       "benefit1Title": "Geniş referans ağı",
-      "benefit1Desc": "Yurt içi montaj ve sevkiyat deneyimi",
+      "benefit1Desc": "Turgut Usta ekibiyle yurt ici montaj ve sevkiyat deneyimi",
       "benefit2Title": "Tek dokunuşla özet",
       "benefit2Desc": "Harita ve sağdaki kart eş zamanlı güncellenir",
       "benefit3Title": "Tam liste",
@@ -312,7 +313,7 @@
       "tarihce": {
         "title": "Kurumsal kimlik ve güven",
         "paragraphs": [
-          "1987 yılından bu yana otuz yılı aşkın süredir Turgut Çoşkun öncülüğünde, bünyemizde yetişen ustalarla birlikte siz değerli müşterilerimize hizmet sunuyoruz. Turgut Usta Kubbe Kaplama olarak, geleneksel ustalığı çağdaş standartlarla birleştiriyor; her projede şeffaf iletişim ve sürdürülebilir kaliteyi ön planda tutuyoruz.",
+          "1987'den bu yana Turgut Usta öncülüğünde 39 yıldır devam eden tecrübemizle siz değerli müşterilerimize hizmet sunuyoruz. Turgut Usta Kubbe Kaplama olarak, geleneksel ustalığı çağdaş standartlarla birleştiriyor; her projede şeffaf iletişim ve sürdürülebilir kaliteyi ön planda tutuyoruz.",
           "Uzun yıllardır Türkiye’nin hemen hemen her ilinde faaliyet gösterdik. Yaptığımız işlerde sektörün önde gelen isimlerinden biri olmamız, sizi farklı illerde yan yana görmeye ve tüm ihtiyaçlarınızı karşılamaya bugün de aynı kararlılıkla devam etmemizi sağlıyor."
         ]
       },
@@ -337,8 +338,8 @@
       "heroKicker": "Kurumsal",
       "heroTitle": "Hakkımızda",
       "heroLeadMid": "{{brandLine}} alanında,",
-      "heroLeadSince": "1987’den beri",
-      "heroLeadEnd": "süren bir gelenek ve Türkiye genelinde süregelen bir hizmet ağıyla yanınızdayız.",
+      "heroLeadSince": "1987'den bu yana",
+      "heroLeadEnd": "süren bir gelenek, Turgut Usta imzasi ve Türkiye genelinde süregelen bir hizmet ağıyla yanınızdayız.",
       "heroPills": [
         "Kurumsal güven",
         "Türkiye geneli sevkiyat",
@@ -456,7 +457,10 @@
     "heroAlt": "Hizmetlerimiz hero görseli",
     "kicker": "Firmamızın yaptığı hizmetler",
     "title": "Hizmetlerimiz",
-    "lead": "Camii kubbe kaplamadan sevkiyat ve montaja kadar tüm uzmanlık alanlarımızı tek ekranda bulabilirsiniz. Her başlık için detay sayfasına geçip proje bazlı bilgi alabilirsiniz.",
+      "lead": "Turgut Usta ekibinin camii kubbe kaplamadan sevkiyat ve montaja kadar uzanan tüm uzmanlık alanlarını tek ekranda bulabilirsiniz. Her başlık için detay sayfasına geçip proje bazlı bilgi alabilirsiniz.",
+    "heroSplitKicker": "HİZMETLER",
+    "heroSplitTitle": "Camii Kubbe Kaplama",
+    "heroSplitLead": "Turgut Usta ekibiyle Osmanlı kubbe geleneğine uygun montaj ve malzeme tedariği.",
     "stat1Label": "Hizmet başlığı",
     "stat2Label": "Saha tecrübesi",
     "stat2Suffix": "+ yıl",

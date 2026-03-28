@@ -77,6 +77,7 @@
   },
   "home": {
     "hero": {
+      "brandLine": "Turgut Coskun Mosque Dome Cladding",
       "leftTitle": "Nationwide mosque dome cladding and metal roofing expertise",
       "leftSubtitle": "For copper and aluminium domes, finials, gutters and traditional decoration we deliver disciplined site teams, transparent processes and durable workmanship.",
       "rightTitle": "Growing with our references",
@@ -483,6 +484,9 @@
     "kicker": "Services we provide",
     "title": "Our services",
     "lead": "Browse every area of expertise from mosque dome cladding to shipping and installation on one screen. Open each item for project-specific detail.",
+    "heroSplitKicker": "SERVICES",
+    "heroSplitTitle": "Mosque Dome Cladding",
+    "heroSplitLead": "Installation and material supply in line with the Ottoman dome tradition, with the Turgut Usta team.",
     "stat1Label": "Service lines",
     "stat2Label": "Field experience",
     "stat2Suffix": "+ yrs",

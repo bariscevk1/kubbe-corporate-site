@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ConversionPageViewTracker } from '@/components/analytics/ConversionPageViewTracker';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
 
 export const metadata: Metadata = {
   title: 'Teşekkürler',
@@ -10,28 +11,34 @@ export const metadata: Metadata = {
 
 export default function TesekkurlerPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-16 md:px-6">
+    <main className="site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <ConversionPageViewTracker kind="thankyou" />
 
-      <section className="rounded-2xl border border-white/10 bg-lead-900/40 p-6 md:p-8">
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">Başarılı</p>
-        <h1 className="mt-3 font-display text-3xl font-bold text-white md:text-4xl">Teşekkürler</h1>
-        <p className="mt-4 leading-relaxed text-slate-300">
-          Bilgileriniz tarafımıza ulaştı. Ekibimiz en kısa sürede dönüş sağlayacaktır.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link
-            href="/"
-            className="inline-flex rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-light"
-          >
-            Anasayfaya dön
-          </Link>
-          <Link
-            href="/iletisim"
-            className="inline-flex rounded-xl border border-white/15 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/5"
-          >
-            İletişim sayfası
-          </Link>
+      <section className="mx-auto max-w-3xl px-4 py-16 md:px-6">
+        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-elevated)] p-6 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.18)] md:p-8">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">Başarılı</p>
+          <div className="mt-3">
+            <SubpageHeading as="h1" size="hero">
+              Teşekkürler
+            </SubpageHeading>
+          </div>
+          <p className="leading-relaxed text-[var(--text-body)]">
+            Bilgileriniz tarafımıza ulaştı. Ekibimiz en kısa sürede dönüş sağlayacaktır.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href="/"
+              className="inline-flex min-h-[44px] items-center rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-light"
+            >
+              Anasayfaya dön
+            </Link>
+            <Link
+              href="/iletisim"
+              className="inline-flex min-h-[44px] items-center rounded-xl border border-[var(--border-soft)] bg-white px-5 py-2.5 text-sm font-semibold text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
+            >
+              İletişim sayfası
+            </Link>
+          </div>
         </div>
       </section>
     </main>

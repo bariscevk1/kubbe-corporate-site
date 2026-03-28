@@ -1,32 +1,25 @@
 'use client';
 
 import Image, { type ImageProps } from 'next/image';
-import { useCallback, useId, type DragEvent, type MouseEvent } from 'react';
-import { WatermarkSvgOverlay } from '@/components/media/WatermarkSvgOverlay';
+import { useCallback, type DragEvent, type MouseEvent } from 'react';
 
 export type ProtectedImageProps = Omit<ImageProps, 'onContextMenu' | 'draggable'> & {
-  /** Sarmalayıcıya ek Tailwind / sınıf */
   wrapClassName?: string;
-  /** Geriye dönük uyumluluk — tek SVG pattern kullanılır */
-  watermarkPattern?: 'diagonal' | 'grid';
 };
 
 /**
  * next/image: sunucu tarafında WebP/AVIF, varsayılan lazy-load.
- * Filigran: tek SVG pattern (düşük DOM / paint maliyeti).
+ * Tarayıcı tarafında ek watermark overlay basılmaz; görsel sunucudan geldiği haliyle render edilir.
  */
 export function ProtectedImage({
   src,
   alt,
   className = '',
   wrapClassName = '',
-  watermarkPattern: _watermarkPattern = 'diagonal',
   loading,
   onDragStart,
   ...rest
 }: ProtectedImageProps) {
-  const patternId = `wm-prot-${useId().replace(/:/g, '')}`;
-
   const blockContextMenu = useCallback((e: MouseEvent) => {
     e.preventDefault();
   }, []);
@@ -64,8 +57,6 @@ export function ProtectedImage({
         onContextMenu={blockContextMenu}
         onDragStart={blockDrag}
       />
-
-      <WatermarkSvgOverlay patternId={patternId} className="z-[1] overflow-hidden" />
 
       <div
         className="pointer-events-none absolute inset-0 z-[2] cursor-default bg-transparent"

@@ -75,6 +75,7 @@ const enPatch = {
   },
   home: {
     hero: {
+      brandLine: 'Turgut Coskun Mosque Dome Cladding',
       leftTitle: 'Nationwide mosque dome cladding and metal roofing expertise',
       leftSubtitle:
         'For copper and aluminium domes, finials, gutters and traditional decoration we deliver disciplined site teams, transparent processes and durable workmanship.',
@@ -454,6 +455,9 @@ const enPatch = {
     kicker: 'Services we provide',
     title: 'Our services',
     lead: 'Browse every area of expertise from mosque dome cladding to shipping and installation on one screen. Open each item for project-specific detail.',
+    heroSplitKicker: 'SERVICES',
+    heroSplitTitle: 'Mosque Dome Cladding',
+    heroSplitLead: 'Installation and material supply in line with the Ottoman dome tradition, with the Turgut Usta team.',
     stat1Label: 'Service lines',
     stat2Label: 'Field experience',
     stat2Suffix: '+ yrs',
@@ -524,6 +528,7 @@ const arPatch = {
   },
   home: {
     hero: {
+      brandLine: 'تورغوت جوشكون لكسوة قباب المساجد',
       leftTitle: 'Ø®Ø¨Ø±Ø© ÙƒØ³ÙˆØ© Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ ÙˆØ§Ù„Ø£Ø³Ù‚Ù Ø§Ù„Ù…Ø¹Ø¯Ù†ÙŠØ© ÙÙŠ Ø£Ù†Ø­Ø§Ø¡ ØªØ±ÙƒÙŠØ§',
       leftSubtitle:
         'ÙÙŠ Ø§Ù„Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù†Ø­Ø§Ø³ÙŠØ© ÙˆØ§Ù„Ø£Ù„Ù…Ù†ÙŠÙˆÙ… ÙˆØ§Ù„Ø£Ø¹Ù„Ø§Ù… ÙˆØ§Ù„Ù…Ø²Ø§Ø±ÙŠØ¨ ÙˆØ§Ù„Ø²Ø®Ø±ÙØ© Ø§Ù„ØªÙ‚Ù„ÙŠØ¯ÙŠØ© Ù†Ù‚Ø¯Ù… ÙØ±Ù‚Ø§Ù‹ Ù…Ù†Ø¶Ø¨Ø·Ø© Ø¹Ù„Ù‰ Ø£Ø±Ø¶ Ø§Ù„ÙˆØ§Ù‚Ø¹ØŒ Ø¹Ù…Ù„ÙŠØ§Øª Ø´ÙØ§ÙØ© ÙˆØ­Ø±ÙÙŠØ© Ø¯Ø§Ø¦Ù…Ø©.',
@@ -896,6 +901,9 @@ const arPatch = {
     kicker: 'Ø®Ø¯Ù…Ø§Øª Ù†Ù‚Ø¯Ù…Ù‡Ø§',
     title: 'Ø®Ø¯Ù…Ø§ØªÙ†Ø§',
     lead: 'Ø§Ø·Ù‘Ù„Ø¹ Ø¹Ù„Ù‰ ÙƒÙ„ Ù…Ø¬Ø§Ù„Ø§Øª Ø§Ù„Ø®Ø¨Ø±Ø© Ù…Ù† ÙƒØ³ÙˆØ© Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ Ø¥Ù„Ù‰ Ø§Ù„Ø´Ø­Ù† ÙˆØ§Ù„ØªØ±ÙƒÙŠØ¨ ÙÙŠ Ø´Ø§Ø´Ø© ÙˆØ§Ø­Ø¯Ø©. Ø§ÙØªØ­ ÙƒÙ„ Ø¨Ù†Ø¯ Ù„Ù„ØªÙØ§ØµÙŠÙ„ Ø­Ø³Ø¨ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹.',
+    heroSplitKicker: 'Ø§Ù„Ø®Ø¯Ù…Ø§Øª',
+    heroSplitTitle: 'ÙƒØ³ÙˆØ© Ù‚Ø¨Ø© Ø§Ù„Ù…Ø³Ø¬Ø¯',
+    heroSplitLead: 'Ø§Ù„ØªØ±ÙƒÙŠØ¨ ÙˆØªÙˆØ±ÙŠØ¯ Ø§Ù„Ù…ÙˆØ§Ø¯ ÙˆÙÙ‚ ØªÙ‚Ø§Ù„ÙŠØ¯ Ø§Ù„Ù‚Ø¨Ø© Ø§Ù„Ø¹Ø«Ù…Ø§Ù†ÙŠØ© Ù…Ø¹ ÙØ±ÙŠÙ‚ Ø·Ø±ØºÙˆØª Ø£Ø³ØªØ§.',
     stat1Label: 'Ø¨Ù†ÙˆØ¯ Ø§Ù„Ø®Ø¯Ù…Ø§Øª',
     stat2Label: 'Ø®Ø¨Ø±Ø© Ù…ÙŠØ¯Ø§Ù†ÙŠØ©',
     stat2Suffix: '+ Ø³Ù†Ø©',

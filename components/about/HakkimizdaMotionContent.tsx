@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import { StatsSection } from '@/components/home/StatsSection';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
 
@@ -163,7 +164,7 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
       };
 
   return (
-    <>
+    <div className="site-subpage-light about-page">
       <div className="about-lead-texture relative overflow-hidden border-b border-white/10">
         <motion.div
           className="absolute inset-0"
@@ -171,14 +172,14 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
             reduced
               ? undefined
               : isMobile
-                ? { scale: [1, 1.018, 1], y: [0, -2, 0] }
+                ? undefined
                 : { scale: [1, 1.035, 1], x: [0, -6, 0], y: [0, -4, 0] }
           }
           transition={
             reduced
               ? undefined
               : isMobile
-                ? { duration: 13, repeat: Infinity, ease: 'easeInOut' }
+                ? undefined
                 : { duration: 16, repeat: Infinity, ease: 'easeInOut' }
           }
         >
@@ -196,16 +197,18 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
         <motion.span
           aria-hidden
           className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-          animate={reduced ? undefined : { x: isMobile ? ['0%', '300%'] : ['0%', '360%'] }}
+          animate={reduced ? undefined : isMobile ? undefined : { x: ['0%', '360%'] }}
           transition={
             reduced
               ? undefined
-              : {
-                  duration: isMobile ? 7.5 : 9,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  repeatDelay: isMobile ? 1.8 : 2.5,
-                }
+              : isMobile
+                ? undefined
+                : {
+                    duration: 9,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    repeatDelay: 2.5,
+                  }
           }
         />
         <motion.div {...container} className="relative z-10 mx-auto max-w-5xl px-4 py-14 md:px-6 md:py-20">
@@ -214,16 +217,18 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
             animate={
               reduced
                 ? undefined
-                : {
-                    y: isMobile ? [0, -1.2, 0] : [0, -2, 0],
-                    boxShadow: [
-                      '0 10px 40px rgba(0,0,0,0.45)',
-                      isMobile ? '0 12px 42px rgba(0,0,0,0.5)' : '0 14px 46px rgba(0,0,0,0.52)',
-                      '0 10px 40px rgba(0,0,0,0.45)',
-                    ],
-                  }
+                : isMobile
+                  ? undefined
+                  : {
+                      y: [0, -2, 0],
+                      boxShadow: [
+                        '0 10px 40px rgba(0,0,0,0.45)',
+                        '0 14px 46px rgba(0,0,0,0.52)',
+                        '0 10px 40px rgba(0,0,0,0.45)',
+                      ],
+                    }
             }
-            transition={reduced ? undefined : { duration: isMobile ? 5.2 : 6.5, repeat: Infinity, ease: 'easeInOut' }}
+            transition={reduced ? undefined : isMobile ? undefined : { duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
           >
           <motion.p
             {...item}
@@ -231,13 +236,12 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
           >
             {t('about.motion.heroKicker')}
           </motion.p>
-          <motion.h1
-            {...item}
-            className="mt-3 font-display text-3xl font-bold tracking-tight text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.8)] md:text-4xl"
-          >
-            {t('about.motion.heroTitle')}
-          </motion.h1>
-          <motion.p {...item} className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-100 drop-shadow-[0_2px_14px_rgba(0,0,0,0.78)]">
+          <motion.div {...item} className="mt-3">
+            <SubpageHeading as="h1" size="hero">
+              {t('about.motion.heroTitle')}
+            </SubpageHeading>
+          </motion.div>
+          <motion.p {...item} className="max-w-3xl text-[clamp(1rem,3.8vw,1.125rem)] leading-relaxed text-slate-100 drop-shadow-[0_2px_14px_rgba(0,0,0,0.78)]">
             <strong className="text-white">{company}</strong> — {t('about.motion.heroLeadMid', { brandLine })}{' '}
             <strong className="font-semibold text-slate-200">{t('about.motion.heroLeadSince')}</strong>{' '}
             {t('about.motion.heroLeadEnd')}
@@ -263,7 +267,7 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
             {heroPills.map((pill) => (
               <li
                 key={pill}
-                className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-200"
+                className="rounded-full border border-white/15 bg-black/25 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-200"
               >
                 {pill}
               </li>
@@ -285,18 +289,17 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
             className={`${index > 0 ? 'mt-8' : ''} rounded-2xl border border-white/10 bg-[#4A4A4A]/25 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:border-white/20 md:p-8`}
             aria-labelledby={`section-${section.id}`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-center gap-3 md:flex-row md:items-start">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/25 font-display text-sm font-semibold text-[#b6d8c5]">
                 {index + 1}
               </span>
-              <h2
-                id={`section-${section.id}`}
-                className="font-display text-xl font-semibold text-white md:text-2xl"
-              >
-                {section.title}
-              </h2>
+              <div className="w-full">
+                <SubpageHeading as="h2" id={`section-${section.id}`} spacing="compact">
+                  {section.title}
+                </SubpageHeading>
+              </div>
             </div>
-            <div className="mt-5 space-y-4 text-slate-200">
+            <div className="space-y-4 text-slate-200">
               {section.paragraphs.map((p, i) => (
                 <p key={i} className="leading-relaxed">
                   {p}
@@ -320,10 +323,8 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
           {...item}
           className="mt-8 rounded-2xl border border-white/10 bg-gradient-to-br from-[#1f2528] to-[#111619] p-6 md:p-8"
         >
-          <h2 className="font-display text-lg font-semibold text-white md:text-xl">
-            {t('about.motion.mapSectionTitle')}
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-slate-200">{t('about.ctaBand')}</p>
+          <SubpageHeading as="h2">{t('about.motion.mapSectionTitle')}</SubpageHeading>
+          <p className="text-base leading-relaxed text-slate-200">{t('about.ctaBand')}</p>
         </motion.section>
 
         <motion.section
@@ -331,10 +332,8 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
           className="mt-8 rounded-2xl border border-white/10 bg-[#131a1e] p-6 md:p-8"
           aria-labelledby="timeline-title"
         >
-          <h2 id="timeline-title" className="font-display text-lg font-semibold text-white md:text-xl">
-            {t('about.motion.timelineTitle')}
-          </h2>
-          <div className="relative mt-6">
+          <SubpageHeading as="h2" id="timeline-title">{t('about.motion.timelineTitle')}</SubpageHeading>
+          <div className="relative">
             <span className="pointer-events-none absolute bottom-0 left-3 top-0 w-px bg-white/15 md:left-1/2 md:-translate-x-1/2" />
             <ul className="space-y-6">
               {timeline.map((entry, idx) => {
@@ -370,10 +369,8 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
           className="mt-8 rounded-2xl border border-white/10 bg-[#11181b] p-6 md:p-8"
           aria-labelledby="about-trust-title"
         >
-          <h2 id="about-trust-title" className="font-display text-lg font-semibold text-white md:text-xl">
-            {t('about.motion.trustTitle')}
-          </h2>
-          <ul className="mt-4 grid gap-3 md:grid-cols-3">
+          <SubpageHeading as="h2" id="about-trust-title">{t('about.motion.trustTitle')}</SubpageHeading>
+          <ul className="grid gap-3 md:grid-cols-3">
             {trustLines.map((line) => (
               <li
                 key={line}
@@ -393,10 +390,8 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
           className="mt-8 rounded-2xl border border-white/10 bg-gradient-to-br from-[#141b1f] to-[#0f1518] p-6 md:p-8"
           aria-labelledby="about-process-title"
         >
-          <h2 id="about-process-title" className="font-display text-lg font-semibold text-white md:text-xl">
-            {t('about.motion.processTitle')}
-          </h2>
-          <ol className="mt-5 grid gap-3 md:grid-cols-4">
+          <SubpageHeading as="h2" id="about-process-title">{t('about.motion.processTitle')}</SubpageHeading>
+          <ol className="grid gap-3 md:grid-cols-4">
             {processSteps.map((step) => (
               <li
                 key={step.n}
@@ -415,17 +410,26 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
           aria-labelledby="about-testimonials-title"
         >
           <div className="flex items-center justify-between gap-3">
-            <h2 id="about-testimonials-title" className="font-display text-lg font-semibold text-white md:text-xl">
-              {t('about.motion.testimonialsTitle')}
-            </h2>
+            <div className="flex-1">
+              <SubpageHeading as="h2" id="about-testimonials-title" spacing="compact">
+                {t('about.motion.testimonialsTitle')}
+              </SubpageHeading>
+            </div>
             <div className="flex gap-1.5" aria-hidden>
               {testimonials.map((_, i) => (
                 <span
                   key={i}
-                  className={`h-1.5 w-5 rounded-full transition ${
-                    i === activeTestimonial ? 'bg-[#9fbeac]' : 'bg-white/20'
+                  className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full transition ${
+                    i === activeTestimonial ? 'bg-white/10' : 'bg-transparent'
                   }`}
-                />
+                >
+                  <span
+                    className={`h-1.5 w-5 rounded-full transition ${
+                      i === activeTestimonial ? 'bg-[#9fbeac]' : 'bg-white/20'
+                    }`}
+                    aria-hidden
+                  />
+                </span>
               ))}
             </div>
           </div>
@@ -501,6 +505,6 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
         </a>
       </div>
 
-    </>
+    </div>
   );
 }

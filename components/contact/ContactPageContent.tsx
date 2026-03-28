@@ -6,6 +6,8 @@ import { useMemo, useState } from 'react';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
 import { ValuesSection } from '@/components/home/ValuesSection';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 
 type Props = {
   phone: string;
@@ -26,7 +28,7 @@ function Icon({
 }) {
   return (
     <span
-      className={`inline-flex items-center justify-center text-white/90 ${className}`}
+      className={`inline-flex items-center justify-center text-current ${className}`}
       aria-hidden
     >
       {children}
@@ -51,7 +53,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+      <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
         {label}
       </span>
       <input
@@ -60,7 +62,7 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-[#c5a059]/45 focus:bg-black/35"
+        className="mt-2 w-full rounded-xl border border-[var(--border-soft)] bg-white px-4 py-3 text-sm text-[var(--text-heading)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-[#c5a059]/45 focus:bg-white"
       />
     </label>
   );
@@ -93,10 +95,10 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
   }, [wa, waText]);
 
   return (
-    <main className="bg-[var(--brand-bg-body)]">
-      <section className="relative overflow-hidden border-b border-white/10">
+    <main className="site-subpage-light contact-page bg-[var(--brand-bg-body)]">
+      <section className="relative overflow-hidden border-b border-[var(--border-soft)]">
         <Image
-          src="/iletisim/iletisim-hero.png"
+          src={watermarkedSrc('/iletisim/iletisim-hero.png')}
           alt="İletişim sayfası hero görseli"
           fill
           priority
@@ -112,7 +114,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
           }}
           aria-hidden
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-black/72 to-[#0b1014]/92" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-white/72 to-[#f8f9fa]/92" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px]" />
 
         <div className="relative mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
@@ -120,17 +122,19 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
             initial={reduce ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: easeOut }}
-            className="max-w-3xl rounded-2xl border border-white/12 bg-black/36 p-4 shadow-[0_12px_38px_rgba(0,0,0,0.48)] backdrop-blur-[3px] md:p-7"
+            className="max-w-3xl rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-hero-card)] p-4 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.2)] backdrop-blur-[3px] md:p-7"
           >
             <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-brand-muted">
               İletişim ve teklif
             </p>
-            <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
-              Hızlı iletişim, net teklif.
-            </h1>
-            <p className="mt-4 text-sm leading-relaxed text-slate-300 md:text-base">
-              Projenizi kısaca yazın; aynı gün içerisinde dönüş sağlayalım. Telefon ve WhatsApp üzerinden 7/24
-              ulaşabilirsiniz.
+            <div className="mt-3">
+              <SubpageHeading as="h1" size="hero">
+                Turgut Usta ile hızlı iletişim, net teklif.
+              </SubpageHeading>
+            </div>
+            <p className="text-[clamp(0.98rem,3.8vw,1rem)] leading-relaxed text-[var(--text-body)]">
+              Projenizi kısaca yazın; Turgut Usta ekibi olarak ayni gun icerisinde donus saglayalim. Telefon ve
+              WhatsApp uzerinden 7/24 ulasabilirsiniz.
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -148,11 +152,11 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('iletisim_hero')}
-                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-white/18 bg-white/[0.04] px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[var(--border-soft)] bg-white px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>☎</Icon>
                 Hızlı arama
-                <span aria-hidden className="hidden md:inline">
+                <span aria-hidden className="text-[11px] normal-case tracking-normal text-[var(--text-body)] sm:text-xs">
                   {phonePretty}
                 </span>
               </a>
@@ -170,7 +174,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 href={reviewsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[0.04] px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition hover:border-white/35 hover:bg-white/[0.08] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[var(--border-soft)] bg-white px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>★</Icon>
                 Yorumlar
@@ -178,11 +182,11 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               </a>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2 text-xs text-slate-400">
-              <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
+            <div className="mt-6 flex flex-wrap gap-2 text-xs text-[var(--text-muted)]">
+              <span className="rounded-full border border-[var(--border-soft)] bg-white/80 px-3 py-1.5">
                 Ankara merkez · Türkiye geneli
               </span>
-              <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
+              <span className="rounded-full border border-[var(--border-soft)] bg-white/80 px-3 py-1.5">
                 Keşif · teklif · montaj · sevkiyat
               </span>
             </div>
@@ -198,15 +202,17 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
           transition={{ duration: 0.55, ease: easeOut }}
           className="md:col-span-7"
         >
-          <div className="rounded-2xl border border-white/10 bg-[#0a0d10]/70 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:p-8">
+          <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-elevated)] p-6 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.18)] md:p-8">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">
               Teklif formu
             </p>
-            <h2 className="mt-2 font-display text-xl font-semibold text-white md:text-2xl">
-              Mesaj bırakın, aynı gün dönüş yapalım
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-300">
-              Form gönderimi WhatsApp’a yönlendirilir. Böylece mesajınız kaybolmaz ve hızlıca görüşürüz.
+            <div className="mt-2">
+              <SubpageHeading as="h2">
+                Mesaj birakin, Turgut Usta ayni gun donus yapsin
+              </SubpageHeading>
+            </div>
+            <p className="text-sm leading-relaxed text-[var(--text-body)]">
+              Form gonderimi WhatsApp&apos;a yonlendirilir. Boylece mesajiniz kaybolmaz ve Turgut Usta ekibiyle hizlica gorusuruz.
             </p>
 
             <form
@@ -233,7 +239,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 />
               </div>
               <label className="block">
-                <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
                   Mesajınız
                 </span>
                 <textarea
@@ -241,7 +247,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Proje türü, il/ilçe, yaklaşık metraj, teslim tarihi gibi detayları yazabilirsiniz."
                   rows={5}
-                  className="mt-2 w-full resize-y rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-[#c5a059]/45 focus:bg-black/35"
+                  className="mt-2 w-full resize-y rounded-xl border border-[var(--border-soft)] bg-white px-4 py-3 text-sm text-[var(--text-heading)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-[#c5a059]/45 focus:bg-white"
                 />
               </label>
 
@@ -256,7 +262,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 <a
                   href={tel}
                   onClick={() => trackPhoneClick('iletisim_form')}
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-white/18 bg-white/[0.04] px-5 py-2.5 font-display text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08]"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[var(--border-soft)] bg-white px-5 py-2.5 font-display text-sm font-semibold text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
                 >
                   Hemen arayın
                   <span aria-hidden>{phonePretty}</span>
@@ -271,7 +277,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('iletisim_card')}
-                className="mt-2 inline-flex items-center gap-2 text-lg font-semibold text-white hover:underline"
+                className="mt-2 inline-flex items-center gap-2 text-lg font-semibold text-white transition hover:text-[#c5a059] hover:underline"
               >
                 {phonePretty}
               </a>
@@ -281,7 +287,15 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
             </div>
             <div className="rounded-2xl border border-white/10 bg-black/25 p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Konum</p>
-              <p className="mt-2 text-sm font-semibold text-white">{locationLabel}</p>
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-white hover:underline"
+              >
+                {locationLabel}
+                <span aria-hidden>↗</span>
+              </a>
               <p className="mt-2 text-xs leading-relaxed text-slate-400">
                 Ankara merkezden Türkiye geneline montaj ve sevkiyat. Uygunluk durumuna göre yerinde keşif.
               </p>
@@ -370,10 +384,12 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
             <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">
               Kurumsal iletişim
             </p>
-            <h2 className="mt-2 font-display text-xl font-semibold text-white md:text-2xl">
-              Tek numara, tek ekip, tek sorumluluk
-            </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-300">
+            <div className="mt-2">
+              <SubpageHeading as="h2">
+                Tek numara, tek ekip, tek sorumluluk
+              </SubpageHeading>
+            </div>
+            <p className="max-w-3xl text-sm leading-relaxed text-slate-300">
               Ustadan keşfe, malzeme tedarikinden montaja kadar tek bir hat üzerinden ilerleyin. Hızlı arama veya
               WhatsApp ile hemen başlayalım.
             </p>

@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function AluminyumKubbeKaplamaPage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <HizmetPageHero
         imageSrc="/hizmetler/aluminyum-kubbe-kaplama.webp"
         imageAlt="Alüminyum kaplı camii kubbesi ve kubbe kaplama uygulaması"
         title="Alüminyum Kubbe Kaplama"
         kicker="Hizmet"
-        subtitle="Hafif, dayanıklı ve uzun ömürlü kubbe yüzeyleri için profesyonel montaj."
+        subtitle="Turgut Usta ekibiyle hafif, dayanikli ve uzun omurlu kubbe yuzeyleri icin profesyonel montaj."
       />
 
       <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
@@ -51,9 +51,9 @@ export default function AluminyumKubbeKaplamaPage() {
           </p>
 
           <p>
-            30 yılı aşkın tecrübemizle, alüminyum kubbe kaplama konusunda ihtiyaç duyduğunuz tüm teknik ve
-            uygulama desteğini profesyonel kadromuzla karşılıyoruz. Detaylı bilgi ve fiyat teklifi almak için
-            bizimle iletişime geçebilirsiniz.
+            1987&apos;den bu yana 39 yildir devam eden tecrubemizle, aluminyum kubbe kaplama konusunda ihtiyac
+            duydugunuz tum teknik ve uygulama destegini profesyonel kadromuzla karsiliyoruz. Detayli bilgi ve
+            fiyat teklifi almak icin bizimle iletisime gecebilirsiniz.
           </p>
         </div>
         <ContactCtaBlock />

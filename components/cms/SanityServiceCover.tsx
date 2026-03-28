@@ -3,6 +3,7 @@
 import { ProtectedImage } from '@/components/ProtectedImage';
 import { serviceCoverUrl } from '@/lib/sanity/image';
 import type { ServiceDoc } from '@/lib/sanity/types';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 
 type Props = {
   service: ServiceDoc;
@@ -20,7 +21,7 @@ export function SanityServiceCover({
   className = '',
   wrapClassName = '',
 }: Props) {
-  const src = serviceCoverUrl(service.coverImage, width);
+  const src = watermarkedSrc(serviceCoverUrl(service.coverImage, width));
   const alt = service.coverImage?.alt || service.title;
 
   return (

@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { WatermarkFillClient } from '@/components/media/WatermarkFillClient';
+import { SubpageHeading } from '@/components/ui/SubpageHeading';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 
 export type HizmetPageHeroProps = {
   /** `public/` altı — örn. `/hizmetler/ornek.webp` */
@@ -46,7 +47,7 @@ function HeroCorners() {
 }
 
 /**
- * Hizmet alt sayfaları — tam genişlik hero; görseli `public/` altına koyup `imageSrc` ile bağlayın.
+ * Hizmet alt sayfaları — split screen hero; görseli `public/` altına koyup `imageSrc` ile bağlayın.
  */
 export function HizmetPageHero({
   imageSrc,
@@ -59,58 +60,52 @@ export function HizmetPageHero({
 }: HizmetPageHeroProps) {
   return (
     <section
-      className="relative w-full overflow-hidden border-b border-white/10 bg-lead-950"
+      className="relative w-full overflow-hidden border-b border-[var(--border-soft)] bg-[var(--surface-soft)]"
       aria-labelledby="hizmet-hero-heading"
     >
-      <div className="relative min-h-[min(54vh,480px)] w-full md:min-h-[min(46vh,520px)]">
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          priority={priority}
-          quality={quality}
-          className="object-cover object-[60%_center] md:object-center"
-          sizes="100vw"
-          fetchPriority={priority ? 'high' : 'low'}
-        />
-        {/* Okunabilirlik katmanları */}
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#060c11] via-[#060c11]/78 to-[#0a1520]/52 md:from-[#070d12] md:via-[#070d12]/66"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_110%_70%_at_50%_0%,rgba(0,0,0,0.15),rgba(0,0,0,0.58))] md:bg-[radial-gradient(ellipse_90%_55%_at_50%_-10%,rgba(197,160,89,0.14),transparent_52%)]"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px]"
-          aria-hidden
-        />
-
-        <WatermarkFillClient className="z-[4]" />
-
-        <HeroCorners />
-
-        <div className="absolute bottom-0 left-0 right-0 z-[12] px-4 pb-7 pt-24 md:px-10 md:pb-12 md:pt-32">
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-3xl rounded-2xl border border-white/10 bg-black/28 p-4 shadow-[0_12px_34px_rgba(0,0,0,0.45)] backdrop-blur-[2px] md:border-transparent md:bg-transparent md:p-0 md:shadow-none md:backdrop-blur-0">
-              <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#b7d8c8] md:text-brand-muted">
-                {kicker}
-              </p>
-              <div className="mt-3 h-px w-16 bg-gradient-to-r from-brand/90 to-transparent" aria-hidden />
-              <h1
-                id="hizmet-hero-heading"
-                className="font-display mt-4 text-2xl font-bold leading-tight tracking-tight text-white drop-shadow-[0_3px_20px_rgba(0,0,0,0.78)] sm:text-3xl md:text-4xl md:leading-[1.15] lg:text-[2.6rem]"
-              >
+      <div className="grid md:min-h-screen md:grid-cols-[minmax(320px,40%)_minmax(0,60%)]">
+        <div className="relative z-10 flex flex-col justify-center bg-[var(--surface-hero-card)] px-5 pb-10 pt-28 sm:px-8 sm:pb-12 sm:pt-32 md:px-10 md:pb-14 md:pt-36 lg:px-14">
+          <div className="max-w-xl">
+            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.34em] text-brand-muted sm:text-xs">
+              {kicker}
+            </p>
+            <div className="mt-4 h-px w-20 bg-gradient-to-r from-[#c5a059] to-transparent" aria-hidden />
+            <div className="mt-5">
+              <SubpageHeading as="h1" id="hizmet-hero-heading" size="hero">
                 {title}
-              </h1>
-              {subtitle ? (
-                <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-100/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.78)] md:text-base md:text-slate-300/95 md:drop-shadow-none">
-                  {subtitle}
-                </p>
-              ) : null}
+              </SubpageHeading>
             </div>
+            {subtitle ? (
+              <p className="max-w-lg text-sm leading-7 text-[var(--text-body)] sm:text-base md:text-[1.05rem]">
+                {subtitle}
+              </p>
+            ) : null}
           </div>
+        </div>
+
+        <div className="relative min-h-[42vh] bg-[var(--surface-soft)] sm:min-h-[48vh] md:min-h-screen">
+          <Image
+            src={watermarkedSrc(imageSrc)}
+            alt={imageAlt}
+            fill
+            priority={priority}
+            quality={quality}
+            className="bg-[var(--surface-soft)] object-contain object-center p-4 sm:p-6 md:p-10 lg:p-14"
+            sizes="(max-width: 768px) 100vw, 60vw"
+            fetchPriority={priority ? 'high' : 'low'}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.24),rgba(248,249,250,0.72))]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:24px_24px]"
+            aria-hidden
+          />
+
+          <HeroCorners />
+
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-24 bg-gradient-to-b from-white/25 to-transparent md:h-32" />
         </div>
       </div>
     </section>

@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function BakirLevhaSatisPage() {
   return (
-    <main className="min-h-screen bg-[var(--brand-bg-body)]">
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
       <HizmetPageHero
         imageSrc="/hizmetler/bakir-kubbe-kaplama.webp"
         imageAlt="Bakır kaplı camii kubbesi — bakır kubbe kaplama uygulaması"
         title="Bakır Levha Satışı ve Bakır Kubbe Kaplama"
         kicker="Hizmet"
-        subtitle="Levha tedariği ve bakır kubbe uygulamalarına profesyonel destek."
+        subtitle="Turgut Usta ekibiyle levha tedarigi ve bakir kubbe uygulamalarina profesyonel destek."
       />
 
       <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">

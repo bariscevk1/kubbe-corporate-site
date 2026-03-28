@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { RelativeImageWatermark } from '@/components/media/RelativeImageWatermark';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Playfair_Display } from 'next/font/google';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 import { HOME_SERVICES_TEASER_ITEMS } from '@/lib/content/home-services-teaser';
 
 const playfair = Playfair_Display({
@@ -327,9 +327,9 @@ export function ServicesTeaserSection({ phone }: Props) {
                   className="relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[#c5a059]/35 hover:shadow-[0_24px_48px_-28px_rgba(0,0,0,0.85),0_0_0_1px_rgba(197,160,89,0.12)] max-md:min-h-[296px] md:min-h-[300px]"
                 >
                   {hasImage && item.imageSrc ? (
-                    <RelativeImageWatermark className="relative aspect-[4/3] w-full shrink-0 bg-lead-900">
+                    <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-lead-900">
                       <Image
-                        src={item.imageSrc}
+                        src={watermarkedSrc(item.imageSrc)}
                         alt={imageAlt}
                         fill
                         className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
@@ -340,7 +340,7 @@ export function ServicesTeaserSection({ phone }: Props) {
                         className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-[#111111]/85 via-transparent to-black/10"
                         aria-hidden
                       />
-                    </RelativeImageWatermark>
+                    </div>
                   ) : null}
                   <div
                     className={`flex flex-1 flex-col p-6 max-md:p-7 md:p-7 ${hasImage ? 'pt-5' : 'pt-7'}`}

@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import sharp from 'sharp';
+import { renderPermanentWatermark } from '@/lib/server/image-watermark';
 
 export const runtime = 'nodejs';
 
@@ -24,32 +24,6 @@ const IMAGE_MAP: Record<string, string> = {
   '15': `${ASSET_BASE}\\c__Users_Baris_AppData_Roaming_Cursor_User_workspaceStorage_cf65e08408d636187e57b7dd908866a5_images_sevkiyat-15-bf1a3f23-1c42-41c4-899f-858692eeb561.png`,
 };
 
-function watermarkSvg(width: number, height: number) {
-  const phone = '0532 323 66 27';
-  const rows = 8;
-  const cols = 6;
-  const items: string[] = [];
-
-  for (let y = 0; y < rows; y += 1) {
-    for (let x = 0; x < cols; x += 1) {
-      const px = Math.round((x + 0.5) * (width / cols));
-      const py = Math.round((y + 0.5) * (height / rows));
-      items.push(
-        `<text x="${px}" y="${py}" text-anchor="middle" dominant-baseline="middle" fill="rgba(255,255,255,0.26)" font-size="${Math.max(
-          16,
-          Math.round(width / 42),
-        )}" font-family="Arial, sans-serif" font-weight="700" letter-spacing="1">${phone}</text>`,
-      );
-    }
-  }
-
-  return Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><g transform="rotate(-32 ${width / 2} ${height / 2})">${items.join(
-      '',
-    )}</g></svg>`,
-  );
-}
-
 type Ctx = { params: { id: string } };
 
 export async function GET(_req: Request, { params }: Ctx) {
@@ -59,15 +33,7 @@ export async function GET(_req: Request, { params }: Ctx) {
   try {
     const original = await readFile(source);
     try {
-      const base = sharp(original).rotate();
-      const meta = await base.metadata();
-      const width = meta.width ?? 1200;
-      const height = meta.height ?? 800;
-
-      const out = await base
-        .composite([{ input: watermarkSvg(width, height), gravity: 'center' }])
-        .webp({ quality: 74, effort: 4 })
-        .toBuffer();
+      const out = await renderPermanentWatermark(original);
 
       return new Response(new Uint8Array(out), {
         headers: {
