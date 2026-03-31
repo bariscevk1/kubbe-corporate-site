@@ -195,14 +195,14 @@ export function SiteHeader({
   const barBg =
     scrolled || !isHome
       ? 'site-light-header border-b backdrop-blur-xl'
-      : 'site-light-header border-b backdrop-blur-xl md:border-transparent md:bg-transparent md:shadow-none md:backdrop-blur-0';
+      : 'border-transparent bg-transparent shadow-none backdrop-blur-0';
   const headerPlacement = 'sticky top-0';
 
   return (
     <header
       className={`${headerPlacement} z-[120] pt-[env(safe-area-inset-top,0px)] transition-all duration-300 ease-out ${barBg}`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-2 sm:gap-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
         {/* Mobil: marka + masaüstünde boş (nav merkezde) */}
         <div className="flex min-w-0 flex-1 items-center gap-2 md:gap-5">
           <Link
@@ -223,7 +223,7 @@ export function SiteHeader({
           <Link
             prefetch
             href={toHref('/')}
-            className="flex min-w-0 shrink items-center gap-2 rounded-lg py-1.5 outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:hidden"
+            className="flex min-w-0 flex-1 items-center gap-3 rounded-lg py-1.5 pr-2 outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:hidden"
           >
             {logoUrl ? (
               <Image
@@ -231,15 +231,23 @@ export function SiteHeader({
                 alt={logoAlt || 'Kubbe Kaplama'}
                 width={140}
                 height={42}
-                className="h-8 w-auto max-w-[140px] object-contain object-left"
-                sizes="140px"
+                className="h-16 w-auto max-w-[64px] object-contain object-left"
+                sizes="64px"
                 priority
               />
             ) : (
-              <span className="truncate font-display text-[13px] font-bold leading-tight tracking-tight text-[var(--text-heading)]">
-                <span className="text-[#c5a059]">{brandWordPrimary}</span> {brandWordAccent}
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#c5a059]/10 font-display text-[20px] font-bold leading-tight tracking-tight text-[var(--text-heading)]">
+                {brandWordPrimary.slice(0, 1)}
               </span>
             )}
+            <span className="flex min-w-0 flex-col leading-none">
+              <span className="truncate font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-brand-muted">
+                Turgut Coşkun
+              </span>
+              <span className="mt-1 truncate font-display text-[13px] font-semibold tracking-[0.05em] text-[var(--text-heading)]">
+                Camii Kubbe Kaplama
+              </span>
+            </span>
           </Link>
         </div>
 

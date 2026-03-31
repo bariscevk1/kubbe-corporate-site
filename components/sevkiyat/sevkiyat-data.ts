@@ -40,7 +40,7 @@ export const SEVKIYAT_IMAGES: readonly ShipmentImageItem[] = [
 ];
 
 export function sevkiyatVideoSrc(id: string) {
-  return `/api/sevkiyat-video/${id}`;
+  return `/sevkiyat/videos/sevkiyat-video-${id}.mp4`;
 }
 
 export function sevkiyatImageSrc(id: string) {

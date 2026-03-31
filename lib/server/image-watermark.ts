@@ -55,7 +55,8 @@ export async function renderPermanentWatermark(input: Buffer) {
 
 export function resolvePublicImagePath(src: string) {
   if (!src.startsWith('/')) throw new Error('Invalid image path.');
-  const relative = src.replace(/^\/+/, '');
+  const normalizedSrc = src.split('?')[0]?.split('#')[0] ?? src;
+  const relative = normalizedSrc.replace(/^\/+/, '');
   const absolute = path.resolve(process.cwd(), 'public', relative);
   const publicRoot = path.resolve(process.cwd(), 'public');
 
