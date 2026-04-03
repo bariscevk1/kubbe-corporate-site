@@ -1,17 +1,9 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Oluk Satışı ve Montajı',
-  description:
-    'Camii ve çatı hatlarında oluk satışı ve montajı. Beyaz ve kırmızı seçenekler; alüminyum kubbe kaplama ile uyumlu uygulama.',
-  openGraph: {
-    title: 'Oluk Satışı ve Montajı | Kubbe Kaplama',
-    description:
-      'Yağmur suyu tahliyesi için oluk ve düşen boru sistemleri; Türkiye geneli sevkiyat ve profesyonel montaj.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA.oluk;
 
 export default function OlukPage() {
   return (

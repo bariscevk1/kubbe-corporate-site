@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { HakkimizdaMotionContent } from '@/components/about/HakkimizdaMotionContent';
 import { getSiteSettings } from '@/lib/sanity/site-settings';
 import { getRequestLocale } from '@/lib/i18n/server-locale';
+import { pageMetadata } from '@/lib/seo/metadata-helpers';
+import { semKeywordsForLocale } from '@/lib/seo/sem-locale-keywords';
 import tr from '@/messages/tr.json';
 import en from '@/messages/en.json';
 import ar from '@/messages/ar.json';
@@ -11,7 +13,11 @@ const seoByLang = { tr, en, ar } as const;
 export async function generateMetadata(): Promise<Metadata> {
   const locale = getRequestLocale();
   const s = seoByLang[locale].seo.about;
-  return { title: s.title, description: s.description };
+  return pageMetadata(
+    { title: s.title, description: s.description },
+    'Kubbe Kaplama',
+    semKeywordsForLocale(locale),
+  );
 }
 
 export default async function HakkimizdaPage() {

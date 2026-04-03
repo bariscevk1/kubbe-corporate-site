@@ -474,24 +474,18 @@ video {
 .home-light-palette #hizmetler-ozet h2,
 .home-light-palette #hizmetler-ozet h3,
 .home-light-palette #hakkimizda-ozet h2,
-.home-light-palette #turkiye-referans h2,
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] h2,
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] h3,
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] h4 {
+.home-light-palette #turkiye-referans h2 {
   color: #1f2937 !important;
 }
 
 .home-light-palette #hizmetler-ozet p,
 .home-light-palette #hakkimizda-ozet p,
 .home-light-palette #turkiye-referans p,
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] p,
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] li,
 .home-light-palette #turkiye-referans li {
   color: #52606d !important;
 }
 
 .home-light-palette #hizmetler-ozet .rounded-2xl,
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] .rounded-2xl,
 .home-light-palette #turkiye-referans .group\/trust {
   border-color: rgba(47, 124, 103, 0.12) !important;
   background: rgba(255, 255, 255, 0.82) !important;
@@ -512,14 +506,6 @@ video {
 
 .home-light-palette #turkiye-referans {
   background: linear-gradient(180deg, #f6f8f4 0%, #ebf0ea 100%) !important;
-}
-
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] {
-  background: linear-gradient(180deg, #edf3ee 0%, #e5ece6 100%) !important;
-}
-
-.home-light-palette section[aria-labelledby='seo-hizmet-baslik'] a {
-  color: #2f7c67;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -648,6 +634,40 @@ footer :is(a, button)[class*='rounded'],
 .service-detail-page h2,
 .service-detail-page h3 {
   color: var(--text-heading) !important;
+}
+
+/* Hakkımızda mobil sade hero — genel h1 rengini geçersiz kıl */
+.about-page .about-hakkimizda-mobile-hero h1 {
+  color: #ffffff !important;
+}
+
+/*
+ * Hizmet alt sayfa hero — site-subpage-light altında [class*='text-white'] ve h1 kuralları !important ile
+ * beyaz tipografiyi koyu metne çeviriyordu. #hizmet-hero-heading, attribute seçiciden yüksek özgüllükle beyazı garanti eder.
+ */
+.service-detail-page .hizmet-page-hero #hizmet-hero-heading {
+  color: #ffffff !important;
+}
+
+.service-detail-page .hizmet-page-hero .hizmet-hero-kicker {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.service-detail-page .hizmet-page-hero .hizmet-hero-lead {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* İletişim: .contact-page h1 / text-white kuralları hero başlığını koyulaştırıyordu */
+.contact-page .hizmet-page-hero #hizmet-hero-heading {
+  color: #ffffff !important;
+}
+
+.contact-page .hizmet-page-hero .hizmet-hero-kicker {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.contact-page .hizmet-page-hero .hizmet-hero-lead {
+  color: rgba(255, 255, 255, 0.95) !important;
 }
 
 .about-page strong,

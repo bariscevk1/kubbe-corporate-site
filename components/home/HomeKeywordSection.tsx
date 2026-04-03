@@ -36,95 +36,124 @@ export function HomeKeywordSection() {
     { id: 'alemler', href: '/hizmetler/alemler' },
   ] as const;
 
+  const sectionCard = (item: (typeof serviceSections)[number]) => {
+    const highlights = t(`home.keywords.sections.${item.id}.highlights`, {
+      returnObjects: true,
+    }) as string[];
+
+    return (
+      <section
+        key={item.id}
+        aria-labelledby={`keyword-section-${item.id}`}
+        className="rounded-2xl border border-white/10 bg-lead-950/80 p-5 shadow-inner shadow-black/20 md:p-5"
+      >
+        <p className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#e8d5a3]">
+          {t(`home.keywords.sections.${item.id}.eyebrow`)}
+        </p>
+        <h3
+          id={`keyword-section-${item.id}`}
+          className="mt-3 font-display text-xl font-semibold text-white"
+        >
+          {t(`home.keywords.sections.${item.id}.title`)}
+        </h3>
+        <p className="mt-3 hidden text-sm leading-relaxed text-slate-300 md:block">
+          {t(`home.keywords.sections.${item.id}.body`)}
+        </p>
+        <ul className="mt-4 hidden space-y-2 text-sm text-slate-400 md:block">
+          {highlights.map((highlight) => (
+            <li key={highlight} className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c5a059]" aria-hidden />
+              <span>{highlight}</span>
+            </li>
+          ))}
+        </ul>
+        <Link
+          href={toHref(item.href)}
+          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#a7f3d0] transition hover:text-white"
+        >
+          {t('home.keywords.detailCta')}
+          <span aria-hidden>↗</span>
+        </Link>
+      </section>
+    );
+  };
+
   return (
     <section
       className="border-t border-lead-800/80 bg-lead-900/50"
       aria-labelledby="seo-hizmet-baslik"
     >
-      <div className="mx-auto max-w-6xl px-4 py-14 max-md:px-5 max-md:py-16 md:px-6 md:py-16">
-        <p className="text-center font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">
+      <div className="mx-auto max-w-6xl px-4 py-6 md:px-6 md:py-16">
+        <p className="text-center font-display text-[9px] font-semibold uppercase leading-tight tracking-[0.12em] text-slate-200/95 md:text-xs md:tracking-[0.2em] md:text-[#a7f3d0]">
           {t('home.keywords.tagline')}
         </p>
         <h2
           id="seo-hizmet-baslik"
-          className="mt-4 text-center font-display text-2xl font-bold text-white md:text-3xl"
+          className="mt-2 text-center font-display text-lg font-bold leading-snug text-white drop-shadow-sm md:mt-4 md:text-3xl md:drop-shadow-none"
         >
           {t('home.keywords.heading')}
         </h2>
-        <p className="mx-auto mt-5 max-w-3xl text-center text-base leading-relaxed text-slate-300">
+        <p className="mx-auto mt-2 hidden max-w-3xl text-center text-base leading-relaxed text-slate-300 md:mt-5 md:block">
           {t('home.keywords.description')}
         </p>
 
-        <div className="mt-10 grid gap-4 max-md:mt-12 max-md:gap-5 lg:grid-cols-3">
-          {serviceSections.map((item) => {
-            const highlights = t(`home.keywords.sections.${item.id}.highlights`, {
-              returnObjects: true,
-            }) as string[];
-
-            return (
-              <section
+        {/* Mobil: yatay şerit — üç özet kart */}
+        <div className="mt-4 md:hidden">
+          <ul className="flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {serviceSections.map((item) => (
+              <li
                 key={item.id}
-                aria-labelledby={`keyword-section-${item.id}`}
-                className="rounded-2xl border border-white/10 bg-lead-950/80 p-5 shadow-inner shadow-black/20"
+                className="min-w-[min(88vw,280px)] max-w-[88vw] shrink-0 snap-start rounded-xl border border-white/12 bg-lead-950/90 px-3 py-2.5"
               >
-                <p className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-muted">
+                <p className="font-display text-[9px] font-semibold uppercase tracking-[0.18em] text-[#e8d5a3]">
                   {t(`home.keywords.sections.${item.id}.eyebrow`)}
                 </p>
-                <h3
-                  id={`keyword-section-${item.id}`}
-                  className="mt-3 font-display text-xl font-semibold text-white"
-                >
+                <h3 className="mt-1 font-display text-sm font-semibold leading-tight text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.45)]">
                   {t(`home.keywords.sections.${item.id}.title`)}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                  {t(`home.keywords.sections.${item.id}.body`)}
-                </p>
-                <ul className="mt-4 space-y-2 text-sm text-slate-400">
-                  {highlights.map((highlight) => (
-                    <li key={highlight} className="flex items-start gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c5a059]" aria-hidden />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
                 <Link
                   href={toHref(item.href)}
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#e8d5a3] transition hover:text-white"
+                  className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-[#a7f3d0] underline decoration-[#a7f3d0]/70 underline-offset-[3px] hover:text-white hover:decoration-white"
                 >
                   {t('home.keywords.detailCta')}
                   <span aria-hidden>↗</span>
                 </Link>
-              </section>
-            );
-          })}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <section className="mt-10" aria-labelledby="keyword-cards-title">
+        <div className="mt-8 hidden gap-4 md:grid md:grid-cols-3 md:mt-10">
+          {serviceSections.map((item) => sectionCard(item))}
+        </div>
+
+        <section className="mt-5 md:mt-10" aria-labelledby="keyword-cards-title">
           <h3
             id="keyword-cards-title"
-            className="text-center font-display text-lg font-semibold text-white"
+            className="text-center font-display text-sm font-semibold text-white md:text-lg"
           >
             {t('home.keywords.cardsTitle')}
           </h3>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {/* Mobil: yatay kaydırmalı kompakt kartlar */}
+          <div className="mt-3 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] md:mt-5 md:grid md:gap-4 md:overflow-visible sm:grid-cols-2 xl:grid-cols-3 [&::-webkit-scrollbar]:hidden">
             {keywordCards.map((card) => (
               <Link
                 key={card.id}
                 href={toHref(card.href)}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/25 p-5 transition-[transform,border-color,background-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-[#c5a059]/30 hover:bg-black/35 hover:shadow-[0_20px_45px_-24px_rgba(0,0,0,0.7),0_0_0_1px_rgba(197,160,89,0.08)]"
+                className="group relative min-w-[min(72vw,240px)] shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-black/30 p-3 transition-[transform,border-color] duration-300 hover:border-[#c5a059]/35 md:min-w-0 md:rounded-2xl md:p-5 md:hover:-translate-y-1 md:hover:shadow-[0_20px_45px_-24px_rgba(0,0,0,0.7),0_0_0_1px_rgba(197,160,89,0.08)]"
               >
                 <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#c5a059]/[0.08] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative">
-                  <div className="inline-flex rounded-full border border-[#c5a059]/20 bg-[#c5a059]/10 px-2.5 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.18em] text-[#e8d5a3]">
+                  <div className="inline-flex rounded-full border border-white/30 bg-white/15 px-2 py-0.5 font-display text-[8px] font-semibold uppercase tracking-[0.14em] text-white md:border-[#c5a059]/35 md:bg-[#c5a059]/15 md:px-2.5 md:py-1 md:text-xs md:text-[#fef3c7]">
                     {t('home.keywords.cardBadge')}
                   </div>
-                  <h4 className="mt-4 font-display text-lg font-semibold text-white">
+                  <h4 className="mt-2 font-display text-sm font-semibold leading-snug text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.35)] md:mt-4 md:text-lg md:[text-shadow:none]">
                     {t(`home.keywords.cards.${card.id}.title`)}
                   </h4>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                  <p className="mt-1 line-clamp-2 text-xs leading-snug text-slate-200 md:mt-3 md:line-clamp-none md:text-sm md:leading-relaxed md:text-slate-300">
                     {t(`home.keywords.cards.${card.id}.body`)}
                   </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#e8d5a3] transition group-hover:text-white">
+                  <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-white underline decoration-white/45 underline-offset-2 md:mt-5 md:gap-2 md:text-sm md:no-underline md:text-[#a7f3d0] md:decoration-transparent md:group-hover:text-white">
                     {t('home.keywords.detailCta')}
                     <span aria-hidden>↗</span>
                   </span>
@@ -132,11 +161,10 @@ export function HomeKeywordSection() {
               </Link>
             ))}
           </div>
-          <p className="mx-auto mt-5 max-w-3xl text-center text-xs leading-relaxed text-slate-500">
+          <p className="mx-auto mt-3 hidden max-w-3xl text-center text-xs leading-relaxed text-slate-500 md:mt-5 md:block">
             {t('home.keywords.cardsNote')}
           </p>
         </section>
-
       </div>
     </section>
   );

@@ -43,32 +43,39 @@
     "link_contact": "İletişim",
     "mapLink": "Haritada bul",
     "blurb": "Ankara merkez · <strong class=\"font-medium text-slate-400\">Türkiye geneli</strong> montaj ve sevkiyat · <strong class=\"font-medium text-slate-400\">7/24</strong> telefon & WhatsApp · Körfez ve Arap ülkeleri projeleri (EN/AR iletişim) · Tüm yaş gruplarına kurumsal hizmet",
-    "rights": "Tüm hakları Turgut Coşkun'a saklıdır."
+    "rights": "Tüm hakları Turgut Coşkun'a saklıdır.",
+    "reachUs": "Bize ulaşın",
+    "addressFallback": "Yenimahalle / Ankara",
+    "compactNav": "İletişim ve form",
+    "labelTel": "T",
+    "labelWa": "W",
+    "labelMail": "E",
+    "socialStrip": "Sosyal"
   },
   "seo": {
     "home": {
       "title": "Anasayfa",
-      "description": "Türkiye genelinde camii kubbe kaplama, alüminyum ve bakır kubbe, oluk ve nakkaş işleri. Kurumsal ekip, sevkiyat ve montaj."
+      "description": "Cami kubbe kaplama, kenet çatı, kurşun levha ve alüminyum sac levha satışı, bakır kubbe, cami nakkaş ve camii alemi. Kubbe kaplama ustası; Ankara merkez, Türkiye geneli montaj. 7/24 telefon ve WhatsApp."
     },
     "about": {
       "title": "Hakkımızda",
-      "description": "1987'den bu yana Turgut Usta öncülüğünde 39 yıldır devam eden cami ve kubbe ustalığı, uzman ekipler ve proje odaklı hizmet."
+      "description": "1987'den beri camii kubbe kaplama, kurşun ve alüminyum kubbe, kenet çatı ve metal işlerinde usta ekip. Ankara ve Türkiye geneli referanslar; Turgut Usta liderliğinde kurumsal hizmet."
     },
     "services": {
       "title": "Hizmetler",
-      "description": "Camii kubbe kaplama, alüminyum satışı ve kubbe kaplama, bakır ve kurşun levha, nakkaş, camii alemleri ve oluk sistemleri."
+      "description": "Kubbe kaplama, cami kubbesi kurşun ve alüminyum kaplama, bakır kubbe, kurşun levha satışı, alüminyum satışı, kenet çatı ve oluk, nakkaş süsleme, camii alemi. Her hizmet için ayrı sayfa ve teklif."
     },
     "contact": {
       "title": "İletişim",
-      "description": "Telefon, WhatsApp ve adres. Turgut Usta ekibinden kubbe kaplama ve metal işleri için teklif ve bilgi talebi."
+      "description": "Kubbe kaplama fiyatları, kurşun levha fiyatları, kenet çatı ve alüminyum için teklif. Telefon, WhatsApp, harita; Ankara merkez, Türkiye geneli keşif ve montaj."
     },
     "projects": {
-      "title": "Projeler",
-      "description": "Turgut Usta imzalı tamamlanan ve süren referans projelerimiz."
+      "title": "Projelerimiz",
+      "description": "Camii kubbe kaplama, kenet çatı ve metal işleri referansları; il ve şehir bazlı tamamlanan projeler. Turgut Usta imzalı uygulamalar."
     },
     "shipments": {
       "title": "Sevkiyatlar",
-      "description": "Turgut Usta ekibinin paketleme, yükleme ve Türkiye geneli sevkiyat süreçleri."
+      "description": "Kubbe kaplama malzemeleri, kurşun levha, alüminyum sac ve sac sevkiyatı. Türkiye geneli güvenli paketleme ve zamanında teslimat."
     },
     "thanks": {
       "title": "Teşekkürler",

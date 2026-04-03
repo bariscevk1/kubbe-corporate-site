@@ -1,17 +1,9 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Camii Alemleri',
-  description:
-    'Camii alemi tasarımı, üretimi ve montajı. Minare ve kubbe hatlarında geleneksel ve özel ölçü çözümler; Türkiye geneli hizmet.',
-  openGraph: {
-    title: 'Camii Alemleri | Kubbe Kaplama',
-    description:
-      'Alemlerde estetik, dayanıklılık ve doğru oran; üretimden montaja profesyonel camii alemi hizmeti.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA.alemler;
 
 export default function AlemlerPage() {
   return (

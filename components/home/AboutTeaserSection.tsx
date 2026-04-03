@@ -82,14 +82,14 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-16 max-md:px-5 max-md:py-20 md:px-6 md:py-24">
-        <div className="grid items-center gap-12 max-md:gap-14 lg:grid-cols-12 lg:gap-10">
+      <div className="relative mx-auto max-w-6xl px-4 py-7 max-md:px-4 md:px-6 md:py-24">
+        <div className="grid items-center gap-8 max-md:gap-5 md:gap-12 lg:grid-cols-12 lg:gap-10">
           {/* —— Görsel kolonu: katmanlı kart + clip açılışı —— */}
           <div className="relative lg:col-span-5">
             {!reduce && <DomeAccentLine />}
 
             <motion.div
-              className="relative mx-auto max-w-md lg:mx-0 lg:max-w-none"
+              className="relative mx-auto max-w-md max-md:max-w-[320px] lg:mx-0 lg:max-w-none"
               initial={reduce ? false : { opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: '-8% 0px' }}
@@ -97,53 +97,43 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
             >
               {/* Kağıt yığını efekti — 3 katman */}
               <motion.div
-                className="absolute -inset-1 rounded-[1.35rem] bg-gradient-to-br from-[#2E5A47]/25 to-transparent"
+                className="absolute -inset-1 hidden rounded-[1.35rem] bg-gradient-to-br from-[#2E5A47]/25 to-transparent md:block"
                 initial={reduce ? false : { opacity: 0, scale: 0.92, rotate: -2 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: -1.5 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.75, ease }}
               />
               <motion.div
-                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[1.25rem] border border-[#F5F5DC]/12 bg-lead-900/40"
+                className="absolute inset-0 hidden translate-x-3 translate-y-3 rounded-[1.25rem] border border-[#F5F5DC]/12 bg-lead-900/40 md:block"
                 initial={reduce ? false : { opacity: 0, x: 16, y: 16 }}
                 whileInView={{ opacity: 1, x: 12, y: 12 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.65, delay: 0.08, ease }}
               />
               <motion.div
-                className="relative overflow-hidden rounded-[1.25rem] border-2 border-[#F5F5DC]/18 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.65),0_0_0_1px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.08)] ring-1 ring-[var(--brand)]/25"
+                className="relative overflow-hidden rounded-[1.1rem] border border-[#F5F5DC]/16 shadow-[0_18px_34px_-22px_rgba(0,0,0,0.45)] ring-1 ring-[var(--brand)]/24 md:rounded-[1.25rem] md:border-2 md:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.65),0_0_0_1px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.08)] md:ring-[var(--brand)]/25"
                 initial={reduce ? false : { opacity: 0.92, scale: 1.03 }}
                 whileInView={reduce ? {} : { opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: '0px 0px -10% 0px', amount: 0.2 }}
                 transition={{ duration: 0.75, ease }}
               >
                 {/* clip-path kaldırıldı: bazı tarayıcılarda whileInView tetiklenmezse görsel tamamen gizleniyordu */}
-                <div className="relative aspect-[3/4] min-h-[220px] w-full bg-white sm:aspect-[4/5] sm:min-h-[280px]">
+                <div className="relative aspect-[4/3] min-h-[170px] w-full bg-white sm:aspect-[4/5] sm:min-h-[280px]">
                   <Image
                     src={ABOUT_TEASER_IMAGE}
                     alt={t('home.aboutTeaser.imageAlt')}
                     fill
                     priority
-                    className="object-contain object-center"
+                    unoptimized
+                    className="object-contain object-center brightness-[1.01] contrast-[1.06] saturate-[1.04]"
                     sizes="(max-width: 1024px) 96vw, 480px"
-                    quality={90}
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/35 via-transparent to-transparent"
-                    aria-hidden
-                  />
-                  <motion.div
-                    className="absolute inset-x-0 bottom-0 z-[2] h-1/4 bg-gradient-to-t from-black/55 to-transparent"
-                    initial={{ opacity: 0.5 }}
-                    whileHover={{ opacity: 0.75 }}
-                    transition={{ duration: 0.35 }}
-                    aria-hidden
+                    quality={96}
                   />
                 </div>
 
                 {/* Üst kemer vurgusu — SVG */}
                 <svg
-                  className="pointer-events-none absolute left-0 right-0 top-0 h-16 w-full text-white/10"
+                  className="pointer-events-none absolute left-0 right-0 top-0 hidden h-16 w-full text-white/10 md:block"
                   viewBox="0 0 400 64"
                   preserveAspectRatio="none"
                   aria-hidden
@@ -161,7 +151,7 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
                 </svg>
 
                 <motion.div
-                  className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 md:bottom-5 md:left-5 md:right-5"
+                  className="absolute bottom-3 left-3 right-3 hidden flex-wrap gap-2 md:bottom-5 md:left-5 md:right-5 md:flex"
                   initial={reduce ? false : { opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -176,7 +166,7 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
               {/* Yüzen marka halkası */}
               {!reduce && (
                 <motion.div
-                  className="pointer-events-none absolute -bottom-6 -right-6 h-28 w-28 rounded-full border border-[var(--brand)]/35 bg-[var(--brand)]/5 blur-[1px]"
+                  className="pointer-events-none absolute -bottom-6 -right-6 hidden h-28 w-28 rounded-full border border-[var(--brand)]/35 bg-[var(--brand)]/5 blur-[1px] md:block"
                   animate={{ scale: [1, 1.06, 1], opacity: [0.5, 0.75, 0.5] }}
                   transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                   aria-hidden
@@ -195,46 +185,44 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
           >
             <motion.p
               variants={textItem}
-              className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#a7d4c8]"
+              className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#b8e4d8]"
             >
               {t('home.aboutTeaser.kicker')}
             </motion.p>
             <motion.h2
               id="about-teaser-heading"
               variants={textItem}
-              className="mt-3 font-display text-3xl font-bold tracking-tight text-white md:text-4xl"
+              className="mt-2 text-[2rem] font-bold tracking-tight text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.16)] md:mt-3 md:text-4xl"
             >
-              <span className="bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-                {t('home.aboutTeaser.heading')}
-              </span>
+              {t('home.aboutTeaser.heading')}
             </motion.h2>
             <motion.div
               variants={textItem}
-              className="mt-2 h-1 w-20 rounded-full bg-gradient-to-r from-[var(--brand)] to-brand-muted"
+              className="mt-2 h-1 w-16 rounded-full bg-gradient-to-r from-[var(--brand)] to-brand-muted"
               aria-hidden
             />
             <motion.p
               variants={textItem}
-              className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg"
+              className="mt-4 max-w-xl text-[15px] leading-8 text-slate-100 md:mt-6 md:text-lg"
             >
               {t('home.aboutTeaser.p1', { company: companyName })}
             </motion.p>
             <motion.p
               variants={textItem}
-              className="mt-4 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base"
+              className="mt-3 hidden max-w-xl text-sm leading-relaxed text-slate-300 md:block md:text-base"
             >
               {t('home.aboutTeaser.p2')}
             </motion.p>
 
             <motion.div
               variants={textItem}
-              className="mt-10 flex flex-wrap items-center gap-4"
+              className="mt-6 flex flex-wrap items-center gap-3 md:mt-10 md:gap-4"
             >
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   prefetch
                   href={toHref('/hakkimizda')}
-                  className="group inline-flex items-center gap-2 rounded-xl bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[var(--brand)]/20 ring-1 ring-white/15 transition hover:bg-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)]"
+                  className="group inline-flex items-center gap-2 rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[var(--brand)]/20 ring-1 ring-white/15 transition hover:bg-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-muted)] md:px-6 md:py-3.5"
                 >
                   <span>{t('home.aboutTeaser.storyCta')}</span>
                   <span className="sr-only">{t('home.aboutTeaser.storyCtaSr')}</span>
@@ -251,10 +239,10 @@ export function AboutTeaserSection({ companyName = 'Turgut Çoşkun Kubbe Kaplam
               <Link
                 prefetch
                 href={toHref('/iletisim')}
-                className="group relative text-sm font-medium text-slate-400 transition hover:text-brand-muted"
+                className="group relative text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-light)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
               >
                 <span className="relative z-[1]">{t('home.aboutTeaser.contactCta')}</span>
-                <span className="absolute bottom-0 left-0 h-px w-0 bg-brand-muted transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-[var(--brand)] transition-all duration-300 group-hover:w-full group-hover:bg-[var(--brand-light)]" />
               </Link>
             </motion.div>
           </motion.div>

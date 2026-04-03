@@ -3,21 +3,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Playfair_Display } from 'next/font/google';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import { watermarkedSrc } from '@/lib/media/watermarked-src';
 import { HOME_SERVICES_TEASER_ITEMS } from '@/lib/content/home-services-teaser';
 
-const playfair = Playfair_Display({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['500', '600', '700'],
-  display: 'swap',
-});
-
 const ease = [0.22, 1, 0.36, 1] as const;
 const gold = '#c5a059';
-const goldMuted = 'rgba(197, 160, 89, 0.55)';
 
 function formatPhoneDisplay(raw: string): string {
   const d = raw.replace(/\D/g, '');
@@ -208,6 +201,9 @@ export function ServicesTeaserSection({ phone }: Props) {
   const toHref = useLocalizedPath();
   const phoneDisplay = formatPhoneDisplay(phone);
   const servicesPath = toHref('/hizmetler');
+  const sliderRef = useRef<HTMLUListElement | null>(null);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
   const headerContainer = {
     hidden: {},
@@ -241,23 +237,44 @@ export function ServicesTeaserSection({ phone }: Props) {
     },
   };
 
+  const syncScrollState = useCallback(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+    const maxScrollLeft = el.scrollWidth - el.clientWidth;
+    setCanScrollPrev(el.scrollLeft > 8);
+    setCanScrollNext(el.scrollLeft < maxScrollLeft - 8);
+  }, []);
+
+  useEffect(() => {
+    syncScrollState();
+    const el = sliderRef.current;
+    if (!el) return;
+
+    el.addEventListener('scroll', syncScrollState, { passive: true });
+    window.addEventListener('resize', syncScrollState);
+
+    return () => {
+      el.removeEventListener('scroll', syncScrollState);
+      window.removeEventListener('resize', syncScrollState);
+    };
+  }, [syncScrollState]);
+
+  const scrollCards = useCallback((dir: -1 | 1) => {
+    const el = sliderRef.current;
+    if (!el) return;
+    const step = Math.max(el.clientWidth * 0.82, 280);
+    el.scrollBy({ left: dir * step, behavior: 'smooth' });
+  }, []);
+
   return (
     <section
       id="hizmetler-ozet"
       aria-labelledby="services-teaser-heading"
-      className="relative overflow-hidden border-t border-white/[0.07] bg-black"
+      className="relative overflow-hidden border-t border-[rgba(15,23,42,0.05)] bg-white"
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          backgroundImage: `radial-gradient(ellipse 100% 70% at 50% -15%, ${gold}12, transparent 55%)`,
-        }}
-        aria-hidden
-      />
-
-      <div className="relative mx-auto max-w-6xl px-4 py-20 max-md:px-5 max-md:py-24 md:px-6 md:py-24">
+      <div className="relative mx-auto max-w-6xl px-4 py-6 max-md:px-4 md:px-6 md:py-24">
         <motion.div
-          className="mx-auto max-w-3xl text-center"
+          className="mx-auto max-w-4xl"
           variants={headerContainer}
           initial="hidden"
           whileInView="show"
@@ -265,21 +282,54 @@ export function ServicesTeaserSection({ phone }: Props) {
         >
           <motion.p
             variants={headerItem}
-            className="font-display text-[11px] font-semibold uppercase tracking-[0.38em] md:text-xs"
+            className="font-display text-[10px] font-semibold uppercase tracking-[0.28em] md:text-xs md:tracking-[0.38em]"
             style={{ color: gold }}
           >
             {t('home.services.kicker')}
           </motion.p>
-          <motion.h2
-            id="services-teaser-heading"
-            variants={headerItem}
-            className={`${playfair.className} mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.65rem]`}
-          >
-            {t('home.services.title')}
-          </motion.h2>
+          <motion.div variants={headerItem} className="mt-2 flex items-center justify-between gap-2 md:mt-3 md:gap-3">
+            <button
+              type="button"
+              onClick={() => scrollCards(-1)}
+              aria-label="Onceki hizmet kartlari"
+              disabled={!canScrollPrev}
+              className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[var(--text-heading)] shadow-[0_8px_18px_-16px_rgba(15,23,42,0.12)] transition md:h-12 md:w-12 ${
+                canScrollPrev
+                  ? 'border-[rgba(15,23,42,0.14)] bg-white hover:border-[rgba(15,23,42,0.24)] hover:bg-white'
+                  : 'cursor-not-allowed border-[rgba(15,23,42,0.08)] bg-white/70 text-slate-300'
+              }`}
+            >
+              <span aria-hidden className="text-[1.35rem] leading-none md:text-[2rem]">
+                ←
+              </span>
+            </button>
+            <div className="min-w-0 flex-1 text-center">
+              <h2
+                id="services-teaser-heading"
+                className="text-[1.35rem] font-semibold leading-tight tracking-tight text-[var(--text-heading)] md:text-4xl lg:text-[2.65rem]"
+              >
+                {t('home.services.title')}
+              </h2>
+            </div>
+            <button
+              type="button"
+              onClick={() => scrollCards(1)}
+              aria-label="Sonraki hizmet kartlari"
+              disabled={!canScrollNext}
+              className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[var(--text-heading)] shadow-[0_8px_18px_-16px_rgba(15,23,42,0.12)] transition md:h-12 md:w-12 ${
+                canScrollNext
+                  ? 'border-[rgba(15,23,42,0.14)] bg-white hover:border-[rgba(15,23,42,0.24)] hover:bg-white'
+                  : 'cursor-not-allowed border-[rgba(15,23,42,0.08)] bg-white/70 text-slate-300'
+              }`}
+            >
+              <span aria-hidden className="text-[1.35rem] leading-none md:text-[2rem]">
+                →
+              </span>
+            </button>
+          </motion.div>
           <motion.p
             variants={headerItem}
-            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base"
+            className="mx-auto mt-2 hidden max-w-xl text-center text-[13px] leading-6 text-slate-600 md:mt-4 md:block md:max-w-2xl md:text-base md:leading-relaxed"
           >
             {t('home.services.leadBefore')}
             <Link prefetch href={servicesPath} className="text-[#c5a059]/90 underline-offset-4 hover:underline">
@@ -287,12 +337,11 @@ export function ServicesTeaserSection({ phone }: Props) {
             </Link>
             {t('home.services.leadAfter')}
           </motion.p>
-          <motion.div variants={headerItem} className="mt-8 flex justify-center">
+          <motion.div variants={headerItem} className="mt-3 hidden justify-center md:mt-8 md:flex">
             <Link
               prefetch
               href={servicesPath}
-              className="group inline-flex items-center gap-2 rounded-lg border px-6 py-2.5 font-display text-xs font-semibold uppercase tracking-[0.2em] transition hover:bg-[#c5a059]/10 md:text-sm"
-              style={{ borderColor: goldMuted, color: gold }}
+              className="group inline-flex items-center gap-2 rounded-xl border border-[rgba(15,23,42,0.12)] bg-white px-5 py-2 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--text-heading)] shadow-[0_8px_18px_-16px_rgba(15,23,42,0.12)] transition hover:border-[rgba(15,23,42,0.2)] hover:bg-slate-50 md:px-6 md:py-2.5 md:text-sm"
             >
               {t('home.services.viewAll')}
               <span
@@ -306,71 +355,66 @@ export function ServicesTeaserSection({ phone }: Props) {
         </motion.div>
 
         <motion.ul
-          className="mt-14 grid grid-cols-1 gap-6 max-md:mt-16 max-md:gap-8 sm:grid-cols-2 xl:grid-cols-4"
+          ref={sliderRef}
+          className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 pt-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mt-12 md:gap-5 md:pb-3"
           variants={gridContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-8% 0px' }}
         >
-          {HOME_SERVICES_TEASER_ITEMS.map((item, idx) => {
-            const Icon = SERVICE_ICONS[idx] ?? IconDomeMosque;
-            const hasImage = Boolean(item.imageSrc);
+          {HOME_SERVICES_TEASER_ITEMS.map((item) => {
             const gridBase = `home.services.grid.${item.id}` as const;
             const title = t(`${gridBase}.title`);
             const description = t(`${gridBase}.description`);
             const imageAlt = t(`${gridBase}.imageAlt`);
             return (
-              <motion.li key={item.id} variants={cardItem} className="group h-full">
+              <motion.li
+                key={item.id}
+                variants={cardItem}
+                className="group h-full min-w-[78vw] snap-start sm:min-w-[46vw] lg:min-w-[31.5%] xl:min-w-[23.5%]"
+              >
                 <Link
                   prefetch
                   href={toHref(item.href)}
-                  className="relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[#c5a059]/35 hover:shadow-[0_24px_48px_-28px_rgba(0,0,0,0.85),0_0_0_1px_rgba(197,160,89,0.12)] max-md:min-h-[296px] md:min-h-[300px]"
+                  className="relative flex h-full min-h-[210px] flex-col overflow-hidden rounded-2xl border border-[rgba(15,23,42,0.07)] bg-white shadow-[0_10px_24px_-20px_rgba(15,23,42,0.1)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[rgba(15,23,42,0.14)] hover:shadow-[0_14px_28px_-22px_rgba(15,23,42,0.12)] md:min-h-[300px] md:rounded-[24px]"
                 >
-                  {hasImage && item.imageSrc ? (
-                    <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-lead-900">
-                      <Image
-                        src={watermarkedSrc(item.imageSrc)}
-                        alt={imageAlt}
-                        fill
-                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                        quality={82}
-                      />
-                      <div
-                        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-[#111111]/85 via-transparent to-black/10"
-                        aria-hidden
-                      />
-                    </div>
-                  ) : null}
-                  <div
-                    className={`flex flex-1 flex-col p-6 max-md:p-7 md:p-7 ${hasImage ? 'pt-5' : 'pt-7'}`}
-                  >
-                    {!hasImage ? (
-                      <div
-                        className="mb-5 flex justify-center transition-transform duration-300 group-hover:scale-105"
-                        style={{ color: gold }}
-                      >
-                        <Icon className="h-11 w-11 md:h-12 md:w-12" />
+                  {item.imageSrc ? (
+                    <>
+                      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-slate-200 md:aspect-[4/3]">
+                        <Image
+                          src={watermarkedSrc(item.imageSrc)}
+                          alt={imageAlt}
+                          fill
+                          className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                          sizes="(max-width: 640px) 84vw, (max-width: 1024px) 46vw, (max-width: 1280px) 31vw, 24vw"
+                          quality={82}
+                        />
                       </div>
-                    ) : null}
-                    <h3
-                      className={`${playfair.className} text-center text-lg font-semibold leading-snug text-white md:text-xl`}
-                    >
-                      {title}
-                    </h3>
-                    <p className="mt-3 flex-1 text-center text-sm leading-relaxed text-slate-400">
+                      <div
+                        className="border-t border-[rgba(15,23,42,0.08)] bg-[#f8f9fb] px-3 py-2 text-center md:px-5 md:py-3.5"
+                        style={{ backgroundColor: '#f8f9fb' }}
+                      >
+                        <h3
+                          className="text-[0.9rem] font-bold leading-snug tracking-[0.01em] !text-[#18212b] md:text-[1.08rem]"
+                          style={{ color: '#18212b' }}
+                        >
+                          {title}
+                        </h3>
+                      </div>
+                    </>
+                  ) : null}
+                  <div className="flex flex-1 flex-col p-3 md:p-6">
+                    <p className="line-clamp-3 flex-1 text-left text-[13px] font-medium leading-[1.45] text-slate-700 md:line-clamp-none md:text-base md:leading-7">
                       {description}
                     </p>
-                    <div className="mt-6 flex items-end justify-between gap-3 border-t border-white/[0.06] pt-5">
-                      <span
-                        className="inline-flex items-center gap-1 font-display text-[11px] font-semibold uppercase tracking-wider transition-colors group-hover:text-[#d4b87a]"
-                        style={{ color: gold }}
-                      >
-                        {t('home.services.detailCta')}
-                        <span aria-hidden>→</span>
-                      </span>
-                      <span className="shrink-0 text-right font-mono text-[10px] text-slate-500 md:text-[11px]">
+                    <div className="mt-2 hidden justify-start sm:flex">
+                      <span className="inline-flex items-center rounded-full border border-[rgba(15,23,42,0.1)] bg-slate-50 px-3 py-1 text-[10px] font-semibold tracking-[0.12em] text-slate-600 md:text-[11px]">
                         {phoneDisplay}
+                      </span>
+                    </div>
+                    <div className="mt-2 flex justify-start md:mt-3">
+                      <span className="inline-flex min-h-[36px] min-w-[100px] items-center justify-center rounded-xl border border-[rgba(15,23,42,0.26)] bg-white px-4 text-center text-[13px] font-semibold text-[var(--text-heading)] shadow-[0_8px_18px_-16px_rgba(15,23,42,0.08)] transition group-hover:bg-slate-50 md:min-h-[48px] md:min-w-[132px] md:rounded-2xl md:px-6 md:text-[15px]">
+                        İncele
                       </span>
                     </div>
                   </div>

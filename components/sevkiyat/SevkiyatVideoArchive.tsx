@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
 import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
@@ -135,6 +136,7 @@ export function SevkiyatVideoArchive() {
   const tel = telHrefTr(PHONE);
   const wa = waHrefTr(PHONE);
   const phoneLabel = formatPhoneDisplay(PHONE);
+  const toHref = useLocalizedPath();
 
   const prev = useCallback(() => {
     if (activeIndex < 0) return;
@@ -251,7 +253,7 @@ export function SevkiyatVideoArchive() {
 
           <p className="mt-6 text-xs text-[var(--text-muted)]">
             Donusum takibi: WhatsApp ve telefon butonlari event/conversion tetikler. Gerekirse{' '}
-            <Link href="/tesekkurler" className="text-brand-muted underline-offset-2 hover:underline">
+            <Link href={toHref('/tesekkurler')} className="text-brand-muted underline-offset-2 hover:underline">
               Tesekkurler
             </Link>{' '}
             sayfasi kampanya hedefi olarak kullanilabilir.

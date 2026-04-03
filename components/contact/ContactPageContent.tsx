@@ -1,14 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { formatPhoneDisplay, telHrefTr, waHrefTr } from '@/lib/phone';
-import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
+import { trackContactFormSubmit, trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics/gtag-events';
 import { ValuesSection } from '@/components/home/ValuesSection';
 import { SubpageHeading } from '@/components/ui/SubpageHeading';
-import { watermarkedSrc } from '@/lib/media/watermarked-src';
-
 type Props = {
   phone: string;
   locationLabel: string;
@@ -95,55 +92,26 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
   }, [wa, waText]);
 
   return (
-    <main className="site-subpage-light contact-page bg-[var(--brand-bg-body)]">
-      <section className="relative overflow-hidden border-b border-[var(--border-soft)]">
-        <Image
-          src={watermarkedSrc('/iletisim/iletisim-hero.png')}
-          alt="İletişim sayfası hero görseli"
-          fill
-          priority
-          fetchPriority="high"
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.72]"
-          style={{
-            background:
-              'radial-gradient(1200px 520px at 15% 0%, rgba(197,160,89,0.18), transparent 55%), radial-gradient(900px 460px at 90% 10%, rgba(0,75,35,0.22), transparent 58%)',
-          }}
-          aria-hidden
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-white/72 to-[#f8f9fa]/92" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px]" />
-
-        <div className="relative mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
+    <>
+      <section className="border-b border-[var(--border-soft)] bg-[var(--brand-bg-body)]">
+        <div className="relative mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-10">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: easeOut }}
             className="max-w-3xl rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-hero-card)] p-4 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.2)] backdrop-blur-[3px] md:p-7"
           >
-            <p className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-brand-muted">
-              İletişim ve teklif
-            </p>
-            <div className="mt-3">
-              <SubpageHeading as="h1" size="hero">
-                Turgut Usta ile hızlı iletişim, net teklif.
-              </SubpageHeading>
-            </div>
-            <p className="text-[clamp(0.98rem,3.8vw,1rem)] leading-relaxed text-[var(--text-body)]">
-              Projenizi kısaca yazın; Turgut Usta ekibi olarak ayni gun icerisinde donus saglayalim. Telefon ve
-              WhatsApp uzerinden 7/24 ulasabilirsiniz.
+            <p className="text-sm font-medium leading-relaxed text-[var(--text-heading)]">
+              Hızlı erişim: WhatsApp, telefon, harita ve yorumlar.
             </p>
 
-            <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <a
                 href={waPrefilled}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick('iletisim_hero')}
-                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-emerald-200 transition hover:bg-emerald-500/22 sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[#128C7E]/45 bg-[#128C7E]/12 px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[#054239] transition hover:border-[#128C7E]/55 hover:bg-[#128C7E]/18 sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>🟢</Icon>
                 WhatsApp
@@ -152,11 +120,11 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('iletisim_hero')}
-                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[var(--border-soft)] bg-white px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-xl border border-[var(--border-soft)] bg-white px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)] sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>☎</Icon>
-                Hızlı arama
-                <span aria-hidden className="text-[11px] normal-case tracking-normal text-[var(--text-body)] sm:text-xs">
+                <span>Hızlı arama</span>
+                <span className="w-full basis-full text-center text-[13px] font-bold normal-case tracking-normal text-[var(--text-heading)] tabular-nums sm:w-auto sm:basis-auto sm:text-left sm:text-sm">
                   {phonePretty}
                 </span>
               </a>
@@ -164,7 +132,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20 sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[#8b6914]/45 bg-[#c5a059]/20 px-4 py-3 text-center text-[12px] font-semibold uppercase tracking-[0.12em] text-[#3d2e0a] transition hover:border-[#8b6914]/55 hover:bg-[#c5a059]/28 sm:rounded-2xl sm:px-5 sm:text-xs sm:tracking-[0.14em]"
               >
                 <Icon>📍</Icon>
                 Harita
@@ -182,11 +150,11 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               </a>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2 text-xs text-[var(--text-muted)]">
-              <span className="rounded-full border border-[var(--border-soft)] bg-white/80 px-3 py-1.5">
+            <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium text-[var(--text-heading)]">
+              <span className="rounded-full border border-[var(--border-soft)] bg-white px-3 py-1.5">
                 Ankara merkez · Türkiye geneli
               </span>
-              <span className="rounded-full border border-[var(--border-soft)] bg-white/80 px-3 py-1.5">
+              <span className="rounded-full border border-[var(--border-soft)] bg-white px-3 py-1.5">
                 Keşif · teklif · montaj · sevkiyat
               </span>
             </div>
@@ -219,8 +187,9 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               className="mt-6 grid gap-4"
               onSubmit={(e) => {
                 e.preventDefault();
-                trackWhatsAppClick('iletisim_form_submit');
-                window.open(waPrefilled, '_blank', 'noopener,noreferrer');
+                trackContactFormSubmit('iletisim_form_whatsapp');
+                const opened = window.open(waPrefilled, '_blank', 'noopener,noreferrer');
+                if (!opened) window.location.assign(waPrefilled);
               }}
             >
               <div className="grid gap-4 md:grid-cols-2">
@@ -254,7 +223,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <button
                   type="submit"
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-5 py-2.5 font-display text-sm font-semibold text-emerald-200 transition hover:bg-emerald-500/22"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#128C7E]/45 bg-[#128C7E]/12 px-5 py-2.5 font-display text-sm font-semibold text-[#054239] transition hover:border-[#128C7E]/55 hover:bg-[#128C7E]/18"
                 >
                   WhatsApp ile gönder
                   <span aria-hidden>↗</span>
@@ -262,10 +231,12 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 <a
                   href={tel}
                   onClick={() => trackPhoneClick('iletisim_form')}
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[var(--border-soft)] bg-white px-5 py-2.5 font-display text-sm font-semibold text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
+                  className="inline-flex min-h-[44px] flex-wrap items-center justify-center gap-x-2 gap-y-0.5 rounded-xl border border-[var(--border-soft)] bg-white px-5 py-2.5 font-display text-sm font-semibold text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
                 >
-                  Hemen arayın
-                  <span aria-hidden>{phonePretty}</span>
+                  <span>Hemen arayın</span>
+                  <span className="w-full text-center text-[15px] font-bold tabular-nums text-[var(--text-heading)] sm:w-auto">
+                    {phonePretty}
+                  </span>
                 </a>
               </div>
             </form>
@@ -273,30 +244,30 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-white/10 bg-black/25 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Telefon</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">Telefon</p>
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('iletisim_card')}
-                className="mt-2 inline-flex items-center gap-2 text-lg font-semibold text-white transition hover:text-[#c5a059] hover:underline"
+                className="mt-2 inline-flex items-center gap-2 text-lg font-bold tabular-nums text-[var(--text-heading)] transition hover:text-[#8b6914] hover:underline"
               >
                 {phonePretty}
               </a>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400">
+              <p className="mt-2 text-xs leading-relaxed text-[var(--text-body)]">
                 Acil işler için doğrudan arayın. Keşif ve metraj planlamasını telefonda netleştirelim.
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-black/25 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Konum</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">Konum</p>
               <a
                 href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-white hover:underline"
+                className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-heading)] underline-offset-2 hover:underline"
               >
                 {locationLabel}
                 <span aria-hidden>↗</span>
               </a>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400">
+              <p className="mt-2 text-xs leading-relaxed text-[var(--text-body)]">
                 Ankara merkezden Türkiye geneline montaj ve sevkiyat. Uygunluk durumuna göre yerinde keşif.
               </p>
             </div>
@@ -315,7 +286,9 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
               <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">
                 Harita kaydı
               </p>
-              <p className="mt-1 text-sm text-slate-300">İşletmemizi harita üzerinden inceleyin.</p>
+              <p className="mt-1 text-sm leading-snug text-[var(--text-body)]">
+                İşletmemizi harita üzerinden inceleyin.
+              </p>
             </div>
             <div className="relative aspect-[16/11] w-full">
               <iframe
@@ -331,7 +304,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#e8d5a3] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20"
+                className="inline-flex items-center gap-2 rounded-full border border-[#8b6914]/45 bg-[#c5a059]/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#3d2e0a] transition hover:border-[#8b6914]/55 hover:bg-[#c5a059]/28"
               >
                 Haritada aç
                 <span aria-hidden>↗</span>
@@ -340,7 +313,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 href={reviewsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-white/35 hover:bg-white/[0.08]"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
               >
                 Yorumlar
                 <span aria-hidden>★</span>
@@ -349,8 +322,8 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
           </div>
 
           <div className="mt-6 rounded-2xl border border-white/10 bg-black/25 p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Çalışma düzeni</p>
-            <ul className="mt-3 space-y-2 text-sm text-slate-300">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">Çalışma düzeni</p>
+            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-[var(--text-body)]">
               <li className="flex items-start gap-2">
                 <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-[#c5a059]" aria-hidden />
                 Keşif planı: konum ve metraja göre
@@ -389,24 +362,25 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                 Tek numara, tek ekip, tek sorumluluk
               </SubpageHeading>
             </div>
-            <p className="max-w-3xl text-sm leading-relaxed text-slate-300">
+            <p className="max-w-3xl text-sm leading-relaxed text-[var(--text-body)]">
               Ustadan keşfe, malzeme tedarikinden montaja kadar tek bir hat üzerinden ilerleyin. Hızlı arama veya
               WhatsApp ile hemen başlayalım.
             </p>
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href={tel}
                 onClick={() => trackPhoneClick('iletisim_footer_cta')}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-white/18 bg-white/[0.04] px-5 py-2.5 font-display text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/[0.08]"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[var(--border-soft)] bg-white px-5 py-2.5 font-display text-sm font-semibold text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
               >
-                Hızlı arama: {phonePretty}
+                <span>Hızlı arama</span>
+                <span className="font-bold tabular-nums text-[var(--text-heading)]">{phonePretty}</span>
               </a>
               <a
                 href={waPrefilled}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick('iletisim_footer_cta')}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-5 py-2.5 font-display text-sm font-semibold text-emerald-200 transition hover:bg-emerald-500/22"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[#128C7E]/45 bg-[#128C7E]/12 px-5 py-2.5 font-display text-sm font-semibold text-[#054239] transition hover:border-[#128C7E]/55 hover:bg-[#128C7E]/18"
               >
                 WhatsApp ile yazın
               </a>
@@ -414,7 +388,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }
 

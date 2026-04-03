@@ -45,7 +45,6 @@ export function HeroSplitSection({
   const toHref = useLocalizedPath();
   const reduceMotion = useReducedMotion() ?? false;
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   const slides = useMemo(
     () => [
@@ -86,15 +85,6 @@ export function HeroSplitSection({
     });
   }, [loadedSlides, slides]);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const media = window.matchMedia('(max-width: 767px)');
-    const sync = () => setIsMobile(media.matches);
-    sync();
-    media.addEventListener('change', sync);
-    return () => media.removeEventListener('change', sync);
-  }, []);
-
   const brandLine = t('home.hero.brandLine') || 'Turgut Coşkun Camii Kubbe Kaplama';
   const title = leftTitle ?? t('home.hero.leftTitle');
   const subtitle = leftSubtitle ?? t('home.hero.leftSubtitle');
@@ -114,12 +104,12 @@ export function HeroSplitSection({
       aria-label={t('home.hero.ariaSection')}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <div className="relative grid min-h-[620px] grid-cols-1 md:min-h-[100vh] md:grid-cols-[minmax(340px,38%)_1fr]">
+      <div className="relative grid min-h-[420px] grid-cols-1 md:min-h-[100vh] md:grid-cols-[minmax(340px,38%)_1fr]">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, x: -18 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, ease: easeLux }}
-          className="relative z-10 order-2 flex bg-black/[0.68] px-5 py-8 backdrop-blur-md max-md:border-t max-md:border-white/10 sm:px-6 md:order-1 md:min-h-[100vh] md:items-center md:bg-black/[0.48] md:px-8 lg:px-10"
+          className="relative z-10 order-2 hidden bg-black/[0.68] px-5 py-8 backdrop-blur-md sm:px-6 md:order-1 md:flex md:min-h-[100vh] md:items-center md:bg-black/[0.48] md:px-8 lg:px-10"
         >
           <div className="w-full max-w-[32rem]">
             {logoUrl ? (
@@ -135,16 +125,16 @@ export function HeroSplitSection({
               </div>
             ) : null}
 
-            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-[#e8d5a3] sm:text-xs">
+            <p className="font-display text-[12px] font-semibold uppercase tracking-[0.28em] text-[#f1e0b0] drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)] sm:text-xs">
               {brandLine}
             </p>
-            <h1 className="mt-4 max-w-[13ch] font-display text-[clamp(2rem,8vw,4.8rem)] font-bold leading-[0.98] tracking-tight text-white md:max-w-[10ch]">
+            <h1 className="mt-4 max-w-[12ch] font-display text-[clamp(2.45rem,10vw,4.9rem)] font-bold leading-[0.95] tracking-tight text-white drop-shadow-[0_16px_36px_rgba(0,0,0,0.42)] md:max-w-[10ch]">
               {title}
             </h1>
-            <p className="mt-5 max-w-[32rem] text-[clamp(0.98rem,3.8vw,1.125rem)] leading-relaxed text-slate-100/95">
+            <p className="mt-5 max-w-[32rem] text-[clamp(1.05rem,4.15vw,1.16rem)] leading-relaxed text-slate-50 drop-shadow-[0_10px_22px_rgba(0,0,0,0.32)]">
               {subtitle}
             </p>
-            <p className="mt-4 max-w-[32rem] text-[clamp(0.9rem,3.5vw,1rem)] leading-relaxed text-slate-200/85">
+            <p className="mt-4 max-w-[32rem] text-[clamp(0.98rem,3.7vw,1.03rem)] leading-relaxed text-slate-100/90 drop-shadow-[0_10px_22px_rgba(0,0,0,0.28)]">
               <span className="font-semibold text-white">{secondaryTitle}</span>
               {' · '}
               {secondarySubtitle}
@@ -171,7 +161,7 @@ export function HeroSplitSection({
               <Link
                 prefetch
                 href={servicesHref}
-                className="inline-flex min-h-[46px] items-center justify-center rounded-xl border border-[#c5a059]/45 bg-[#c5a059]/10 px-5 py-3 text-center font-display text-[12px] font-semibold uppercase tracking-[0.14em] text-[#f4e5bc] transition hover:bg-[#c5a059]/18"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-white/30 bg-white/16 px-6 py-3.5 text-center text-[12px] font-medium uppercase tracking-[0.14em] text-white shadow-[0_10px_24px_-20px_rgba(15,23,42,0.28)] transition hover:bg-white/22 max-md:min-w-[220px]"
               >
                 {t('home.hero.colCtaServices')}
               </Link>
@@ -194,7 +184,7 @@ export function HeroSplitSection({
           </div>
         </motion.div>
 
-        <div className="group relative order-1 min-h-[58vh] bg-[#1a1a1a] sm:min-h-[64vh] md:order-2 md:min-h-[100vh]">
+        <div className="group relative order-1 min-h-[54svh] bg-[#1a1a1a] sm:min-h-[64vh] md:order-2 md:min-h-[100vh]">
           {slides.map((slide, index) => {
             const isActive = index === activeIndex;
             return (
@@ -207,21 +197,8 @@ export function HeroSplitSection({
                 style={{ zIndex: isActive ? 2 : 1 }}
                 aria-hidden={!isActive}
               >
-                <motion.div
-                  className="absolute inset-0"
-                  initial={false}
-                  animate={
-                    isActive && !reduceMotion
-                      ? isMobile
-                        ? { scale: 1.04, x: 0 }
-                        : { scale: 1.12, x: -12 }
-                      : { scale: 1.02, x: 0 }
-                  }
-                  transition={{
-                    duration: reduceMotion ? 0.2 : isMobile ? 0.6 : AUTO_SLIDE_MS + 1800,
-                    ease: 'easeOut',
-                  }}
-                >
+                {/* object-cover: alanı tamamen doldurur, yan siyah şerit (letterbox) kalmaz; dikey görsellerde hafif üst-alt kırpılabilir */}
+                <div className="absolute inset-0">
                   <Image
                     src={slide.src}
                     alt={slide.alt}
@@ -235,9 +212,8 @@ export function HeroSplitSection({
                       setLoadedSlides((current) => ({ ...current, [slide.src]: true }));
                     }}
                   />
-                </motion.div>
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,20,0.10),rgba(6,14,20,0.18)_42%,rgba(6,14,20,0.42)_100%)] md:bg-[linear-gradient(180deg,rgba(6,14,20,0.04),rgba(6,14,20,0.12)_40%,rgba(6,14,20,0.28)_100%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.04),rgba(0,0,0,0.20))]" />
+                </div>
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,20,0.12),rgba(6,14,20,0.14)_32%,rgba(6,14,20,0.32)_72%,rgba(6,14,20,0.48)_100%)] md:bg-[linear-gradient(180deg,rgba(6,14,20,0.04),rgba(6,14,20,0.12)_40%,rgba(6,14,20,0.28)_100%)]" />
                 {!loadedSlides[slide.src] ? <div className="absolute inset-0 bg-[#1a1a1a]" /> : null}
               </motion.div>
             );
@@ -264,8 +240,8 @@ export function HeroSplitSection({
             </span>
           </button>
 
-          <div className="absolute inset-x-0 bottom-6 z-10">
-            <div className="flex items-center justify-center gap-2 px-4 md:justify-end md:px-8">
+          <div className="absolute inset-x-0 bottom-4 z-10 md:bottom-6">
+            <div className="flex items-center justify-start gap-2 px-4 md:justify-end md:px-8">
               {slides.map((slide, index) => (
                 <button
                   key={slide.src}
@@ -273,12 +249,12 @@ export function HeroSplitSection({
                   aria-label={`Hero gorseli ${index + 1}`}
                   onClick={() => setActiveIndex(index)}
                   className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full transition-all duration-300 ${
-                    index === activeIndex ? 'bg-white/10' : 'bg-black/10 hover:bg-white/10'
+                    index === activeIndex ? 'bg-white/10' : 'bg-black/5 hover:bg-white/10'
                   }`}
                 >
                   <span
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      index === activeIndex ? 'w-14 bg-[#e8d5a3]' : 'w-7 bg-white/[0.35] hover:bg-white/[0.55]'
+                      index === activeIndex ? 'w-10 bg-[#e8d5a3]' : 'w-5 bg-white/[0.45] hover:bg-white/[0.6]'
                     }`}
                     aria-hidden
                   />

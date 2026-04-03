@@ -2,17 +2,9 @@ import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
 import { SubpageHeading } from '@/components/ui/SubpageHeading';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Kurşun Levha Satışı',
-  description:
-    'Yüksek saflıkta kurşun levha satışı, özel ebat üretim ve Türkiye geneli sevkiyat. Kubbe kaplama, restorasyon ve radyasyon yalıtımı için profesyonel çözümler.',
-  openGraph: {
-    title: 'Kurşun Levha Satışı | Kubbe Kaplama',
-    description:
-      'Kubbe, minare ve restorasyon uygulamaları için yüksek kalite kurşun levha tedariki ve teknik destek.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA['kursun-levha-satis'];
 
 export default function KursunLevhaSatisPage() {
   return (

@@ -1,17 +1,11 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { ServicePageImageGallery } from '@/components/hizmetler/ServicePageImageGallery';
+import { BAKIR_LEVHA_SATIS_GALLERY } from '@/lib/content/bakir-levha-satis-gallery';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Bakır Levha Satışı ve Bakır Kubbe Kaplama',
-  description:
-    'Camii kubbeleri için bakır levha satışı ve bakır kubbe kaplama uygulamalarına uygun tedarik. Profesyonel ekip ve Türkiye geneli destek.',
-  openGraph: {
-    title: 'Bakır Levha & Bakır Kubbe | Kubbe Kaplama',
-    description:
-      'Bakır kubbe kaplama ve bakır levha tedariği; uzun ömürlü yüzeyler ve doğru malzeme seçimi ile güvenilir hizmet.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA['bakir-levha-satis'];
 
 export default function BakirLevhaSatisPage() {
   return (
@@ -50,6 +44,15 @@ export default function BakirLevhaSatisPage() {
             projenize uygun teknik yönlendirme ve fiyatlandırma desteği talep edebilirsiniz.
           </p>
         </div>
+      </div>
+
+      <ServicePageImageGallery
+        id="bakir-levha-satis-gallery"
+        title="Bakır kubbe kaplama — uygulama görseli"
+        items={BAKIR_LEVHA_SATIS_GALLERY}
+      />
+
+      <div className="mx-auto max-w-3xl px-4 pb-16 md:px-6">
         <ContactCtaBlock />
       </div>
     </main>

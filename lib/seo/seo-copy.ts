@@ -8,9 +8,9 @@
  */
 
 export const DEFAULT_SITE_DESCRIPTION_TR = [
-  'Cami kubbe kaplama, bakır ve alüminyum kubbe, cami alemleri, kurşun levha ve kurşun kaplama, kenet çatı sistemleri, alüminyum sac ve levha satışı.',
-  'Türkiye genelinde profesyonel uygulama; WhatsApp ve telefon hattı ile 7 gün 24 saat ulaşılabilir ekip.',
-  'Körfez ülkeleri ve Arap ülkelerinden gelen projeler için İngilizce ve Arapça iletişim desteği sunulabilir; tüm yaş gruplarına yönelik kurumsal hizmet.',
+  'Cami kubbe kaplama, camii kubbe kaplama ustası, kurşun ve alüminyum kubbe, bakır kubbe kaplama, cami kurşun kaplama, kenet çatı ve metal kenet çatı, alüminyum sac levha satışı, kurşun levha fiyatları, cami nakkaş ve camii alemi.',
+  'Türkiye genelinde montaj ve sevkiyat; Ankara merkez. WhatsApp ve telefon ile 7/24 ulaşım.',
+  'Körfez ve Arap ülkeleri projeleri için İngilizce ve Arapça iletişim; kurumsal hizmet.',
 ].join(' ');
 
 export const SITE_TAGLINE_TR =

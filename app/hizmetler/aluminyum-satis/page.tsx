@@ -1,17 +1,12 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { ServicePageImageGallery } from '@/components/hizmetler/ServicePageImageGallery';
 import { SubpageHeading } from '@/components/ui/SubpageHeading';
+import { ALUMINYUM_SATIS_GALLERY } from '@/lib/content/aluminyum-satis-gallery';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Alüminyum Satışı',
-  description:
-    'Camii kubbeleri ve özel projeler için alüminyum satışı, tedarik ve sevkiyat hizmetleri. Her renk ve kalınlıkta ürün seçenekleri.',
-  openGraph: {
-    title: 'Alüminyum Satışı | Kubbe Kaplama',
-    description: 'Her renk ve kalınlıkta alüminyum ürün tedariği ve Türkiye geneli sevkiyat.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA['aluminyum-satis'];
 
 export default function AluminyumSatisPage() {
   return (
@@ -66,6 +61,15 @@ export default function AluminyumSatisPage() {
             sayfamızdan bize doğrudan ulaşabilirsiniz.
           </p>
         </div>
+      </div>
+
+      <ServicePageImageGallery
+        id="aluminyum-satis-gallery"
+        title="Depo ve stok görselleri"
+        items={ALUMINYUM_SATIS_GALLERY}
+      />
+
+      <div className="mx-auto max-w-3xl px-4 pb-16 md:px-6">
         <ContactCtaBlock />
       </div>
     </main>

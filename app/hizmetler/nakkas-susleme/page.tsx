@@ -1,17 +1,9 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Camii Nakkaş Süsleme',
-  description:
-    'Camii, türbe ve tarihi yapılarda nakkaş süsleme hizmetleri. Kubbe, tavan ve iç duvarlarda geleneksel kalemkâr işçiliği ve estetik restorasyon uygulamaları.',
-  openGraph: {
-    title: 'Camii Nakkaş Süsleme | Kubbe Kaplama',
-    description:
-      'Geleneksel nakkaş süsleme sanatını uzman ekip ile camii ve tarihi yapılara taşıyan profesyonel hizmet.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA['nakkas-susleme'];
 
 export default function NakkasSuslemePage() {
   return (

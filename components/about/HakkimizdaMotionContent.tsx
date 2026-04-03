@@ -84,7 +84,6 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
   const waHref = waHrefTr(CONTACT_PHONE);
   const phoneLabel = formatPhoneDisplay(CONTACT_PHONE);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   const sections = useMemo(
     () =>
@@ -129,15 +128,6 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
     return () => window.clearInterval(timer);
   }, [reduced, testimonials.length]);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const media = window.matchMedia('(max-width: 767px)');
-    const sync = () => setIsMobile(media.matches);
-    sync();
-    media.addEventListener('change', sync);
-    return () => media.removeEventListener('change', sync);
-  }, []);
-
   const container = reduced
     ? {}
     : {
@@ -165,22 +155,46 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
 
   return (
     <div className="site-subpage-light about-page">
+      <div className="md:hidden">
+        <header className="about-hakkimizda-mobile-hero relative min-h-[min(46vh,320px)] w-full overflow-hidden border-b border-black/10">
+          <Image
+            src="/about/hakkimizda-hero.png"
+            alt={t('about.motion.heroAlt')}
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/50" aria-hidden />
+          <div className="relative z-10 flex min-h-[min(46vh,320px)] items-center justify-center px-5">
+            <h1 className="text-center text-2xl font-bold leading-tight tracking-tight text-white">
+              {t('about.motion.heroTitle')}
+            </h1>
+          </div>
+        </header>
+        <article className="mx-auto w-full max-w-lg bg-white px-5 py-10 pb-24">
+          {sections.map((section) => (
+            <section key={section.id} className="mb-10 last:mb-0">
+              <h2 className="mb-3 text-base font-bold text-slate-900">{section.title}</h2>
+              {section.paragraphs.map((p, i) => (
+                <p key={i} className="mb-4 text-[15px] leading-[1.82] text-slate-800 last:mb-0">
+                  {p}
+                </p>
+              ))}
+            </section>
+          ))}
+        </article>
+      </div>
+
+      <div className="hidden md:block">
       <div className="about-lead-texture relative overflow-hidden border-b border-white/10">
         <motion.div
           className="absolute inset-0"
           animate={
-            reduced
-              ? undefined
-              : isMobile
-                ? undefined
-                : { scale: [1, 1.035, 1], x: [0, -6, 0], y: [0, -4, 0] }
+            reduced ? undefined : { scale: [1, 1.035, 1], x: [0, -6, 0], y: [0, -4, 0] }
           }
           transition={
-            reduced
-              ? undefined
-              : isMobile
-                ? undefined
-                : { duration: 16, repeat: Infinity, ease: 'easeInOut' }
+            reduced ? undefined : { duration: 16, repeat: Infinity, ease: 'easeInOut' }
           }
         >
           <Image
@@ -197,18 +211,16 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
         <motion.span
           aria-hidden
           className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-          animate={reduced ? undefined : isMobile ? undefined : { x: ['0%', '360%'] }}
+          animate={reduced ? undefined : { x: ['0%', '360%'] }}
           transition={
             reduced
               ? undefined
-              : isMobile
-                ? undefined
-                : {
-                    duration: 9,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    repeatDelay: 2.5,
-                  }
+              : {
+                  duration: 9,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  repeatDelay: 2.5,
+                }
           }
         />
         <motion.div {...container} className="relative z-10 mx-auto max-w-5xl px-4 py-14 md:px-6 md:py-20">
@@ -217,18 +229,16 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
             animate={
               reduced
                 ? undefined
-                : isMobile
-                  ? undefined
-                  : {
-                      y: [0, -2, 0],
-                      boxShadow: [
-                        '0 10px 40px rgba(0,0,0,0.45)',
-                        '0 14px 46px rgba(0,0,0,0.52)',
-                        '0 10px 40px rgba(0,0,0,0.45)',
-                      ],
-                    }
+                : {
+                    y: [0, -2, 0],
+                    boxShadow: [
+                      '0 10px 40px rgba(0,0,0,0.45)',
+                      '0 14px 46px rgba(0,0,0,0.52)',
+                      '0 10px 40px rgba(0,0,0,0.45)',
+                    ],
+                  }
             }
-            transition={reduced ? undefined : isMobile ? undefined : { duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
+            transition={reduced ? undefined : { duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
           >
           <motion.p
             {...item}
@@ -480,6 +490,7 @@ export function HakkimizdaMotionContent({ company, brandLine }: Props) {
           </Link>
         </motion.p>
       </motion.article>
+      </div>
 
       {/* Desktop: sağ alt sticky CTA */}
       <div className="fixed bottom-6 right-6 z-[60] hidden w-[300px] rounded-2xl border border-white/15 bg-[#0f1518]/90 p-3 shadow-[0_16px_42px_rgba(0,0,0,0.45)] backdrop-blur-md md:block">

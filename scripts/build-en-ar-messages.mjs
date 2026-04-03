@@ -48,29 +48,45 @@ const enPatch = {
     blurb:
       'Ankara HQ Â· <strong class="font-medium text-slate-400">Nationwide</strong> installation & shipping Â· <strong class="font-medium text-slate-400">24/7</strong> phone & WhatsApp Â· Gulf & Arab region projects (EN/AR support) Â· Corporate service for all ages',
     rights: 'All rights reserved by Turgut Coşkun.',
+    reachUs: 'Contact us',
+    addressFallback: 'Yenimahalle / Ankara, Turkey',
+    compactNav: 'Contact page',
+    labelTel: 'T',
+    labelWa: 'W',
+    labelMail: 'E',
+    socialStrip: 'Social',
   },
   seo: {
     home: {
       title: 'Home',
       description:
-        'Nationwide mosque dome cladding, aluminium and copper domes, gutters and decorative painting across Turkey. Professional crews, shipping and installation.',
+        'Mosque dome cladding, standing seam metal roofing, lead sheet and aluminium plate sales, copper domes, mosque decoration and finials. Master dome teams; Ankara HQ, nationwide installation. 24/7 phone and WhatsApp.',
     },
     about: {
       title: 'About us',
       description:
-        'Since 1987, Turgut Ã‡oÅŸkun Kubbe Kaplama: nationwide mosque & dome works, master craftspeople, project-focused service.',
+        'Since 1987: mosque dome cladding, lead and aluminium domes, standing seam roofs and metal works. Ankara and nationwide references; corporate service led by Master Turgut.',
     },
     services: {
       title: 'Services',
       description:
-        'Mosque dome cladding, aluminium sales & dome cladding, copper and lead sheet, decorative painting, mosque finials and gutter systems.',
+        'Dome cladding, lead and aluminium mosque domes, copper domes, lead sheet sales, aluminium sales, standing seam gutters, decorative painting, mosque finials. Dedicated page and quote for each line.',
     },
     contact: {
       title: 'Contact',
-      description: 'Phone, WhatsApp and address. Quotes and enquiries for dome cladding and metal works.',
+      description:
+        'Quotes for dome cladding, lead sheet, standing seam and aluminium. Phone, WhatsApp, map; Ankara HQ, nationwide surveys and installation.',
     },
-    projects: { title: 'Projects', description: 'Completed and ongoing reference projects.' },
-    shipments: { title: 'Shipments', description: 'Packing, loading and nationwide logistics.' },
+    projects: {
+      title: 'Projects',
+      description:
+        'Reference mosque dome cladding, standing seam and metal projects by province and city. Applications signed by Master Turgut.',
+    },
+    shipments: {
+      title: 'Shipments',
+      description:
+        'Nationwide shipping of dome cladding materials, lead sheet, aluminium coil and plate. Secure packing and on-time delivery.',
+    },
     thanks: { title: 'Thank you', description: 'Your message has been received.' },
   },
   home: {
@@ -501,29 +517,45 @@ const arPatch = {
     blurb:
       'Ù…Ù‚Ø± Ø£Ù†Ù‚Ø±Ø© Â· <strong class="font-medium text-slate-400">ØªØ±ÙƒÙŠØ§ Ø¨Ø§Ù„ÙƒØ§Ù…Ù„</strong> ØªØ±ÙƒÙŠØ¨ ÙˆØ´Ø­Ù† Â· <strong class="font-medium text-slate-400">Ø¹Ù„Ù‰ Ù…Ø¯Ø§Ø± Ø§Ù„Ø³Ø§Ø¹Ø©</strong> Ù‡Ø§ØªÙ ÙˆÙˆØ§ØªØ³Ø§Ø¨ Â· Ù…Ø´Ø§Ø±ÙŠØ¹ Ø§Ù„Ø®Ù„ÙŠØ¬ ÙˆØ§Ù„Ø¹Ø§Ù„Ù… Ø§Ù„Ø¹Ø±Ø¨ÙŠ (Ø¯Ø¹Ù… EN/AR) Â· Ø®Ø¯Ù…Ø© Ù…Ø¤Ø³Ø³ÙŠØ© Ù„Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø£Ø¹Ù…Ø§Ø±',
     rights: 'Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ‚ Ù…Ø­ÙÙˆØ¸Ø©.',
+    reachUs: 'ØªÙˆØ§ØµÙ„ Ù…Ø¹Ù†Ø§',
+    addressFallback: 'ÙŠÙ†ÙŠ Ù…Ø­Ù„Ø© / Ø£Ù†Ù‚Ø±Ø©',
+    compactNav: 'ØµÙØ­Ø© Ø§Ù„Ø§ØªØµØ§Ù„',
+    labelTel: 'T',
+    labelWa: 'W',
+    labelMail: 'E',
+    socialStrip: 'Ø³ÙˆØ´ÙŠØ§Ù„',
   },
   seo: {
     home: {
       title: 'Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©',
       description:
-        'ÙƒØ³ÙˆØ© Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ Ø¹Ù„Ù‰ Ù…Ø³ØªÙˆÙ‰ ØªØ±ÙƒÙŠØ§ØŒ Ù‚Ø¨Ø§Ø¨ Ø£Ù„Ù…Ù†ÙŠÙˆÙ… ÙˆÙ†Ø­Ø§Ø³ØŒ Ù…Ø²Ø§Ø±ÙŠØ¨ ÙˆØ²Ø®Ø±ÙØ© ØªÙ‚Ù„ÙŠØ¯ÙŠØ©. ÙØ±Ù‚ Ø§Ø­ØªØ±Ø§ÙÙŠØ©ØŒ Ø´Ø­Ù† ÙˆØªØ±ÙƒÙŠØ¨.',
+        'ÙƒØ³ÙˆØ© Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ØŒ Ø³Ù‚Ù Ù…Ø¹Ø¯Ù†ÙŠ Ù…Ø¯Ø±Ø¬ØŒ Ø£Ù„ÙˆØ§Ø­ Ø±ØµØ§Øµ ÙˆØ£Ù„Ù…Ù†ÙŠÙˆÙ…ØŒ Ù‚Ø¨Ø§Ø¨ Ù†Ø­Ø§Ø³ÙŠØŒ Ø²Ø®Ø±ÙØ© ÙˆØ£Ø¹Ù„Ø§Ù…. Ù…Ø±ÙƒØ² Ø£Ù†Ù‚Ø±Ø© ÙˆØªØ±ÙƒÙŠØ¨ ÙÙŠ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø¨Ù„Ø§Ø¯. Ù‡Ø§ØªÙ ÙˆÙˆØ§ØªØ³Ø§Ø¨ 24/7.',
     },
     about: {
       title: 'Ù…Ù† Ù†Ø­Ù†',
       description:
-        'Ù…Ù†Ø° 1987ØŒ Ø·ÙˆØ±ØºÙˆØª ØªØ´ÙˆØ´ÙƒÙˆÙ† Ù„ÙƒØ³ÙˆØ© Ø§Ù„Ù‚Ø¨Ø§Ø¨: Ø£Ø¹Ù…Ø§Ù„ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ ÙˆØ§Ù„Ù‚Ø¨Ø§Ø¨ ÙÙŠ Ø£Ù†Ø­Ø§Ø¡ ØªØ±ÙƒÙŠØ§ØŒ Ø­Ø±ÙÙŠÙˆÙ† Ø®Ø¨Ø±Ø§Ø¡ØŒ Ø®Ø¯Ù…Ø© Ù…Ø±ØªÙƒØ²Ø© Ø¹Ù„Ù‰ Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹.',
+        'Ù…Ù†Ø° 1987: ÙƒØ³ÙˆØ© Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ØŒ Ù‚Ø¨Ø§Ø¨ Ø±ØµØ§Øµ ÙˆØ£Ù„Ù…Ù†ÙŠÙˆÙ…ØŒ Ø³Ù‚Ù Ù…Ø¹Ø¯Ù†ÙŠ Ù…Ø¯Ø±Ø¬ ÙˆØ£Ø¹Ù…Ø§Ù„ Ù…Ø¹Ø¯Ù†ÙŠØ©. Ø£Ù†Ù‚Ø±Ø© ÙˆØ¬Ù…ÙŠØ¹ Ø§Ù„Ø¨Ù„Ø§Ø¯Ø› Ø®Ø¯Ù…Ø© Ù…Ø¤Ø³Ø³ÙŠØ© Ø¨Ù‚ÙŠØ§Ø¯Ø© Ø§Ù„Ø£Ø³ØªØ§Ø° Ø·ÙˆØ±ØºÙˆØª.',
     },
     services: {
       title: 'Ø§Ù„Ø®Ø¯Ù…Ø§Øª',
       description:
-        'ÙƒØ³ÙˆØ© Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ØŒ Ø¨ÙŠØ¹ Ø§Ù„Ø£Ù„Ù…Ù†ÙŠÙˆÙ… ÙˆÙƒØ³ÙˆØ© Ø§Ù„Ù‚Ø¨Ø§Ø¨ØŒ Ø£Ù„ÙˆØ§Ø­ Ù†Ø­Ø§Ø³ ÙˆØ±ØµØ§ØµØŒ Ø²Ø®Ø±ÙØ© Ù†Ù‚Ø§Ø´ØŒ Ø£Ø¹Ù„Ø§Ù… Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ ÙˆØ£Ù†Ø¸Ù…Ø© Ù…Ø²Ø§Ø±ÙŠØ¨.',
+        'ÙƒØ³ÙˆØ© Ø§Ù„Ù‚Ø¨Ø§Ø¨ØŒ Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø¬Ø¯ Ø±ØµØ§ØµÙˆØ£Ù„Ù…Ù†ÙŠÙˆÙ…ØŒ Ù‚Ø¨Ø§Ø¨ Ù†Ø­Ø§Ø³ÙŠØŒ Ø¨ÙŠØ¹ Ø£Ù„ÙˆØ§Ø­ Ø§Ù„Ø±ØµØ§ØµØŒ Ø¨ÙŠØ¹ Ø£Ù„Ù…Ù†ÙŠÙˆÙ…ØŒ Ø³Ù‚Ù Ù…Ø¹Ø¯Ù†ÙŠ ÙˆÙ…Ø²Ø§Ø±ÙŠØ¨ØŒ Ø²Ø®Ø±ÙØ© Ù†Ù‚Ø§Ø´ØŒ Ø£Ø¹Ù„Ø§Ù…. ØµÙØ­Ø© ÙˆØ¹Ø±Ø¶ Ù„ÙƒÙ„ Ø®Ø¯Ù…Ø©.',
     },
     contact: {
       title: 'Ø§ØªØµÙ„ Ø¨Ù†Ø§',
-      description: 'Ø§Ù„Ù‡Ø§ØªÙ ÙˆÙˆØ§ØªØ³Ø§Ø¨ ÙˆØ§Ù„Ø¹Ù†ÙˆØ§Ù†. Ø¹Ø±ÙˆØ¶ Ø£Ø³Ø¹Ø§Ø± ÙˆØ§Ø³ØªÙØ³Ø§Ø±Ø§Øª Ù„ÙƒØ³ÙˆØ© Ø§Ù„Ù‚Ø¨Ø§Ø¨ ÙˆØ§Ù„Ø£Ø¹Ù…Ø§Ù„ Ø§Ù„Ù…Ø¹Ø¯Ù†ÙŠØ©.',
+      description:
+        'Ø¹Ø±ÙˆØ¶ Ù„ÙƒØ³ÙˆØ© Ø§Ù„Ù‚Ø¨Ø§Ø¨ ÙˆØ£Ø³Ø¹Ø§Ø± Ø§Ù„Ø±ØµØ§Øµ ÙˆØ§Ù„Ø³Ù‚Ù Ø§Ù„Ù…Ø¹Ø¯Ù†ÙŠ ÙˆØ§Ù„Ø£Ù„Ù…Ù†ÙŠÙˆÙ…. Ù‡Ø§ØªÙ ÙˆÙˆØ§ØªØ³Ø§Ø¨ ÙˆØ§Ù„Ø®Ø±ÙŠØ·Ø©. Ù…Ø±ÙƒØ² Ø£Ù†Ù‚Ø±Ø© ÙˆØªØ±ÙƒÙŠØ¨ ÙÙŠ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø¨Ù„Ø§Ø¯.',
     },
-    projects: { title: 'Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹', description: 'Ù…Ø´Ø§Ø±ÙŠØ¹ Ù…Ø±Ø¬Ø¹ÙŠØ© Ù…ÙƒØªÙ…Ù„Ø© ÙˆØ¬Ø§Ø±ÙŠ ØªÙ†ÙÙŠØ°Ù‡Ø§.' },
-    shipments: { title: 'Ø§Ù„Ø´Ø­Ù†', description: 'Ø§Ù„ØªØ¹Ø¨Ø¦Ø© ÙˆØ§Ù„ØªØ­Ù…ÙŠÙ„ ÙˆØ§Ù„Ù„ÙˆØ¬Ø³ØªÙŠØ§Øª Ø¹Ù„Ù‰ Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø¨Ù„Ø§Ø¯.' },
+    projects: {
+      title: 'Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹',
+      description:
+        'Ù…Ø±Ø§Ø¬Ø¹ ÙƒØ³ÙˆØ© Ù‚Ø¨Ø§Ø¨ Ø§Ù„Ù…Ø³Ø§Ø¬Ø¯ ÙˆØ§Ù„Ø³Ù‚Ù Ø§Ù„Ù…Ø¹Ø¯Ù†ÙŠ ÙˆØ§Ù„Ø£Ø¹Ù…Ø§Ù„ Ø§Ù„Ù…Ø¹Ø¯Ù†ÙŠØ© Ø­Ø³Ø¨ Ø§Ù„Ù…Ø­Ø§ÙØ¸Ø© ÙˆØ§Ù„Ù…Ø¯ÙŠÙ†Ø©. ØªØ·Ø¨ÙŠÙ‚Ø§Øª Ø¨ØªÙˆÙ‚ÙŠØ¹ Ø§Ù„Ø£Ø³ØªØ§Ø° Ø·ÙˆØ±ØºÙˆØª.',
+    },
+    shipments: {
+      title: 'Ø§Ù„Ø´Ø­Ù†',
+      description:
+        'Ø´Ø­Ù† Ù…ÙˆØ§Ø¯ ÙƒØ³ÙˆØ© Ø§Ù„Ù‚Ø¨Ø§Ø¨ ÙˆØ£Ù„ÙˆØ§Ø­ Ø§Ù„Ø±ØµØ§Øµ ÙˆØ§Ù„Ø£Ù„Ù…Ù†ÙŠÙˆÙ…. ØªØ¹Ø¨Ø¦Ø© Ø¢Ù…Ù†Ø© ÙˆØªØ³Ù„ÙŠÙ… ÙÙŠ Ø§Ù„ÙˆÙ‚Øª Ø¹Ù„Ù‰ Ù…Ø³ØªÙˆÙ‰ ØªØ±ÙƒÙŠØ§.',
+    },
     thanks: { title: 'Ø´ÙƒØ±Ø§Ù‹ Ù„Ùƒ', description: 'ØªÙ… Ø§Ø³ØªÙ„Ø§Ù… Ø±Ø³Ø§Ù„ØªÙƒ.' },
   },
   home: {

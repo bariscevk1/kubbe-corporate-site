@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useDeferredValue, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Playfair_Display } from 'next/font/google';
-import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import {
   TURKEY_REFERENCE_PROJECTS,
   categoryLabelTr,
@@ -14,6 +13,7 @@ import {
   type ReferenceFilter,
   type TurkeyReferenceProject,
 } from '@/lib/content/turkey-reference-projects';
+import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import { watermarkedSrc } from '@/lib/media/watermarked-src';
 
 const playfair = Playfair_Display({
@@ -65,6 +65,8 @@ function ProjectCard({
   onImageClick?: (projectId: string) => void;
 }) {
   const reduce = useReducedMotion();
+  const toHref = useLocalizedPath();
+  const homeMapHref = `${toHref('/')}#turkiye-referans`;
   const c = categoryColor(project.category);
   const plaka = project.plaka.padStart(2, '0');
   const projectPreviewSrc = project.imageSrc ? watermarkedSrc(project.imageSrc) : undefined;
@@ -152,7 +154,7 @@ function ProjectCard({
             Referans
           </motion.span>
           <Link
-            href="/#turkiye-referans"
+            href={homeMapHref}
             className="inline-flex items-center gap-1 rounded-full border border-[var(--border-soft)] bg-[var(--surface-soft)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--text-body)] transition hover:border-[#c5a059]/35 hover:text-[#c5a059]"
           >
             Haritada
@@ -167,6 +169,8 @@ function ProjectCard({
 
 export function ProjectsPageContent() {
   const reduce = useReducedMotion();
+  const toHref = useLocalizedPath();
+  const homeMapHref = `${toHref('/')}#turkiye-referans`;
   const [filter, setFilter] = useState<ReferenceFilter>('all');
   const [query, setQuery] = useState('');
   const deferredQ = useDeferredValue(query);
@@ -285,73 +289,30 @@ export function ProjectsPageContent() {
         }}
       />
 
-      <section className="relative overflow-hidden border-b border-[var(--border-soft)]">
-        <Image
-          src="/api/hizmetler-hero"
-          alt="Projelerimiz hero görseli"
-          fill
-          priority
-          className="object-cover object-[58%_center] md:object-center"
-          sizes="100vw"
-          quality={86}
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/34 via-white/70 to-[#f8f9fa]/94" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_0%,rgba(255,255,255,0.16),rgba(248,249,250,0.46))]" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:30px_30px]" />
-
-        <motion.div
-          className="relative mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14"
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease }}
-        >
-          <div className="max-w-3xl rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-hero-card)] p-4 shadow-[0_18px_40px_-32px_rgba(31,41,55,0.2)] backdrop-blur-[4px] md:p-7">
-            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.34em] text-brand-muted md:text-xs">
-              Türkiye referans ağı
-            </p>
-            <div className="mt-4">
-              <SubpageHeading as="h1" size="hero" className={playfair.className}>
-                Projelerimiz
-              </SubpageHeading>
-            </div>
-            <p className="max-w-2xl text-[clamp(0.98rem,3.8vw,1rem)] leading-relaxed text-[var(--text-body)]">
-              Turgut Usta imzali Türkiye genelindeki uygulama, sevkiyat ve referans kayitlarimizi tek ekranda inceleyin.
-              Filtreleme ve arama ile sehir, kategori ve donem bazinda hizlica sonuca ulasin.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {[
-                `${provinceCount} il kapsami`,
-                `${total} toplam kayit`,
-                `${sorted.length} aktif gorunum`,
-              ].map((chip) => (
-                <motion.span
-                  key={chip}
-                  whileHover={reduce ? {} : { y: -1 }}
-                  transition={springSoft}
-                  className="rounded-full border border-[var(--border-soft)] bg-white/85 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-body)]"
-                >
-                  {chip}
-                </motion.span>
-              ))}
-            </div>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <Link
-                href="#projeler-filtre"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#8b6a2d] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20"
-              >
-                Filtrelere git
-                <span aria-hidden>↓</span>
-              </Link>
-              <Link
-                href="/#turkiye-referans"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
-              >
-                Haritaya git
-                <span aria-hidden>↗</span>
-              </Link>
-            </div>
-          </div>
-        </motion.div>
+      <section className="relative border-b border-[var(--border-soft)]">
+        <div className="relative mx-auto max-w-6xl px-4 py-6 md:px-6 md:py-8">
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-2"
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease }}
+          >
+            <Link
+              href="#projeler-filtre"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#8b6a2d] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/20"
+            >
+              Filtrelere git
+              <span aria-hidden>↓</span>
+            </Link>
+            <Link
+              href={homeMapHref}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-soft)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-heading)] transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)]"
+            >
+              Haritaya git
+              <span aria-hidden>↗</span>
+            </Link>
+          </motion.div>
+        </div>
       </section>
 
       <div className="relative mx-auto max-w-6xl px-4 pb-14 pt-6 md:px-6 md:pb-20 md:pt-8">
@@ -496,7 +457,7 @@ export function ProjectsPageContent() {
                 </button>
               ) : null}
               <Link
-                href="/#turkiye-referans"
+                href={homeMapHref}
                 className="inline-flex min-h-[44px] items-center gap-1 rounded-full border border-[#c5a059]/35 bg-[#c5a059]/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8b6a2d] transition hover:border-[#c5a059]/55 hover:bg-[#c5a059]/18"
               >
                 Harita görünümü
@@ -665,7 +626,7 @@ export function ProjectsPageContent() {
             Aynı referanslar plaka merkezlerinde işaretli; kümeleşme ve zoom ile detaylı gezinti.
           </p>
           <Link
-            href="/#turkiye-referans"
+            href={homeMapHref}
             className="relative mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/12 px-6 py-3 font-display text-sm font-semibold uppercase tracking-wider text-[#8b6a2d] transition hover:border-[#c5a059]/60 hover:bg-[#c5a059]/18"
           >
             Türkiye haritasına git

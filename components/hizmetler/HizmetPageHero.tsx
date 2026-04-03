@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import { watermarkedSrc } from '@/lib/media/watermarked-src';
 
 export type HizmetPageHeroProps = {
@@ -7,105 +6,83 @@ export type HizmetPageHeroProps = {
   imageSrc: string;
   imageAlt: string;
   title: string;
-  /** Üst satır etiket (varsayılan: "Hizmet") */
+  /** Üst satır etiket */
   kicker?: string;
   /** Başlığın altında ince açıklama */
   subtitle?: string;
+  /** Kapak görseli için ek sınıflar (örn. `object-[58%_center]`) */
+  imageClassName?: string;
   priority?: boolean;
   quality?: number;
 };
 
-function HeroCorners() {
-  return (
-    <div className="pointer-events-none absolute inset-3 z-[5] md:inset-5" aria-hidden>
-      <svg className="absolute left-0 top-0 h-10 w-10 text-brand/80 md:h-12 md:w-12" viewBox="0 0 40 40" fill="none">
-        <path d="M2 12V2h10" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-      <svg
-        className="absolute right-0 top-0 h-10 w-10 rotate-90 text-brand/80 md:h-12 md:w-12"
-        viewBox="0 0 40 40"
-        fill="none"
-      >
-        <path d="M2 12V2h10" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-      <svg
-        className="absolute bottom-0 left-0 h-10 w-10 -rotate-90 text-brand/80 md:h-12 md:w-12"
-        viewBox="0 0 40 40"
-        fill="none"
-      >
-        <path d="M2 12V2h10" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-      <svg
-        className="absolute bottom-0 right-0 h-10 w-10 rotate-180 text-brand/80 md:h-12 md:w-12"
-        viewBox="0 0 40 40"
-        fill="none"
-      >
-        <path d="M2 12V2h10" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-    </div>
-  );
-}
+const HERO_MIN_HEIGHT =
+  'min-h-[min(78vw,300px)] sm:min-h-[min(72vw,340px)] md:min-h-[min(48vh,480px)] lg:min-h-[min(52vh,560px)]';
 
 /**
- * Hizmet alt sayfaları — split screen hero; görseli `public/` altına koyup `imageSrc` ile bağlayın.
+ * Hizmet alt sayfaları — mobil referans: tam genişlik kapak görseli, koyu örtü, ortada beyaz başlık.
  */
 export function HizmetPageHero({
   imageSrc,
   imageAlt,
   title,
-  kicker = 'Hizmet',
+  kicker,
   subtitle,
+  imageClassName,
   priority = true,
   quality = 88,
 }: HizmetPageHeroProps) {
   return (
     <section
-      className="relative w-full overflow-hidden border-b border-[var(--border-soft)] bg-[var(--surface-soft)]"
+      className="hizmet-page-hero relative w-full overflow-hidden border-b border-black/10"
       aria-labelledby="hizmet-hero-heading"
     >
-      <div className="grid md:min-h-screen md:grid-cols-[minmax(320px,40%)_minmax(0,60%)]">
-        <div className="relative z-10 flex flex-col justify-center bg-[var(--surface-hero-card)] px-5 pb-10 pt-28 sm:px-8 sm:pb-12 sm:pt-32 md:px-10 md:pb-14 md:pt-36 lg:px-14">
-          <div className="max-w-xl">
-            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.34em] text-brand-muted sm:text-xs">
+      <div className={`relative ${HERO_MIN_HEIGHT}`}>
+        <Image
+          src={watermarkedSrc(imageSrc)}
+          alt={imageAlt}
+          fill
+          priority={priority}
+          quality={quality}
+          className={`z-0 object-cover object-center ${imageClassName ?? ''}`.trim()}
+          sizes="100vw"
+          fetchPriority={priority ? 'high' : 'low'}
+        />
+
+        {/*
+          Inline gradient + z-index: bazı ortamlarda Next/Image katmanı üstte kalabiliyor;
+          ayrıca global CSS gradient sınıflarına müdahale riskine karşı doğrudan stil garanti eder.
+        */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.72) 45%, rgba(0,0,0,0.78) 100%)',
+          }}
+          aria-hidden
+        />
+
+        <div
+          className={`relative z-[2] flex ${HERO_MIN_HEIGHT} flex-col items-center justify-center px-4 py-12 text-center sm:px-6 sm:py-14 md:px-8 md:py-20`}
+        >
+          {kicker ? (
+            <p className="hizmet-hero-kicker font-display text-[10px] font-semibold uppercase tracking-[0.32em] text-white/80 sm:text-[11px]">
               {kicker}
             </p>
-            <div className="mt-4 h-px w-20 bg-gradient-to-r from-[#c5a059] to-transparent" aria-hidden />
-            <div className="mt-5">
-              <SubpageHeading as="h1" id="hizmet-hero-heading" size="hero">
-                {title}
-              </SubpageHeading>
-            </div>
-            {subtitle ? (
-              <p className="max-w-lg text-sm leading-7 text-[var(--text-body)] sm:text-base md:text-[1.05rem]">
-                {subtitle}
-              </p>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="relative min-h-[42vh] bg-[var(--surface-soft)] sm:min-h-[48vh] md:min-h-screen">
-          <Image
-            src={watermarkedSrc(imageSrc)}
-            alt={imageAlt}
-            fill
-            priority={priority}
-            quality={quality}
-            className="bg-[var(--surface-soft)] object-contain object-center p-4 sm:p-6 md:p-10 lg:p-14"
-            sizes="(max-width: 768px) 100vw, 60vw"
-            fetchPriority={priority ? 'high' : 'low'}
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.24),rgba(248,249,250,0.72))]"
-            aria-hidden
-          />
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:24px_24px]"
-            aria-hidden
-          />
-
-          <HeroCorners />
-
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-24 bg-gradient-to-b from-white/25 to-transparent md:h-32" />
+          ) : null}
+          <h1
+            id="hizmet-hero-heading"
+            className={`font-display font-bold leading-tight tracking-tight text-white [text-shadow:0_1px_3px_rgba(0,0,0,1),0_2px_16px_rgba(0,0,0,0.85),0_6px_36px_rgba(0,0,0,0.55)] ${
+              kicker ? 'mt-3 md:mt-4' : ''
+            } max-w-[min(92vw,34rem)] text-[clamp(1.35rem,5.5vw,2.35rem)] sm:text-[clamp(1.5rem,5vw,2.65rem)] md:max-w-3xl md:text-[clamp(1.85rem,3.5vw,3rem)]`}
+          >
+            {title}
+          </h1>
+          {subtitle ? (
+            <p className="hizmet-hero-lead mt-4 max-w-xl text-sm leading-relaxed text-white/95 sm:text-[0.95rem] md:mt-5 md:max-w-2xl md:text-base [text-shadow:0_1px_2px_rgba(0,0,0,0.9)]">
+              {subtitle}
+            </p>
+          ) : null}
         </div>
       </div>
     </section>

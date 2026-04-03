@@ -287,7 +287,7 @@ export function TurkeyReferencesSection() {
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-16 max-md:px-5 sm:px-5 sm:py-16 md:px-6 md:py-28">
+      <div className="relative mx-auto max-w-6xl px-4 py-8 max-md:px-4 sm:px-5 md:py-28 lg:px-6">
         <motion.header
           className="mx-auto max-w-3xl text-center"
           variants={headerVariants}
@@ -297,7 +297,7 @@ export function TurkeyReferencesSection() {
         >
           <motion.p
             variants={headerItem}
-            className="font-display text-[11px] font-semibold uppercase tracking-[0.38em] md:text-xs"
+            className="font-display text-[10px] font-semibold uppercase tracking-[0.32em] text-[#c5a059]/90 md:text-[11px] md:tracking-[0.38em]"
             style={{ color: GOLD }}
           >
             {t('home.map.kicker')}
@@ -305,19 +305,19 @@ export function TurkeyReferencesSection() {
           <motion.h2
             variants={headerItem}
             id="turkey-ref-heading"
-            className={`${playfair.className} mt-4 text-[1.65rem] font-semibold leading-[1.15] tracking-tight text-white sm:mt-5 sm:text-3xl md:text-4xl lg:text-[2.35rem]`}
+            className={`${playfair.className} mt-2 text-[1.35rem] font-semibold leading-[1.12] tracking-tight text-white sm:text-3xl md:mt-4 md:text-4xl lg:text-[2.35rem]`}
           >
             {t('home.map.headingTitle', { count: provinceCount })}
           </motion.h2>
           <motion.p
             variants={headerItem}
-            className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-400 md:text-[0.95rem]"
+            className="mx-auto mt-3 hidden max-w-2xl text-sm leading-relaxed text-slate-400 md:mt-5 md:block md:text-[0.95rem]"
           >
             {t('home.map.subtitle')}
           </motion.p>
           <motion.p
             variants={headerItem}
-            className="mx-auto mt-3 max-w-2xl text-sm text-slate-500 md:text-[0.95rem]"
+            className="mx-auto mt-2 max-w-2xl text-[11px] leading-snug text-slate-500 md:mt-3 md:text-sm"
           >
             <Link
               href={projectsPath}
@@ -325,15 +325,48 @@ export function TurkeyReferencesSection() {
             >
               {t('home.map.allProjects')}
             </Link>
-            <span className="text-slate-500">
+            <span className="hidden text-slate-500 md:inline">
               {' '}
               — {t('home.map.fullListHint')}
             </span>
           </motion.p>
         </motion.header>
 
+        {/* Mobil: tek satırlık “metro şeridi” — minimum yükseklik */}
+        <motion.div
+          className="mx-auto mt-5 sm:hidden"
+          initial={reduce ? false : { opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-4%' }}
+          transition={{ duration: 0.45, ease, delay: 0.05 }}
+          aria-label={t('home.map.kicker')}
+        >
+          <div className="relative rounded-2xl border border-white/[0.1] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] p-1">
+            <div
+              className="pointer-events-none absolute left-4 right-4 top-[22px] h-px bg-gradient-to-r from-transparent via-[#c5a059]/35 to-transparent"
+              aria-hidden
+            />
+            <ul className="flex snap-x snap-mandatory gap-0 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {trustItems.map((item, idx) => (
+                <li
+                  key={item.titleKey}
+                  className="min-w-[33.33%] max-w-[33.33%] shrink-0 snap-start px-1.5 text-center first:pl-2 last:pr-2"
+                >
+                  <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full border border-[#c5a059]/35 bg-[#0a0a0a] text-[11px] font-bold tabular-nums text-[#e8d5a3]">
+                    {String(idx + 1).padStart(2, '0')}
+                  </div>
+                  <p className="mt-2 line-clamp-2 text-[9px] font-semibold uppercase leading-tight tracking-[0.06em] text-[#c5a059]/90">
+                    {t(item.titleKey)}
+                  </p>
+                  <p className="mt-1 line-clamp-2 text-[10px] leading-snug text-slate-500">{t(item.descKey)}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+
         <motion.ul
-          className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-3"
+          className="mx-auto mt-10 hidden max-w-5xl gap-3 sm:grid sm:grid-cols-3"
           initial={reduce ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-4%' }}
@@ -357,7 +390,7 @@ export function TurkeyReferencesSection() {
           ))}
         </motion.ul>
 
-        <div className="mt-12 space-y-6 lg:space-y-8">
+        <div className="mt-6 space-y-6 max-md:mt-6 lg:mt-12 lg:space-y-8">
           <div className="space-y-3">
             <p className="text-center font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500 sm:text-left">
               {t('home.map.filterLabel')}

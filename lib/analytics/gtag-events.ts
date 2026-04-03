@@ -77,6 +77,28 @@ export function trackPhoneClick(source = 'unknown') {
   trackAdsConversion(process.env.NEXT_PUBLIC_ADRESGEZGINI_CONVERSION_PHONE);
 }
 
+/**
+ * İletişim formu — WhatsApp’a yönlendirme öncesi (GA4 önerilen olay + opsiyonel Ads dönüşümü).
+ * .env: NEXT_PUBLIC_GADS_CONVERSION_LEAD, NEXT_PUBLIC_ADRESGEZGINI_CONVERSION_LEAD
+ */
+export function trackContactFormSubmit(source = 'iletisim_form') {
+  trackGtagEvent('generate_lead', {
+    event_category: 'lead',
+    event_label: source,
+    currency: 'TRY',
+    value: 1,
+  });
+  const leadAw = process.env.NEXT_PUBLIC_GADS_CONVERSION_LEAD;
+  const leadAg = process.env.NEXT_PUBLIC_ADRESGEZGINI_CONVERSION_LEAD;
+  if (leadAw || leadAg) {
+    trackAdsConversion(leadAw);
+    trackAdsConversion(leadAg);
+  } else {
+    trackAdsConversion(process.env.NEXT_PUBLIC_GADS_CONVERSION_WHATSAPP);
+    trackAdsConversion(process.env.NEXT_PUBLIC_ADRESGEZGINI_CONVERSION_WHATSAPP);
+  }
+}
+
 /** Teşekkürler sayfası görüntülenmesi (form/lead sonrası) */
 export function trackThankYouPageView() {
   trackGtagEvent('thank_you_page_view', {

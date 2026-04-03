@@ -43,32 +43,39 @@
     "link_contact": "Contact",
     "mapLink": "View on map",
     "blurb": "Ankara HQ Â· <strong class=\"font-medium text-slate-400\">Nationwide</strong> installation & shipping Â· <strong class=\"font-medium text-slate-400\">24/7</strong> phone & WhatsApp Â· Gulf & Arab region projects (EN/AR support) Â· Corporate service for all ages",
-    "rights": "All rights reserved by Turgut Coşkun."
+    "rights": "All rights reserved by Turgut Coşkun.",
+    "reachUs": "Contact us",
+    "addressFallback": "Yenimahalle / Ankara, Turkey",
+    "compactNav": "Contact page",
+    "labelTel": "T",
+    "labelWa": "W",
+    "labelMail": "E",
+    "socialStrip": "Social"
   },
   "seo": {
     "home": {
       "title": "Home",
-      "description": "Nationwide mosque dome cladding, aluminium and copper domes, gutters and decorative painting across Turkey. Professional crews, shipping and installation."
+      "description": "Mosque dome cladding, standing seam metal roofing, lead sheet and aluminium plate sales, copper domes, mosque decoration and finials. Master dome teams; Ankara HQ, nationwide installation. 24/7 phone and WhatsApp."
     },
     "about": {
       "title": "About us",
-      "description": "Since 1987, Turgut Ã‡oÅŸkun Kubbe Kaplama: nationwide mosque & dome works, master craftspeople, project-focused service."
+      "description": "Since 1987: mosque dome cladding, lead and aluminium domes, standing seam roofs and metal works. Ankara and nationwide references; corporate service led by Master Turgut."
     },
     "services": {
       "title": "Services",
-      "description": "Mosque dome cladding, aluminium sales & dome cladding, copper and lead sheet, decorative painting, mosque finials and gutter systems."
+      "description": "Dome cladding, lead and aluminium mosque domes, copper domes, lead sheet sales, aluminium sales, standing seam gutters, decorative painting, mosque finials. Dedicated page and quote for each line."
     },
     "contact": {
       "title": "Contact",
-      "description": "Phone, WhatsApp and address. Quotes and enquiries for dome cladding and metal works."
+      "description": "Quotes for dome cladding, lead sheet, standing seam and aluminium. Phone, WhatsApp, map; Ankara HQ, nationwide surveys and installation."
     },
     "projects": {
       "title": "Projects",
-      "description": "Completed and ongoing reference projects."
+      "description": "Reference mosque dome cladding, standing seam and metal projects by province and city. Applications signed by Master Turgut."
     },
     "shipments": {
       "title": "Shipments",
-      "description": "Packing, loading and nationwide logistics."
+      "description": "Nationwide shipping of dome cladding materials, lead sheet, aluminium coil and plate. Secure packing and on-time delivery."
     },
     "thanks": {
       "title": "Thank you",

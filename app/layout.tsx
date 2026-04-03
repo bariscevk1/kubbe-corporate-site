@@ -7,8 +7,10 @@ import { I18nProvider } from '@/components/i18n/I18nProvider';
 import { AdsAnalyticsLazy } from '@/components/ads/AdsAnalyticsLazy';
 import { MobileConversionBar } from '@/components/layout/MobileConversionBar';
 import { MediaProtectionLayer } from '@/components/media/MediaProtectionLayer';
+import { SiteJsonLd } from '@/components/seo/SiteJsonLd';
 import { DEFAULT_SITE_DESCRIPTION_TR } from '@/lib/seo/seo-copy';
 import { getMetadataBaseUrl } from '@/lib/seo/site-url';
+import { SEM_CORE_TOPICS_TR } from '@/lib/seo/sem-keywords';
 import { DEFAULT_BRAND_HEX } from '@/lib/brand-css';
 import { DEFAULT_LOGO_SRC } from '@/lib/brand-assets';
 import { fontArabic, fontInter, fontMontserrat } from '@/lib/fonts';
@@ -29,6 +31,7 @@ export function generateMetadata(): Metadata {
       template: `%s | ${siteName}`,
     },
     description: DEFAULT_SITE_DESCRIPTION_TR,
+    keywords: [...SEM_CORE_TOPICS_TR],
     openGraph: {
       type: 'website',
       locale: 'tr_TR',
@@ -75,7 +78,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           } catch {}
         `}</Script>
       </head>
-      <body className="font-sans touch-manipulation pb-[env(safe-area-inset-bottom,0px)] max-md:pb-[calc(5.25rem+env(safe-area-inset-bottom,0px))]">
+      <body className="font-sans touch-manipulation pb-[env(safe-area-inset-bottom,0px)] max-md:pb-[calc(6.5rem+env(safe-area-inset-bottom,0px))]">
+        <SiteJsonLd />
         <I18nProvider>
           <MediaProtectionLayer />
           <SiteHeader
@@ -90,9 +94,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SiteFooter
             theme="lead"
             phone="05323236627"
-            logoUrl={null}
-            logoAlt="Kubbe Kaplama"
-            companyLegalName="Turgut Coskun Kubbe Kaplama"
+            logoUrl={DEFAULT_LOGO_SRC}
+            logoAlt="Turgut Coşkun Kubbe Kaplama"
+            companyLegalName="Turgut Coşkun Kubbe Kaplama"
           />
           <MobileConversionBar phone="05323236627" />
           <AdsAnalyticsLazy />

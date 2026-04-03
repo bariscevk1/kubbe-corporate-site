@@ -84,6 +84,20 @@ function ArrowRight({ className }: { className?: string }) {
   );
 }
 
+function PhoneIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d="M5.76 3.5h2.08c.3 0 .57.2.65.49l.65 2.34a.74.74 0 01-.19.72l-1.05 1.05a11.47 11.47 0 004.08 4.08l1.05-1.05a.74.74 0 01.72-.19l2.34.65c.29.08.49.35.49.65v2.08a.75.75 0 01-.75.75h-.67C9.7 16.07 3.75 10.12 3.75 4.25v-.67a.75.75 0 01.75-.08h1.26z"
+        stroke="currentColor"
+        strokeWidth="1.55"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /** Hover’da ortadan genişleyen alt çizgi */
 function NavUnderlineLink({
   href,
@@ -202,13 +216,12 @@ export function SiteHeader({
     <header
       className={`${headerPlacement} z-[120] pt-[env(safe-area-inset-top,0px)] transition-all duration-300 ease-out ${barBg}`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-2 sm:gap-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
-        {/* Mobil: marka + masaüstünde boş (nav merkezde) */}
-        <div className="flex min-w-0 flex-1 items-center gap-2 md:gap-5">
+      <div className="mx-auto hidden max-w-6xl items-center justify-between gap-2 px-4 py-2 sm:gap-3 sm:px-4 sm:py-3 md:flex md:px-6 md:py-4">
+        <div className="flex min-w-0 flex-1 items-center gap-5">
           <Link
             prefetch
             href={toHref('/')}
-            className="header-brand-lockup group hidden min-w-0 rounded-xl px-1 py-1.5 outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:flex"
+            className="header-brand-lockup group min-w-0 rounded-xl px-1 py-1.5 outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70"
           >
             <span className="flex flex-col leading-none">
               <span className="font-display text-[10px] font-semibold uppercase tracking-[0.34em] text-brand-muted">
@@ -220,42 +233,9 @@ export function SiteHeader({
               <span className="header-brand-underline mt-2 h-px w-full rounded-full bg-gradient-to-r from-transparent via-[#c5a059]/80 to-transparent" />
             </span>
           </Link>
-          <Link
-            prefetch
-            href={toHref('/')}
-            className="flex min-w-0 flex-1 items-center gap-3 rounded-lg py-1.5 pr-2 outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 md:hidden"
-          >
-            {logoUrl ? (
-              <Image
-                src={logoUrl}
-                alt={logoAlt || 'Kubbe Kaplama'}
-                width={140}
-                height={42}
-                className="h-16 w-auto max-w-[64px] object-contain object-left"
-                sizes="64px"
-                priority
-              />
-            ) : (
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#c5a059]/10 font-display text-[20px] font-bold leading-tight tracking-tight text-[var(--text-heading)]">
-                {brandWordPrimary.slice(0, 1)}
-              </span>
-            )}
-            <span className="flex min-w-0 flex-col leading-none">
-              <span className="truncate font-display text-[10px] font-semibold uppercase tracking-[0.24em] text-brand-muted">
-                Turgut Coşkun
-              </span>
-              <span className="mt-1 truncate font-display text-[13px] font-semibold tracking-[0.05em] text-[var(--text-heading)]">
-                Camii Kubbe Kaplama
-              </span>
-            </span>
-          </Link>
         </div>
 
-        {/* Masaüstü menü */}
-        <nav
-          aria-label="Ana menü"
-          className="hidden items-center gap-1 md:flex md:gap-0 lg:gap-1"
-        >
+        <nav aria-label="Ana menü" className="hidden items-center gap-1 md:flex md:gap-0 lg:gap-1">
           {MAIN_NAV.map((item) =>
             item.hasDropdown ? (
               <div key={item.key} className="group relative px-1">
@@ -302,7 +282,6 @@ export function SiteHeader({
           )}
         </nav>
 
-        {/* Dil seçici (masaüstü) */}
         <div className="relative hidden md:block">
           <button
             type="button"
@@ -345,25 +324,63 @@ export function SiteHeader({
             ) : null}
           </AnimatePresence>
         </div>
+      </div>
 
-        {/* Mobil: hamburger */}
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2 md:hidden">
         <button
           type="button"
-          className="inline-flex h-12 min-h-[48px] items-center justify-center gap-2 rounded-xl border border-[var(--border-strong)] bg-white/90 px-4 text-[var(--text-heading)] shadow-[0_12px_28px_-20px_rgba(31,41,55,0.18)] transition active:scale-95 hover:bg-white md:hidden"
+          className="inline-flex h-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-2xl border border-[rgba(15,23,42,0.08)] bg-white px-3 text-[var(--text-heading)] shadow-[0_8px_18px_-16px_rgba(15,23,42,0.12)] transition active:scale-95 hover:bg-slate-50"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-sheet"
           aria-label={mobileOpen ? 'Menüyü kapat' : 'Menüyü aç'}
           onClick={() => setMobileOpen((o) => !o)}
         >
-          <span className="font-display text-[11px] font-semibold uppercase tracking-[0.26em]">
-            {t('ui.menu')}
-          </span>
           <span className="relative h-4 w-4" aria-hidden>
             <span className="absolute left-0 top-[2px] h-[1.5px] w-4 rounded-full bg-current" />
             <span className="absolute left-0 top-[7px] h-[1.5px] w-4 rounded-full bg-current" />
             <span className="absolute left-0 top-[12px] h-[1.5px] w-4 rounded-full bg-current" />
           </span>
         </button>
+
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-center px-[4.5rem]">
+          <Link
+            prefetch
+            href={toHref('/')}
+            className="pointer-events-auto flex min-w-0 max-w-[210px] items-center justify-center gap-2 rounded-2xl border border-[rgba(15,23,42,0.08)] bg-white px-3 py-2 shadow-[0_8px_18px_-16px_rgba(15,23,42,0.12)] outline-none ring-offset-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-[#c5a059]/70"
+          >
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={logoAlt || 'Kubbe Kaplama'}
+                width={140}
+                height={42}
+                className="h-10 w-auto max-w-[42px] object-contain object-left"
+                sizes="42px"
+                priority
+              />
+            ) : (
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c5a059]/10 font-display text-[17px] font-bold leading-tight tracking-tight text-[var(--text-heading)]">
+                {brandWordPrimary.slice(0, 1)}
+              </span>
+            )}
+            <span className="min-w-0 text-center leading-none">
+              <span className="block truncate text-[9px] font-medium uppercase tracking-[0.2em] text-brand-muted">
+                Turgut Coşkun
+              </span>
+              <span className="mt-1 block truncate text-[14px] font-medium tracking-[0.01em] text-[var(--text-heading)]">
+                Camii Kubbe Kaplama
+              </span>
+            </span>
+          </Link>
+        </div>
+
+        <a
+          href={telHref}
+          aria-label={`${phonePretty} numarasini ara`}
+          className="relative z-[1] inline-flex h-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-2xl border border-[rgba(15,23,42,0.08)] bg-white px-3 text-[#0f766e] shadow-[0_8px_18px_-16px_rgba(15,23,42,0.12)] transition hover:bg-slate-50"
+        >
+          <PhoneIcon className="h-5 w-5" />
+        </a>
       </div>
 
       {/* Mobil sidebar menü */}

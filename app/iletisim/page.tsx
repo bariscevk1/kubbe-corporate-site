@@ -1,16 +1,25 @@
 import type { Metadata } from 'next';
-import { getSiteSettings } from '@/lib/sanity/site-settings';
 import { ContactPageContent } from '@/components/contact/ContactPageContent';
+import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { getRequestLocale } from '@/lib/i18n/server-locale';
+import { pageMetadata } from '@/lib/seo/metadata-helpers';
+import { semKeywordsForLocale } from '@/lib/seo/sem-locale-keywords';
+import { getSiteSettings } from '@/lib/sanity/site-settings';
+import tr from '@/messages/tr.json';
+import en from '@/messages/en.json';
+import ar from '@/messages/ar.json';
 
-export const metadata: Metadata = {
-  title: 'İletişim',
-  description:
-    'Telefon, WhatsApp ve adres. Kubbe kaplama ve metal işleri için teklif ve bilgi talebi.',
-  openGraph: {
-    title: 'İletişim | Kubbe Kaplama',
-    description: 'Bize ulaşın.',
-  },
-};
+const seoByLang = { tr, en, ar } as const;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getRequestLocale();
+  const s = seoByLang[locale].seo.contact;
+  return pageMetadata(
+    { title: s.title, description: s.description },
+    'Kubbe Kaplama',
+    semKeywordsForLocale(locale),
+  );
+}
 
 const DEFAULT_PHONE = '05323236627';
 const DEFAULT_LOCATION = 'Ankara, Türkiye';
@@ -44,12 +53,21 @@ export default async function IletisimPage() {
   const reviewsUrl = mapsReviewsUrl(mapQuery);
 
   return (
-    <ContactPageContent
-      phone={phone}
-      locationLabel={location}
-      mapUrl={mapUrl}
-      reviewsUrl={reviewsUrl}
-      mapEmbed={mapEmbed}
-    />
+    <main className="site-subpage-light contact-page bg-[var(--brand-bg-body)]">
+      <HizmetPageHero
+        imageSrc="/iletisim/iletisim-hero.png"
+        imageAlt="İletişim sayfası hero görseli"
+        title="Turgut Usta ile hızlı iletişim, net teklif."
+        kicker="İletişim ve teklif"
+        subtitle="Projenizi kısaca yazın; Turgut Usta ekibi olarak aynı gün içinde dönüş sağlayalım. Telefon ve WhatsApp üzerinden 7/24 ulaşabilirsiniz."
+      />
+      <ContactPageContent
+        phone={phone}
+        locationLabel={location}
+        mapUrl={mapUrl}
+        reviewsUrl={reviewsUrl}
+        mapEmbed={mapEmbed}
+      />
+    </main>
   );
 }

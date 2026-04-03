@@ -47,6 +47,9 @@ export function enSameAsTrIsOk(path, value) {
   // City names often identical in EN/TR Latin script (e.g. Bursa, Konya)
   if (/^about\.motion\.testimonials\[\d+\]\.city$/.test(path)) return true;
 
+  // Footer minimal labels (T / W / E) — same letter in all locales
+  if (/^footer\.label(Tel|Wa|Mail)$/.test(path)) return true;
+
   return false;
 }
 

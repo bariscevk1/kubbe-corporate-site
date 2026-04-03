@@ -1,17 +1,11 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { ServicePageImageGallery } from '@/components/hizmetler/ServicePageImageGallery';
+import { ALUMINYUM_KUBBE_KAPLAMA_GALLERY } from '@/lib/content/aluminyum-kubbe-kaplama-gallery';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Alüminyum Kubbe Kaplama',
-  description:
-    'Camii kubbeleri için alüminyum kaplama uygulamaları. Tecrübeli ekip, doğru malzeme seçimi ve Türkiye geneli profesyonel montaj hizmeti.',
-  openGraph: {
-    title: 'Alüminyum Kubbe Kaplama | Kubbe Kaplama',
-    description:
-      'Alüminyum kubbe kaplama uygulamalarında kaliteli işçilik, uygun fiyat ve Türkiye geneli hizmet.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA['aluminyum-kubbe-kaplama'];
 
 export default function AluminyumKubbeKaplamaPage() {
   return (
@@ -56,6 +50,15 @@ export default function AluminyumKubbeKaplamaPage() {
             fiyat teklifi almak icin bizimle iletisime gecebilirsiniz.
           </p>
         </div>
+      </div>
+
+      <ServicePageImageGallery
+        id="aluminyum-kubbe-kaplama-gallery"
+        title="Uygulama görselleri"
+        items={ALUMINYUM_KUBBE_KAPLAMA_GALLERY}
+      />
+
+      <div className="mx-auto max-w-3xl px-4 pb-16 md:px-6">
         <ContactCtaBlock />
       </div>
     </main>

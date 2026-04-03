@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 import { sanityFetch } from '@/lib/sanity/client';
+import { serviceCoverUrl } from '@/lib/sanity/image';
 import { serviceBySlugQuery } from '@/lib/sanity/queries';
 import type { ServiceDoc } from '@/lib/sanity/types';
-import { SanityServiceCover } from '@/components/cms/SanityServiceCover';
-import { SubpageHeading } from '@/components/ui/SubpageHeading';
 
 type Props = { params: { slug: string } };
 
@@ -31,22 +32,22 @@ export default async function HizmetDetayPage({ params }: Props) {
   const service = await fetchService(params.slug);
   if (!service) notFound();
 
+  const hasCover = Boolean(service.coverImage && 'asset' in service.coverImage && service.coverImage.asset);
+  const heroSrc = hasCover
+    ? watermarkedSrc(serviceCoverUrl(service.coverImage, 1600))
+    : '/hizmetler/camii-kubbe-kaplama-hero.png';
+
   return (
-    <main className="service-detail-page site-subpage-light mx-auto max-w-3xl px-4 py-16 md:px-6">
-      <div className="overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-elevated)] shadow-[0_18px_40px_-32px_rgba(31,41,55,0.18)]">
-        <SanityServiceCover
-          service={service}
-          width={1200}
-          wrapClassName="block w-full"
-          className="w-full object-cover"
-        />
+    <main className="service-detail-page site-subpage-light min-h-screen bg-[var(--brand-bg-body)]">
+      <HizmetPageHero
+        imageSrc={heroSrc}
+        imageAlt={service.coverImage?.alt || service.title}
+        title={service.title}
+        kicker="Hizmet"
+      />
+      <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
+        <p className="whitespace-pre-line leading-relaxed text-slate-300">{service.description}</p>
       </div>
-      <div className="mt-10">
-        <SubpageHeading as="h1" size="hero">
-          {service.title}
-        </SubpageHeading>
-      </div>
-      <p className="whitespace-pre-line text-slate-400 leading-relaxed">{service.description}</p>
     </main>
   );
 }

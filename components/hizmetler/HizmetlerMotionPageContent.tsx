@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedPath } from '@/components/i18n/useLocalizedPath';
 import { SubpageHeading } from '@/components/ui/SubpageHeading';
 import { HERO_SLIDES } from '@/lib/brand-assets';
+import { watermarkedSrc } from '@/lib/media/watermarked-src';
 import type { HomeServiceTeaserItem } from '@/lib/content/home-services-teaser';
 
 type Props = {
@@ -21,45 +22,9 @@ function getInitialLoadedSlides(): Record<string, boolean> {
   const initial: Record<string, boolean> = {};
   const firstSlide = HERO_SLIDES[0];
   if (firstSlide) {
-    initial[firstSlide.src] = true;
+    initial[watermarkedSrc(firstSlide.src)] = true;
   }
   return initial;
-}
-
-function StatCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement | null>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.65 });
-  const reduced = useReducedMotion();
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    if (reduced) {
-      setCount(value);
-      return;
-    }
-
-    let raf = 0;
-    const duration = 1050;
-    const start = performance.now();
-
-    const run = (now: number) => {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setCount(Math.round(value * eased));
-      if (p < 1) raf = requestAnimationFrame(run);
-    };
-
-    raf = requestAnimationFrame(run);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, reduced, value]);
-
-  return (
-    <span ref={ref} className="font-display text-2xl font-bold text-[var(--text-heading)] md:text-3xl">
-      {count}
-      {suffix}
-    </span>
-  );
 }
 
 export function HizmetlerMotionPageContent({ items }: Props) {
@@ -67,7 +32,6 @@ export function HizmetlerMotionPageContent({ items }: Props) {
   const { t } = useTranslation('common');
   const toHref = useLocalizedPath();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const [loadedSlides, setLoadedSlides] = useState<Record<string, boolean>>(getInitialLoadedSlides);
 
   const heroKicker = t('servicesPage.heroSplitKicker', { defaultValue: 'HİZMETLER' });
@@ -78,7 +42,8 @@ export function HizmetlerMotionPageContent({ items }: Props) {
 
   useEffect(() => {
     if (HERO_SLIDES[0]) {
-      setLoadedSlides((current) => ({ ...current, [HERO_SLIDES[0].src]: true }));
+      const wm = watermarkedSrc(HERO_SLIDES[0].src);
+      setLoadedSlides((current) => ({ ...current, [wm]: true }));
     }
   }, []);
 
@@ -94,23 +59,15 @@ export function HizmetlerMotionPageContent({ items }: Props) {
     if (typeof window === 'undefined') return;
 
     HERO_SLIDES.forEach((slide) => {
-      if (loadedSlides[slide.src]) return;
+      const wm = watermarkedSrc(slide.src);
+      if (loadedSlides[wm]) return;
       const img = new window.Image();
-      img.src = slide.src;
+      img.src = wm;
       img.onload = () => {
-        setLoadedSlides((current) => (current[slide.src] ? current : { ...current, [slide.src]: true }));
+        setLoadedSlides((current) => (current[wm] ? current : { ...current, [wm]: true }));
       };
     });
   }, [loadedSlides]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const media = window.matchMedia('(max-width: 767px)');
-    const sync = () => setIsMobile(media.matches);
-    sync();
-    media.addEventListener('change', sync);
-    return () => media.removeEventListener('change', sync);
-  }, []);
 
   return (
     <main className="site-subpage-light services-page bg-[var(--brand-bg-body)]">
@@ -120,7 +77,7 @@ export function HizmetlerMotionPageContent({ items }: Props) {
             initial={reduced ? undefined : { opacity: 0, x: -28 }}
             animate={reduced ? undefined : { opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: easeOut }}
-            className="relative z-10 flex flex-col justify-center bg-[var(--surface-hero-card)] px-5 pb-10 pt-28 sm:px-8 sm:pb-12 sm:pt-32 md:px-10 md:pb-14 md:pt-36 lg:px-14"
+            className="relative z-10 order-2 flex flex-col justify-center bg-[var(--surface-hero-card)] px-5 pb-10 pt-8 sm:px-8 sm:pb-12 sm:pt-10 md:order-1 md:px-10 md:pb-14 md:pt-36 lg:px-14"
           >
             <div className="max-w-xl">
               <p className="font-display text-[11px] font-semibold uppercase tracking-[0.34em] text-brand-muted sm:text-xs">
@@ -135,30 +92,16 @@ export function HizmetlerMotionPageContent({ items }: Props) {
               <p className="max-w-lg text-[clamp(0.98rem,3.8vw,1.05rem)] leading-7 text-[var(--text-body)]">
                 {heroLead}
               </p>
-
-              <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                <li className="rounded-xl border border-[var(--border-soft)] bg-white/80 p-4 shadow-[0_14px_30px_-24px_rgba(31,41,55,0.14)]">
-                  <StatCounter value={items.length} />
-                  <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">{t('servicesPage.stat1Label')}</p>
-                </li>
-                <li className="rounded-xl border border-[var(--border-soft)] bg-white/80 p-4 shadow-[0_14px_30px_-24px_rgba(31,41,55,0.14)]">
-                  <StatCounter value={30} suffix={t('servicesPage.stat2Suffix')} />
-                  <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">{t('servicesPage.stat2Label')}</p>
-                </li>
-                <li className="rounded-xl border border-[var(--border-soft)] bg-white/80 p-4 shadow-[0_14px_30px_-24px_rgba(31,41,55,0.14)]">
-                  <StatCounter value={81} />
-                  <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">{t('servicesPage.stat3Label')}</p>
-                </li>
-              </ul>
             </div>
           </motion.div>
 
-          <div className="relative min-h-[42vh] bg-[var(--surface-soft)] sm:min-h-[48vh] md:min-h-screen">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.32),rgba(248,249,250,0.78))]" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-24 bg-gradient-to-b from-white/25 to-transparent md:h-32" />
+          <div className="relative order-1 min-h-[min(52vh,520px)] bg-[#1a1a1a] sm:min-h-[min(56vh,560px)] md:order-2 md:min-h-screen md:bg-[var(--surface-soft)]">
+            <div className="pointer-events-none absolute inset-0 z-[3] bg-[linear-gradient(180deg,rgba(0,0,0,0.14)_0%,transparent_38%,transparent_62%,rgba(0,0,0,0.4)_100%)] md:bg-[radial-gradient(circle_at_top,rgba(197,160,89,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.32),rgba(248,249,250,0.78))]" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-[4] hidden h-32 bg-gradient-to-b from-white/25 to-transparent md:block" />
 
             {HERO_SLIDES.map((slide, index) => {
               const isActive = index === activeIndex;
+              const wmSrc = watermarkedSrc(slide.src);
 
               return (
                 <motion.div
@@ -170,37 +113,26 @@ export function HizmetlerMotionPageContent({ items }: Props) {
                   style={{ zIndex: isActive ? 2 : 1 }}
                   aria-hidden={!isActive}
                 >
-                  <motion.div
-                    className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-10 lg:p-14"
-                    initial={false}
-                    animate={
-                      isActive && !reduced
-                        ? isMobile
-                          ? { scale: 1.015, y: 0 }
-                          : { scale: 1.035, y: -6 }
-                        : { scale: 1, y: 0 }
-                    }
-                    transition={{ duration: reduced ? 0.2 : isMobile ? 0.45 : AUTO_SLIDE_MS + 1400, ease: 'easeOut' }}
-                  >
-                    <div className="relative h-full w-full">
-                      <Image
-                        src={slide.src}
-                        alt={slide.alt}
-                        fill
-                        priority={index === 0}
-                        fetchPriority={index === 0 ? 'high' : 'auto'}
-                        quality={index === 0 ? 82 : 74}
-                        sizes="(max-width: 768px) 100vw, 60vw"
-                        className="bg-[var(--surface-soft)] object-contain object-center"
-                        onLoad={() => {
-                          setLoadedSlides((current) => ({ ...current, [slide.src]: true }));
-                        }}
-                      />
-                    </div>
-                  </motion.div>
+                  <div className="absolute inset-0">
+                    <Image
+                      src={wmSrc}
+                      alt={slide.alt}
+                      fill
+                      priority={index === 0}
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
+                      quality={index === 0 ? 82 : 74}
+                      sizes="(max-width: 768px) 100vw, 60vw"
+                      className="bg-[#1a1a1a] object-cover object-center md:bg-[var(--surface-soft)]"
+                      onLoad={() => {
+                        setLoadedSlides((current) => ({ ...current, [wmSrc]: true }));
+                      }}
+                    />
+                  </div>
 
-                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04)_45%,rgba(248,249,250,0.36)_100%)]" />
-                  {!loadedSlides[slide.src] ? <div className="absolute inset-0 bg-[var(--surface-soft)]" /> : null}
+                  <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03)_45%,rgba(248,249,250,0.28)_100%)] md:bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04)_45%,rgba(248,249,250,0.36)_100%)]" />
+                  {!loadedSlides[wmSrc] ? (
+                    <div className="absolute inset-0 z-[2] bg-[#1a1a1a] md:bg-[var(--surface-soft)]" />
+                  ) : null}
                 </motion.div>
               );
             })}

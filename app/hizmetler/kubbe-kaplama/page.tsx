@@ -1,17 +1,11 @@
 import type { Metadata } from 'next';
 import { ContactCtaBlock } from '@/components/ContactCtaBlock';
 import { HizmetPageHero } from '@/components/hizmetler/HizmetPageHero';
+import { ServicePageImageGallery } from '@/components/hizmetler/ServicePageImageGallery';
+import { KUBBE_KAPLAMA_GALLERY } from '@/lib/content/kubbe-kaplama-gallery';
+import { HIZMET_PAGE_METADATA } from '@/lib/seo/service-metadata';
 
-export const metadata: Metadata = {
-  title: 'Camii Kubbe Kaplama',
-  description:
-    "Osmanlı kubbe geleneğine uygun camii kubbe kaplama, montaj ve malzeme tedariği. 1987'den bu yana 39 yıldır devam eden tecrübe ve Türkiye geneli referanslar.",
-  openGraph: {
-    title: 'Camii Kubbe Kaplama | Kubbe Kaplama',
-    description:
-      'Kubbe mimarisinde uzun ömürlü uygulamalar; bakır, kurşun ve alüminyum ile profesyonel camii kubbe kaplama hizmeti.',
-  },
-};
+export const metadata: Metadata = HIZMET_PAGE_METADATA['kubbe-kaplama'];
 
 export default function KubbeKaplamaPage() {
   return (
@@ -53,6 +47,11 @@ export default function KubbeKaplamaPage() {
             yürüttüğümüz işlere dair örnekleri inceleyebilirsiniz.
           </p>
         </div>
+      </div>
+
+      <ServicePageImageGallery title="Saha ve referans görselleri" items={KUBBE_KAPLAMA_GALLERY} />
+
+      <div className="mx-auto max-w-3xl px-4 pb-16 md:px-6">
         <ContactCtaBlock />
       </div>
     </main>
