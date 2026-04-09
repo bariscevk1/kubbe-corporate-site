@@ -74,6 +74,7 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
   const [name, setName] = useState('');
   const [phoneInput, setPhoneInput] = useState('');
   const [message, setMessage] = useState('');
+  const [emailStatus, setEmailStatus] = useState<'idle' | 'ok' | 'fail'>('idle');
 
   const waText = useMemo(() => {
     const parts = [
@@ -185,9 +186,25 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
 
             <form
               className="mt-6 grid gap-4"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
                 trackContactFormSubmit('iletisim_form_whatsapp');
+                setEmailStatus('idle');
+                try {
+                  const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      name,
+                      phone: phoneInput,
+                      message,
+                      page: typeof window !== 'undefined' ? window.location.href : undefined,
+                    }),
+                  });
+                  setEmailStatus(res.ok ? 'ok' : 'fail');
+                } catch {
+                  setEmailStatus('fail');
+                }
                 const opened = window.open(waPrefilled, '_blank', 'noopener,noreferrer');
                 if (!opened) window.location.assign(waPrefilled);
               }}
@@ -219,6 +236,12 @@ export function ContactPageContent({ phone, locationLabel, mapUrl, reviewsUrl, m
                   className="mt-2 w-full resize-y rounded-xl border border-[var(--border-soft)] bg-white px-4 py-3 text-sm text-[var(--text-heading)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-[#c5a059]/45 focus:bg-white"
                 />
               </label>
+
+              {emailStatus === 'fail' ? (
+                <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                  WhatsApp mesajınız açıldı. Ek olarak e-posta bildirimi gönderilemedi; lütfen daha sonra tekrar deneyin.
+                </p>
+              ) : null}
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <button
